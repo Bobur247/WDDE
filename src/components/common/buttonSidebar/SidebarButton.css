@@ -1,0 +1,38 @@
+.sidebarButton{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    padding: 12px 15px;
+    border-radius: 8px;
+    background-color: transparent;
+    gap: 10px;
+    color: #ffff;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.sidebarButton.active{
+    background-color: #0756DF;
+    border: 1px solid #0756DF;
+
+}
+.sidebarButton:hover{
+    background-color: #121F41;
+    border: 1px solid #25355A;
+}
+.sidebarButton span{
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+
+}
+.sidebarButton p{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+}

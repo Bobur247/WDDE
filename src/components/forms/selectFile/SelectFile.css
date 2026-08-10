@@ -1,0 +1,113 @@
+
+.SelectFile form {
+  border: 3px dotted #0858e150;
+  width: 100%;
+  border-radius: 15px;
+  padding: 20px;
+  background-color: #0858e115;
+  margin-bottom: 20px;
+}
+.SelectFile form .selectFileIcon {
+  color: #0756df;
+  text-align: center;
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+.SelectFile form h3 {
+  text-align: center;
+  margin-bottom: 5px;
+}
+.SelectFile form .selectFilesubtilte {
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+.SelectFile form .selectFileButtona {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px 15px;
+  border-radius: 8px;
+  border: none;
+  background-color: #0756df;
+  color: #fff;
+  cursor: pointer;
+}
+.SelectFile form .selectFileButtons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.mainFiles {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.initial.hide{
+  display: none;
+}
+.mainFiles.hide{
+  display: none;
+}
+.mainFiles .item.SelectmainFileIcon {
+  background-color: #06a95940;
+  border: 2px solid #06a959 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 10px 6px !important;
+}
+.mainFiles .item.SelectmainFileIcon .SelectmainFileIcon1 {
+  font-size: 45px;
+  color: #06a959;
+  margin: 10px 0;
+}
+.mainFiles .item.SelectmainFileIcon p,
+.mainFiles .item.SelectmainFileIconExit p {
+  font-size: 12px;
+  text-align: center;
+}
+.mainFiles .item.SelectmainFileIconExit {
+  background-color: #dd5b1240;
+  border: 2px solid #dd5b12 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  cursor: pointer;
+}
+.mainFiles .item.SelectmainFileIconExit .SelectmainFileIconExit1 {
+  color: #dd5b12;
+  font-size: 45px;
+  margin: 10px 0;
+}
+
+.separate .subtitleSelect{
+  margin-bottom: 15px;
+  font-size: 18px;
+  font-weight: bold;
+}
+.separate form select{
+  width: 100%;
+  border: 1px solid #E0E0E0;
+  cursor: pointer;
+  padding: 12px 20px;
+  border-radius: 8px;
+}
+.clickSeparate{
+  width: 100%;
+  margin: 20px 0;
+  font-size: 18px;
+  color: #fff;
+  background-color: #0754D9;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  padding: 15px;
+  border-radius:10px;
+  cursor: pointer;
+}

@@ -1,0 +1,60 @@
+.DocxViewer, .docxContentSelected {
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 16px;
+  background: #fff;
+  margin-bottom: 10px;
+  min-height: 30vh !important;
+}
+.docxViewerPlaceholder {
+  color: #9aa0a6;
+}
+.SubtitleFileTopNavbar{
+  margin-bottom: 15px;
+} 
+.DocxViewer {
+  flex: 1;
+  min-height: 200px;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 16px;
+  background: #fff;
+}
+.docxViewerPlaceholder {
+  color: #9aa0a6;
+}
+
+.manualText,
+.rawTextPreview {
+  white-space: pre-wrap;
+  word-break: break-word;
+  user-select: text;
+  max-height: 300px;
+  overflow-y: auto;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 10px;
+  font-family: inherit;
+  background-color: #FAFAFA;
+}
+
+.manualPendingPreview {
+  margin-top: 10px;
+  padding: 8px;
+  border: 1px solid #0B43A8;
+  border-radius: 8px;
+  color: #0B43A8;
+}
+
+.finalResults {
+  margin-top: 20px;
+  padding: 12px;
+  border: 1px solid #eee;
+  height: 40vh;
+  overflow-y: auto;
+  border-radius: 8px;
+  background-color: #FAFAFA;
+}
+.finalResults ol li{
+  list-style-type: none;
+}

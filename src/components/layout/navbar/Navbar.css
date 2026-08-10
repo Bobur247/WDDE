@@ -1,0 +1,44 @@
+.navbar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    box-shadow: 3px 3px 5px rgb(205, 224, 239);
+    background-color: #fff;
+    min-height: 100%;
+}
+.navbarText{
+    color: #0136A7;
+}
+.navbar .logo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+.navbar .logoImg{
+    width: 45px;
+}
+.navbar .user{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+.navbar .user .userAvatar{
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+}
+.navbar .user form select{
+    background-color: #fff;
+    padding: 8px 25px;
+    border: 1px solid #999;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.navbar .user form select option{
+    background-color: #0C1938;
+    color: #fff;
+    cursor: pointer;
+}

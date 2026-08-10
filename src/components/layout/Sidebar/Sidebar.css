@@ -1,0 +1,11 @@
+.sidebarHome{
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+.sidebarLink{
+    width: 100%;
+}

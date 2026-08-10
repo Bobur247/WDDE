@@ -1,0 +1,66 @@
+.CardHome {
+  background-color: #fff;
+  box-shadow: 3px 3px 5px rgb(205, 224, 239);
+  border-radius: 15px;
+  padding: 15px 20px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+
+}
+.CardHome::after{
+    width: 200px;
+    height: 200px;
+    background-color: var(--after-bg-color, gray);
+    content: '';
+    position: absolute;
+    top: 0;
+    right: -50%;
+    transform: translate(-50%,-50%) scale(0);
+    border-radius: 50%;
+    z-index: 1;
+    backdrop-filter: blur(5px);
+    transition: all 1s ease;
+
+}
+.CardHome:hover::after{
+    transform: translate(-50%,-50%) scale(1);
+}
+.CardHome .cardAbout {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.CardHome .cardAbout .cardText {
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  flex-direction: column;
+  color: #0C1A38;
+  position: relative;
+  z-index: 100;
+}
+.CardHome .cardAbout .cardText p{
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+.CardHome .cardAbout .cardText span{
+    font-size: 12px;
+}
+.CardHome .cardAbout .cardImg {
+  width: 65px;
+  height: 65px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+}
+.cardnextPage{
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    position: relative;
+    z-index: 120;
+}
