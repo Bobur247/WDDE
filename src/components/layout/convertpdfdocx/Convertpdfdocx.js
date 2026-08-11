@@ -1,5 +1,4 @@
 import React, { useState, useRef } from 'react'
-import './Convertpdfdocx.css'
 import {
   FaCloudUploadAlt,
   FaFilePdf,
@@ -11,6 +10,7 @@ import {
   FaDownload,
   FaRedo,
 } from 'react-icons/fa'
+import '../../../page/convert/Convert.css'
 
 const ConvertPdfDocx = () => {
   const [file, setFile] = useState(null)
@@ -144,7 +144,7 @@ const ConvertPdfDocx = () => {
   }
 
   return (
-    <div className="ConvertPdfDocx">
+    <div className="ConvertGrid">
       {/* 1-USTUN: Fayl yuklash */}
       <div className="panel">
         <div className="panelHeader">

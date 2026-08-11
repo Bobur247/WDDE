@@ -10,7 +10,7 @@ import {
   FaDownload,
   FaRedo,
 } from 'react-icons/fa'
-import './Convertdocxhtml.css'
+import '../../../page/convert/Convert.css'
 
 const ConvertDocxHtml = () => {
   const [file, setFile] = useState(null)
@@ -144,7 +144,7 @@ const ConvertDocxHtml = () => {
   }
 
   return (
-    <div className="ConvertDocxHtml">
+    <div className="ConvertGrid">
       {/* 1-USTUN: Fayl yuklash */}
       <div className="panel">
         <div className="panelHeader">
