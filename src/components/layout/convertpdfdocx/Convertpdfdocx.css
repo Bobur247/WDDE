@@ -1,0 +1,434 @@
+.ConvertPdfDocx {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .ConvertPdfDocx {
+    grid-template-columns: 1fr;
+  }
+}
+
+.panel {
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 18px;
+  background: #fff;
+}
+
+.panelHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.panelHeader.small {
+  margin-bottom: 10px;
+}
+
+.panelHeader h3 {
+  font-size: 16px;
+  margin: 0;
+}
+
+.panelHeader h4 {
+  font-size: 14px;
+  margin: 0;
+}
+
+.panelIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: #eef2ff;
+  color: #2563eb;
+  font-size: 14px;
+}
+
+/* --- 1-USTUN: fayl yuklash --- */
+
+.dropzone {
+  border: 1.5px dashed #c7d2fe;
+  border-radius: 12px;
+  background: #f8fafc;
+  padding: 28px 16px;
+  text-align: center;
+  color: #6b7280;
+}
+
+.dropzoneIcon {
+  font-size: 30px;
+  color: #2563eb;
+  margin-bottom: 10px;
+}
+
+.uploadButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  padding: 10px 18px;
+  border-radius: 8px;
+  background: #2563eb;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.selectedBox {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  text-align: left;
+  padding: 16px;
+}
+
+.selectedFileInfo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  overflow: hidden;
+}
+
+.selectedFileName {
+  font-weight: 600;
+  color: #111;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 140px;
+}
+
+.fileTypeIcon {
+  font-size: 26px;
+  flex-shrink: 0;
+}
+
+.fileTypeIcon.pdf {
+  color: #ef4444;
+}
+
+.fileTypeIcon.docx {
+  color: #2563eb;
+}
+
+.removeFileAction {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #ef4444;
+  cursor: pointer;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
+.errorText {
+  color: #ef4444;
+  margin-top: 10px;
+  font-size: 13px;
+}
+
+.formatsLabel {
+  margin-top: 18px;
+  margin-bottom: 8px;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.formatsRow {
+  display: flex;
+  gap: 8px;
+}
+
+.formatPill {
+  padding: 5px 14px;
+  border-radius: 999px;
+  background: #f1f5f9;
+  color: #475569;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.formatPill.active {
+  background: #dbeafe;
+  color: #2563eb;
+}
+
+/* --- 2-USTUN: konvertatsiya yo'nalishi --- */
+
+.directionCard {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  transition: all 0.15s ease;
+}
+
+.directionCard.active {
+  border-color: #2563eb;
+  background: #eff6ff;
+}
+
+.directionCard.disabled {
+  opacity: 0.45;
+}
+
+.directionIcon {
+  font-size: 20px;
+}
+
+.directionIcon.pdf {
+  color: #ef4444;
+}
+
+.directionIcon.docx {
+  color: #2563eb;
+}
+
+.directionArrow {
+  color: #9ca3af;
+  font-weight: 700;
+}
+
+.directionCard p {
+  margin: 0;
+  margin-left: auto;
+  font-weight: 600;
+  font-size: 14px;
+  color: #111;
+}
+
+.settingsBlock {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.settingRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  color: #374151;
+  padding: 6px 0;
+  cursor: pointer;
+}
+
+.settingRow.disabledRow {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.convertButton {
+  width: 100%;
+  margin-top: 18px;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: #2563eb;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.convertButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* --- 3-USTUN: natija --- */
+
+.resultPlaceholder {
+  color: #9aa0a6;
+  font-size: 14px;
+  text-align: center;
+  padding: 30px 10px;
+}
+
+.convertingBox {
+  text-align: center;
+  padding: 20px 6px;
+}
+
+.spinner {
+  width: 34px;
+  height: 34px;
+  margin: 0 auto 14px;
+  border: 3px solid #dbeafe;
+  border-top-color: #2563eb;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.progressBarOuter {
+  width: 100%;
+  height: 8px;
+  background: #eef2ff;
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: 14px;
+}
+
+.progressBarInner {
+  height: 100%;
+  background: #2563eb;
+  border-radius: 999px;
+  transition: width 0.25s ease;
+}
+
+.progressPercent {
+  margin-top: 8px;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.successBanner {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: #ecfdf5;
+  border: 1px solid #bbf7d0;
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 16px;
+}
+
+.successIcon {
+  color: #16a34a;
+  font-size: 20px;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.successTitle {
+  margin: 0;
+  font-weight: 700;
+  color: #065f46;
+  font-size: 14px;
+}
+
+.successSubtitle {
+  margin: 2px 0 0;
+  font-size: 12.5px;
+  color: #047857;
+}
+
+.resultFileCard {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 14px;
+}
+
+.resultFileInfo {
+  flex: 1;
+  overflow: hidden;
+}
+
+.resultFileName {
+  margin: 0;
+  font-weight: 600;
+  font-size: 13.5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.resultFileSize {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+.iconDownloadButton {
+  border: none;
+  background: #eef2ff;
+  color: #2563eb;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.resultDetails {
+  background: #f9fafb;
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin-bottom: 16px;
+}
+
+.resultDetailRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  padding: 6px 0;
+  color: #374151;
+  border-bottom: 1px solid #eef0f2;
+}
+
+.resultDetailRow:last-child {
+  border-bottom: none;
+}
+
+.resultDetailRow span:first-child {
+  color: #6b7280;
+}
+
+.resultDetailRow span:last-child {
+  font-weight: 600;
+  color: #111;
+}
+
+.downloadMainButton {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: #2563eb;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.convertAnotherButton {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #fff;
+  color: #374151;
+  font-weight: 600;
+  cursor: pointer;
+}
