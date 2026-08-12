@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { Box, Tabs, Tab } from '@mui/material'
-import './UniversalTabs.css'
 
 function UniversalTabs({
   tabs = [],
@@ -9,7 +8,7 @@ function UniversalTabs({
   tabButtonSx = {},
   tabSx = {},
   contentSx = {},
-  variant = 'standard',
+  variant = 'fullWidth',
   centered = false,
 }) {
   const [value, setValue] = useState(defaultValue)
@@ -28,17 +27,10 @@ function UniversalTabs({
         sx={tabSx}
       >
         {tabs.map((tab, index) => (
-          <Tab
-            className="tabUn"
-            key={index}
-            label={tab.label}
-            sx={tabButtonSx}
-          />
+          <Tab key={index} label={tab.label} sx={tabButtonSx} />
         ))}
       </Tabs>
-      <Box sx={contentSx}>
-        {tabs[value]?.content}
-      </Box>
+      <Box sx={contentSx}>{tabs[value]?.content}</Box>
     </Box>
   )
 }

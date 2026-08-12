@@ -1,0 +1,889 @@
+.TemplatesPage {
+  background: #f4f8fd;
+  padding: 20px;
+  border-radius: 16px;
+}
+
+/* ===== HEADER ===== */
+
+.templatesHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.headerIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: #dbeafe;
+  color: #2563eb;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.headerLeft h1 {
+  margin: 0;
+  font-size: 22px;
+  color: #0f172a;
+}
+
+.headerLeft p {
+  margin: 2px 0 0;
+  font-size: 13.5px;
+  color: #64748b;
+}
+
+.addTemplateButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 18px;
+  border: none;
+  border-radius: 10px;
+  background: #2563eb;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+/* ===== FILTERS ===== */
+
+.templateFilters {
+  display: flex;
+  align-items: flex-end;
+  gap: 14px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 14px 16px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.searchBox {
+  position: relative;
+  flex: 1;
+  min-width: 220px;
+}
+
+.searchIcon {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  color: #9ca3af;
+  font-size: 13px;
+}
+
+.searchBox input {
+  width: 100%;
+  padding: 10px 12px 10px 34px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+}
+
+.filterField {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 140px;
+}
+
+.filterField label {
+  font-size: 12.5px;
+  color: #6b7280;
+  font-weight: 600;
+}
+
+.filterField select {
+  padding: 9px 10px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+}
+
+.viewToggle {
+  display: flex;
+  gap: 4px;
+  background: #eef2ff;
+  border-radius: 8px;
+  padding: 4px;
+}
+
+.viewToggle button {
+  border: none;
+  background: transparent;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #6b7280;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.viewToggle button.active {
+  background: #2563eb;
+  color: #fff;
+}
+
+/* ===== BODY LAYOUT (sidebar + cards) ===== */
+
+.templatesBody {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 18px;
+  align-items: start;
+}
+
+@media (max-width: 800px) {
+  .templatesBody {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===== CATEGORIES SIDEBAR ===== */
+
+.templateCategories {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 16px;
+}
+
+.templateCategories h3 {
+  margin: 0 0 12px;
+  font-size: 15px;
+  color: #0f172a;
+}
+
+.templateCategories ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.templateCategories li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #374151;
+  font-size: 13.5px;
+}
+
+.templateCategories li:hover {
+  background: #f3f4f6;
+}
+
+.templateCategories li.active {
+  background: #2563eb;
+  color: #fff;
+}
+
+.categoryIcon {
+  font-size: 13px;
+  width: 16px;
+  display: flex;
+  justify-content: center;
+}
+
+.categoryName {
+  flex: 1;
+}
+
+.categoryCount {
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+/* ===== CARDS: GRID & LIST ===== */
+
+.templateCardsEmpty {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 40px;
+  text-align: center;
+  color: #9ca3af;
+}
+
+.templateCards.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+@media (max-width: 1100px) {
+  .templateCards.grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  .templateCards.grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.templateCards.list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.templateCards.list .templateCard {
+  flex-direction: row;
+  align-items: center;
+}
+
+.templateCards.list .templatePreview {
+  width: 110px;
+  height: 80px;
+  flex-shrink: 0;
+  border-radius: 10px;
+}
+
+.templateCards.list .templatePreviewTitle {
+  font-size: 9px;
+}
+
+.templateCard {
+  position: relative;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.deleteIconButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 5;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.9);
+  color: #ef4444;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  font-size: 13px;
+}
+
+.deleteIconButton:hover {
+  background: #ef4444;
+  color: #fff;
+}
+
+.templatePreview {
+  height: 140px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #eef4ff;
+  color: #2563eb;
+}
+
+.templatePreview.gradient {
+  background: linear-gradient(135deg, #2563eb, #1e3a8a);
+  color: #fff;
+}
+
+.templatePreviewIcon {
+  font-size: 28px;
+}
+
+.templatePreviewTitle {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.templateCardBody {
+  padding: 14px 16px;
+  flex: 1;
+}
+
+.templateCardTitleRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.templateCardTitleRow h4 {
+  margin: 0;
+  font-size: 14.5px;
+  color: #0f172a;
+}
+
+.categoryBadge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.categoryBadge.blue {
+  background: #dbeafe;
+  color: #2563eb;
+}
+
+.categoryBadge.green {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.categoryBadge.purple {
+  background: #ede9fe;
+  color: #7c3aed;
+}
+
+.categoryBadge.orange {
+  background: #ffedd5;
+  color: #ea580c;
+}
+
+.templateCardDescription {
+  font-size: 12.5px;
+  color: #6b7280;
+  margin: 0 0 14px;
+  line-height: 1.4;
+}
+
+.templateCardActions {
+  display: flex;
+  gap: 8px;
+}
+
+.viewButton,
+.downloadButton {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 9px;
+  border-radius: 8px;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.viewButton {
+  background: #fff;
+  border: 1px solid #d1d5db;
+  color: #374151;
+}
+
+.downloadButton {
+  background: #2563eb;
+  border: none;
+  color: #fff;
+}
+
+/* ===== MODAL SHARED ===== */
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.modalBox {
+  background: #fff;
+  border-radius: 16px;
+  padding: 22px;
+  width: 100%;
+  max-width: 640px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modalTopHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.modalTopHeaderLeft {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.modalHeaderIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: #dbeafe;
+  color: #2563eb;
+  flex-shrink: 0;
+}
+
+.modalTopHeaderLeft h3 {
+  margin: 0;
+  font-size: 16px;
+  color: #0f172a;
+}
+
+.modalTopHeaderLeft p {
+  margin: 2px 0 0;
+  font-size: 12.5px;
+  color: #6b7280;
+}
+
+.modalCloseIcon {
+  border: none;
+  background: transparent;
+  color: #9ca3af;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.modalError {
+  color: #ef4444;
+  font-size: 13px;
+  margin: 4px 0 0;
+}
+
+.modalFooter {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.modalCancelButton,
+.modalSaveButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 9px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 13.5px;
+}
+
+.modalCancelButton {
+  background: #fff;
+  border: 1px solid #d1d5db;
+  color: #374151;
+}
+
+.modalSaveButton {
+  background: #2563eb;
+  border: none;
+  color: #fff;
+}
+
+/* ===== ADD TEMPLATE MODAL ===== */
+
+.addTemplateGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 620px) {
+  .addTemplateGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.addTemplateColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.formField {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.formField label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.required {
+  color: #ef4444;
+}
+
+.formField input,
+.formField select,
+.formField textarea {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  font-family: inherit;
+  resize: vertical;
+}
+
+.docxDropzone {
+  border: 1.5px dashed #c7d2fe;
+  border-radius: 12px;
+  background: #f8fafc;
+  text-align: center;
+  padding: 22px 14px;
+}
+
+.docxDropzoneIcon {
+  font-size: 26px;
+  color: #2563eb;
+  margin-bottom: 8px;
+}
+
+.docxDropzoneTitle {
+  margin: 0;
+  font-weight: 600;
+  font-size: 13.5px;
+  color: #0f172a;
+}
+
+.docxDropzoneSubtitle {
+  margin: 2px 0 12px;
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+.chooseFileButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px;
+  border-radius: 8px;
+  background: #2563eb;
+  color: #fff;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.chooseFileButton.outline {
+  background: #fff;
+  border: 1px solid #d1d5db;
+  color: #374151;
+}
+
+.docxDropzoneHint {
+  margin: 10px 0 0;
+  font-size: 11px;
+  color: #9ca3af;
+}
+
+.docxSelectedBox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid #bbf7d0;
+  background: #ecfdf5;
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.docxSelectedIcon {
+  color: #2563eb;
+  font-size: 18px;
+}
+
+.docxSelectedName {
+  flex: 1;
+  font-size: 13px;
+  color: #0f172a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.docxSelectedCheck {
+  color: #16a34a;
+}
+
+.imagePickerRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.imagePreviewBox {
+  width: 46px;
+  height: 46px;
+  border-radius: 8px;
+  background: #f1f5f9;
+  color: #9ca3af;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.imagePreviewImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ===== VIEW TEMPLATE MODAL ===== */
+
+.viewTemplatePreview {
+  height: 220px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: #eef4ff;
+  color: #2563eb;
+  margin-bottom: 14px;
+}
+
+.viewTemplatePreview.gradient {
+  background: linear-gradient(135deg, #2563eb, #1e3a8a);
+  color: #fff;
+}
+
+.viewTemplatePreviewIcon {
+  font-size: 40px;
+}
+
+.viewTemplatePreviewTitle {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.viewTemplateDescription {
+  font-size: 13.5px;
+  color: #4b5563;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.viewTemplateDemoNote {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  color: #9ca3af;
+  background: #f9fafb;
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin: 0 0 14px;
+}
+
+.fileViewerLoading,
+.fileViewerError {
+  text-align: center;
+  padding: 30px 10px;
+  color: #6b7280;
+  font-size: 13.5px;
+}
+
+.fileViewerError {
+  color: #ef4444;
+}
+
+.pdfViewerFrame {
+  width: 100%;
+  height: 60vh;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  margin-bottom: 14px;
+}
+
+.docxViewerContent {
+  max-height: 60vh;
+  overflow-y: auto;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 14px;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: #111827;
+}
+
+.docxViewerContent img {
+  max-width: 100%;
+}
+
+.excelViewerWrapper {
+  max-height: 60vh;
+  overflow: auto;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  margin-bottom: 14px;
+}
+
+.excelViewerTable {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 12.5px;
+}
+
+.excelViewerTable td {
+  border: 1px solid #e5e7eb;
+  padding: 6px 10px;
+  white-space: nowrap;
+}
+
+.excelViewerTable tr:first-child td {
+  background: #f9fafb;
+  font-weight: 700;
+}
+
+/* ===== DELETE CONFIRM MODAL ===== */
+
+.deleteConfirmModal {
+  max-width: 400px;
+  text-align: center;
+}
+
+.deleteConfirmIcon {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #fee2e2;
+  color: #ef4444;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  margin: 0 auto 14px;
+}
+
+.deleteConfirmModal h3 {
+  margin: 0 0 8px;
+  font-size: 16px;
+  color: #0f172a;
+}
+
+.deleteConfirmModal p {
+  margin: 0;
+  font-size: 13.5px;
+  color: #6b7280;
+  line-height: 1.5;
+}
+
+.modalFooter.center {
+  justify-content: center;
+}
+
+.modalDeleteButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 9px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 13.5px;
+  background: #ef4444;
+  border: none;
+  color: #fff;
+}
+
+/* ===== MOBIL MOSLASHUV ===== */
+
+@media (max-width: 640px) {
+  .TemplatesPage {
+    padding: 12px;
+  }
+
+  .templatesHeader {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+  }
+
+  .addTemplateButton {
+    justify-content: center;
+  }
+
+  .templateFilters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .searchBox,
+  .filterField {
+    min-width: 100%;
+  }
+
+  .viewToggle {
+    align-self: flex-end;
+  }
+
+  .templateCardActions {
+    flex-direction: column;
+  }
+
+  .templateCards.list .templateCard {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .templateCards.list .templatePreview {
+    width: 100%;
+    height: 100px;
+  }
+
+  .modalBox {
+    padding: 16px;
+  }
+
+  .pdfViewerFrame,
+  .docxViewerContent,
+  .excelViewerWrapper {
+    max-height: 50vh;
+  }
+}

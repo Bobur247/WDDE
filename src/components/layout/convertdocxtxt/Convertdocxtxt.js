@@ -3,19 +3,19 @@ import {
   FaCloudUploadAlt,
   FaFileAlt,
   FaFileWord,
-  FaTimesCircle,
   FaExchangeAlt,
   FaCog,
   FaCheckCircle,
   FaDownload,
   FaRedo,
 } from 'react-icons/fa'
+import { CiCircleRemove } from 'react-icons/ci'
 import '../../../page/convert/Convert.css'
 
 const ConvertDocxTxt = () => {
   const [file, setFile] = useState(null)
-  const [fileType, setFileType] = useState(null) // 'docx' | 'txt'
-  const [direction, setDirection] = useState(null) // 'docx-to-txt' | 'txt-to-docx'
+  const [fileType, setFileType] = useState(null) 
+  const [direction, setDirection] = useState(null) 
   const [error, setError] = useState('')
 
   const [keepStyling, setKeepStyling] = useState(true)
@@ -61,7 +61,6 @@ const ConvertDocxTxt = () => {
     setError('')
     setFile(selected)
     setFileType(type)
-    // Fayl turiga qarab yo'nalish avtomatik tanlanadi
     setDirection(type === 'docx' ? 'docx-to-txt' : 'txt-to-docx')
     setResult(null)
     setProgress(0)
@@ -77,11 +76,7 @@ const ConvertDocxTxt = () => {
     if (inputRef.current) inputRef.current.value = ''
   }
 
-  // MUHIM: bu yerda haqiqiy konvertatsiya albatta backend (server) orqali
-  // bajarilishi kerak (masalan mammoth/LibreOffice kabi xizmat bilan).
-  // Hozircha jarayon va natija DEMO sifatida simulyatsiya qilingan —
-  // haqiqiy loyihada startConversion ichini o'z API chaqiruvingiz bilan
-  // almashtiring.
+ 
   function startConversion() {
     if (!file || !direction) return
 
@@ -120,7 +115,7 @@ const ConvertDocxTxt = () => {
         time: `${seconds}s`,
         originalSizeKb,
         newSizeKb,
-        blob: file, // DEMO: haqiqiy loyihada bu yerga konvertatsiya qilingan fayl keladi
+        blob: file,
       })
 
       setConverting(false)
@@ -145,7 +140,6 @@ const ConvertDocxTxt = () => {
 
   return (
     <div className="ConvertGrid">
-      {/* 1-USTUN: Fayl yuklash */}
       <div className="panel">
         <div className="panelHeader">
           <span className="panelIcon">
@@ -182,7 +176,7 @@ const ConvertDocxTxt = () => {
               <p className="selectedFileName">{file.name}</p>
             </div>
             <div className="removeFileAction" onClick={handleRemoveFile}>
-              <FaTimesCircle />
+              <CiCircleRemove className="removeFileActionIcon" />
               <span>Bekor qilish</span>
             </div>
           </div>

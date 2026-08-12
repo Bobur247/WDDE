@@ -9,6 +9,12 @@ import UniversalTabs from './ui/tabs/UniversalTabs'
 import Convertdocxhtml from './layout/convertdocxhtml/Convertdocxhtml'
 import Convertdocxtxt from './layout/convertdocxtxt/Convertdocxtxt'
 import Convertpdfdocx from './layout/convertpdfdocx/Convertpdfdocx'
+import TemplateCards from './layout/templateCards/TemplateCards'
+import TemplateCategories from './layout/templateCategories/TemplateCategories'
+import TemplateFilters from './layout/templateFilters/TemplateFilters'
+import AddTemplateModal from './layout/addTemplateModal/AddTemplateModal'
+import ViewTemplateModal from './layout/viewTemplateModal/ViewTemplateModal'
+import DeleteConfirmModal  from './modals/deleteConfirmModal/DeleteConfirmModal'
 
 export {
   Sidebar,
@@ -21,5 +27,11 @@ export {
   UniversalTabs,
   Convertdocxhtml,
   Convertpdfdocx,
-  Convertdocxtxt
+  Convertdocxtxt,
+  TemplateCards,
+  TemplateCategories,
+  TemplateFilters,
+  AddTemplateModal,
+  ViewTemplateModal,
+  DeleteConfirmModal
 }

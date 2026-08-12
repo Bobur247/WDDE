@@ -3,7 +3,6 @@ import {
   FaCloudUploadAlt,
   FaFilePdf,
   FaFileWord,
-  FaTimesCircle,
   FaExchangeAlt,
   FaCog,
   FaCheckCircle,
@@ -11,6 +10,7 @@ import {
   FaRedo,
 } from 'react-icons/fa'
 import '../../../page/convert/Convert.css'
+import { CiCircleRemove } from 'react-icons/ci'
 
 const ConvertPdfDocx = () => {
   const [file, setFile] = useState(null)
@@ -182,7 +182,7 @@ const ConvertPdfDocx = () => {
               <p className="selectedFileName">{file.name}</p>
             </div>
             <div className="removeFileAction" onClick={handleRemoveFile}>
-              <FaTimesCircle />
+              <CiCircleRemove className="removeFileActionIcon" />
               <span>Bekor qilish</span>
             </div>
           </div>
