@@ -12,7 +12,7 @@ import Convertpdfdocx from './layout/convertpdfdocx/Convertpdfdocx'
 import TemplateCards from './layout/templateCards/TemplateCards'
 import TemplateCategories from './layout/templateCategories/TemplateCategories'
 import TemplateFilters from './layout/templateFilters/TemplateFilters'
-import AddTemplateModal from './layout/addTemplateModal/AddTemplateModal'
+import AddTemplateModal from './modals/addTemplateModal/AddTemplateModal'
 import ViewTemplateModal from './layout/viewTemplateModal/ViewTemplateModal'
 import DeleteConfirmModal  from './modals/deleteConfirmModal/DeleteConfirmModal'
 
