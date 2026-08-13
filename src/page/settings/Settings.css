@@ -1,0 +1,787 @@
+.SettingsPage {
+  background: #f4f8fd;
+  padding: 20px;
+  border-radius: 16px;
+}
+
+/* ===== HEADER ===== */
+
+.settingsPageHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.settingsPageHeaderLeft {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.settingsPageIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  background: #dbeafe;
+  color: #2563eb;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.settingsPageHeaderLeft h1 {
+  margin: 0;
+  font-size: 22px;
+  color: #0f172a;
+}
+
+.settingsPageHeaderLeft p {
+  margin: 2px 0 0;
+  font-size: 13.5px;
+  color: #64748b;
+}
+
+.resetDefaultsButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  background: #fff;
+  color: #374151;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.savedBanner {
+  background: #ecfdf5;
+  border: 1px solid #bbf7d0;
+  color: #16a34a;
+  font-weight: 600;
+  font-size: 13.5px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  margin-bottom: 16px;
+}
+
+/* ===== GRID: rasmga mos assimetrik joylashuv ===== */
+
+.settingsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 280px;
+  grid-template-areas:
+    'general document document sidebar'
+    'conversion extraction file sidebar'
+    'security backup additional sidebar';
+  gap: 18px;
+}
+
+.gridArea-general {
+  grid-area: general;
+}
+.gridArea-document {
+  grid-area: document;
+}
+.gridArea-sidebar {
+  grid-area: sidebar;
+}
+.gridArea-conversion {
+  grid-area: conversion;
+}
+.gridArea-extraction {
+  grid-area: extraction;
+}
+.gridArea-file {
+  grid-area: file;
+}
+.gridArea-security {
+  grid-area: security;
+}
+.gridArea-backup {
+  grid-area: backup;
+}
+.gridArea-additional {
+  grid-area: additional;
+}
+
+/* Planshet: sidebar pastga tushadi, qolganlari 2 ustunga siqiladi */
+@media (max-width: 1100px) {
+  .settingsGrid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      'general document'
+      'conversion extraction'
+      'file security'
+      'backup additional'
+      'sidebar sidebar';
+  }
+}
+
+/* Mobil: hammasi bitta ustunda, tartib bilan pastma-past ochiladi */
+@media (max-width: 700px) {
+  .SettingsPage {
+    padding: 12px;
+  }
+  .settingsPageHeader {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .resetDefaultsButton {
+    justify-content: center;
+  }
+  .settingsGrid {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'general'
+      'document'
+      'conversion'
+      'extraction'
+      'file'
+      'security'
+      'backup'
+      'additional'
+      'sidebar';
+  }
+}
+
+/* ===== KARTA UMUMIY ===== */
+
+.settingsCard,
+.appInfoCard {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 16px;
+  height: 100%;
+}
+
+.settingsCardHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.settingsCardIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: #eef2ff;
+  color: #2563eb;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
+.settingsCardHeader h3 {
+  margin: 0;
+  font-size: 14.5px;
+  color: #0f172a;
+}
+
+.cardTwoCol {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.cardColStack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+@media (max-width: 460px) {
+  .cardTwoCol {
+    grid-template-columns: 1fr;
+  }
+}
+
+.settingsField {
+  margin-bottom: 12px;
+}
+
+.settingsField:last-child {
+  margin-bottom: 0;
+}
+
+.settingsField label {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 5px;
+}
+
+.settingsField input,
+.settingsField select {
+  width: 100%;
+  padding: 9px 10px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  font-size: 13px;
+  font-family: inherit;
+}
+
+/* ===== TOGGLE ===== */
+
+.toggleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 9px 0;
+  font-size: 13px;
+  color: #374151;
+  border-top: 1px solid #f0f0f0;
+}
+
+.toggleRow:first-of-type {
+  border-top: none;
+}
+
+.toggleRow.inline {
+  border-top: none;
+  padding: 0;
+}
+
+.toggleLabelWithIcon {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.toggleBox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+.toggleBoxIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 7px;
+  background: #eef2ff;
+  color: #2563eb;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+.toggleBoxLabel {
+  flex: 1;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 38px;
+  height: 22px;
+  flex-shrink: 0;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  inset: 0;
+  background: #d1d5db;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: 0.15s;
+}
+
+.slider::before {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  left: 3px;
+  top: 3px;
+  background: #fff;
+  border-radius: 50%;
+  transition: 0.15s;
+}
+
+.switch input:checked + .slider {
+  background: #2563eb;
+}
+
+.switch input:checked + .slider::before {
+  transform: translateX(16px);
+}
+
+/* ===== ACTION ROW (parol, token, sessiya, tekshirish, tozalash) ===== */
+
+.actionRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 9px 0;
+  font-size: 13px;
+  color: #374151;
+  border-top: 1px solid #f0f0f0;
+}
+
+.actionRow:first-of-type {
+  border-top: none;
+}
+
+.cardActionButton {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 12px;
+  border-radius: 8px;
+  border: 1px solid #bfdbfe;
+  background: #eff6ff;
+  color: #2563eb;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.cardActionButton.full {
+  width: 100%;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.cardActionButton.danger {
+  border-color: #fecaca;
+  background: #fef2f2;
+  color: #ef4444;
+}
+
+.cardActionButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.fieldHint {
+  font-size: 11.5px;
+  color: #9ca3af;
+  line-height: 1.5;
+  margin: 6px 0 0;
+}
+
+.successNote {
+  background: #ecfdf5;
+  color: #16a34a;
+  border: 1px solid #bbf7d0;
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 12.5px;
+  margin-bottom: 10px;
+}
+
+.spinning {
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ===== FAYL SOZLAMALARI: papka tanlash ===== */
+
+.pathInputRow {
+  display: flex;
+  gap: 6px;
+}
+
+.pathInputRow input {
+  flex: 1;
+}
+
+.pathPickButton {
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  border-radius: 8px;
+  width: 36px;
+  color: #2563eb;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.pathPickButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ===== API TOKEN RO'YXATI ===== */
+
+.tokenList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.emptyListText {
+  color: #9ca3af;
+  font-size: 12.5px;
+  text-align: center;
+  padding: 10px 0;
+}
+
+.tokenRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.tokenValue {
+  margin: 0;
+  font-family: monospace;
+  font-size: 11.5px;
+  color: #0f172a;
+  word-break: break-all;
+}
+
+.tokenDate {
+  margin: 3px 0 0;
+  font-size: 11px;
+  color: #9ca3af;
+}
+
+.tokenRevokeButton {
+  border: none;
+  background: #fef2f2;
+  color: #ef4444;
+  width: 30px;
+  height: 30px;
+  border-radius: 7px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* ===== SESSIYA RO'YXATI ===== */
+
+.sessionRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 10px;
+  font-size: 18px;
+  color: #2563eb;
+}
+
+.sessionRow.current {
+  border-color: #bbf7d0;
+  background: #ecfdf5;
+  color: #16a34a;
+}
+
+.sessionDevice {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.sessionMeta {
+  margin: 2px 0 0;
+  font-size: 11.5px;
+  color: #6b7280;
+  word-break: break-all;
+}
+
+.aboutText {
+  font-size: 13px;
+  color: #374151;
+  line-height: 1.6;
+  margin: 0 0 10px;
+}
+
+/* ===== O'NG PANEL (App Info) ===== */
+
+.appInfoCard {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.appInfoLogo {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  background: #2563eb;
+  color: #fff;
+  font-weight: 800;
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 4px auto 12px;
+}
+
+.appInfoName {
+  margin: 0 0 10px;
+  font-size: 15px;
+  color: #0f172a;
+}
+
+.appInfoVersionRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 12.5px;
+  color: #6b7280;
+  margin-bottom: 14px;
+}
+
+.appInfoVersion {
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.appInfoBadge {
+  background: #dcfce7;
+  color: #16a34a;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+.appInfoDivider {
+  border-top: 1px solid #f0f0f0;
+  margin: 6px 0 14px;
+}
+
+.appInfoSectionTitle {
+  text-align: left;
+  font-size: 12px;
+  font-weight: 700;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  margin: 0 0 12px;
+}
+
+.appInfoRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  text-align: left;
+  margin-bottom: 14px;
+  color: #2563eb;
+  font-size: 14px;
+}
+
+.appInfoRowLabel {
+  margin: 0;
+  font-size: 11.5px;
+  color: #9ca3af;
+}
+
+.appInfoRowValue {
+  margin: 2px 0 0;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #0f172a;
+  word-break: break-word;
+}
+
+.appInfoSaveButton {
+  margin-top: auto;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: #2563eb;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* ===== MODAL UMUMIY ===== */
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.modalBox {
+  background: #fff;
+  border-radius: 16px;
+  padding: 22px;
+  width: 100%;
+  max-width: 420px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modalTopHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.modalTopHeader h3 {
+  margin: 0;
+  font-size: 15.5px;
+  color: #0f172a;
+}
+
+.modalCloseIcon {
+  border: none;
+  background: transparent;
+  color: #9ca3af;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.modalError {
+  color: #ef4444;
+  font-size: 12.5px;
+  margin: 4px 0 0;
+}
+
+.modalFooter {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.modalFooter.center {
+  justify-content: center;
+}
+
+.modalCancelButton,
+.modalSaveButton,
+.modalDangerButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 9px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.modalCancelButton {
+  background: #fff;
+  border: 1px solid #d1d5db;
+  color: #374151;
+}
+
+.modalSaveButton {
+  background: #2563eb;
+  border: none;
+  color: #fff;
+}
+
+.modalDangerButton {
+  background: #ef4444;
+  border: none;
+  color: #fff;
+}
+
+.confirmModal {
+  text-align: center;
+}
+
+.confirmIcon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #fef3c7;
+  color: #d97706;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  margin: 0 auto 12px;
+}
+
+.confirmModal h3 {
+  margin: 0 0 8px;
+  font-size: 15px;
+  color: #0f172a;
+}
+
+.confirmModal p {
+  margin: 0;
+  font-size: 13px;
+  color: #6b7280;
+  line-height: 1.5;
+}
+
+/* ===== DARK MODE (demo - shu sahifa doirasida) ===== */
+
+.settings-dark .SettingsPage {
+  background: #0f172a;
+}
+
+.settings-dark .settingsCard,
+.settings-dark .appInfoCard,
+.settings-dark .modalBox {
+  background: #1e293b;
+  border-color: #334155;
+}
+
+.settings-dark .settingsCardHeader h3,
+.settings-dark .settingsPageHeaderLeft h1,
+.settings-dark .appInfoName,
+.settings-dark .appInfoRowValue,
+.settings-dark .modalTopHeader h3,
+.settings-dark .toggleBoxLabel {
+  color: #f1f5f9;
+}
+
+.settings-dark .settingsField input,
+.settings-dark .settingsField select,
+.settings-dark .pathInputRow input {
+  background: #0f172a;
+  border-color: #334155;
+  color: #f1f5f9;
+}

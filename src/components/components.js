@@ -14,7 +14,23 @@ import TemplateCategories from './layout/templateCategories/TemplateCategories'
 import TemplateFilters from './layout/templateFilters/TemplateFilters'
 import AddTemplateModal from './modals/addTemplateModal/AddTemplateModal'
 import ViewTemplateModal from './layout/viewTemplateModal/ViewTemplateModal'
-import DeleteConfirmModal  from './modals/deleteConfirmModal/DeleteConfirmModal'
+import DeleteConfirmModal from './modals/deleteConfirmModal/DeleteConfirmModal'
+import NewDocumentModal from './layout/newDocumentModal/NewDocumentModal'
+import LivePreview from './layout/livePreview/LivePreview'
+import DocumentHistoryTable from './layout/documentHistoryTable/DocumentHistoryTable'
+import DocumentSettingsPanel from './layout/documentSettingsPanel/DocumentSettingsPanel'
+import AdditionalSettingsPanel from './layout/additionalSettingsPanel/AdditionalSettingsPanel'
+
+import ConfirmModal from './modals/confirmModal/ConfirmModal'
+import AdditionalCard from './cards/additionalCard/AdditionalCard'
+import AppInfoCard from './cards/appInfoCard/AppInfoCard'
+import BackupCard from './cards/backupCard/BackupCard'
+import ConversionSettingsCard from './cards/conversionSettingsCard/ConversionSettingsCard'
+import DocumentSettingsCard from './cards/documentSettingsCard/DocumentSettingsCard'
+import ExtractionSettingsCard from './cards/extractionSettingsCard/ExtractionSettingsCard'
+import FileSettingsCard from './cards/fileSettingsCard/FileSettingsCard'
+import GeneralSettingsCard from './cards/generalSettingsCard/GeneralSettingsCard'
+import SecurityCard from './cards/securityCard/SecurityCard'
 
 export {
   Sidebar,
@@ -33,5 +49,20 @@ export {
   TemplateFilters,
   AddTemplateModal,
   ViewTemplateModal,
-  DeleteConfirmModal
+  DeleteConfirmModal,
+  NewDocumentModal,
+  LivePreview,
+  DocumentHistoryTable,
+  DocumentSettingsPanel,
+  AdditionalSettingsPanel,
+  ConfirmModal,
+  AdditionalCard,
+  AppInfoCard,
+  BackupCard,
+  ConversionSettingsCard,
+  DocumentSettingsCard,
+  ExtractionSettingsCard,
+  FileSettingsCard,
+  GeneralSettingsCard,
+  SecurityCard,
 }

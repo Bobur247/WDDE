@@ -22,7 +22,6 @@ export const App = () => {
           <Route path="/history" element={<History />} />
           <Route path="/settings" element={<Settings />} />
         </Routes>
-        
       </div>
     </div>
   )

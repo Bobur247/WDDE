@@ -1,0 +1,1046 @@
+.CreateDocument {
+  background: #f4f8fd;
+  padding: 20px;
+  border-radius: 16px;
+}
+
+.cdHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.cdHeaderLeft {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.cdHeaderIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  background: #dbeafe;
+  color: #2563eb;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.cdHeaderLeft h1 {
+  margin: 0;
+  font-size: 22px;
+  color: #0f172a;
+}
+
+.cdHeaderLeft p {
+  margin: 2px 0 0;
+  font-size: 13.5px;
+  color: #64748b;
+}
+
+.cdNewDocButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 18px;
+  border: none;
+  border-radius: 10px;
+  background: #2563eb;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.cdGrid {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  grid-template-rows: auto auto;
+  gap: 18px;
+}
+
+.documentSettingsPanel {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.additionalSettingsPanel {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.documentHistoryTable {
+  grid-column: 1 / span 2;
+  grid-row: 2;
+}
+
+@media (max-width: 1100px) {
+  .cdGrid {
+    grid-template-columns: 1fr;
+  }
+  .documentSettingsPanel,
+  .additionalSettingsPanel,
+  .documentHistoryTable {
+    grid-column: 1;
+  }
+  .documentSettingsPanel {
+    grid-row: 1;
+  }
+  .additionalSettingsPanel {
+    grid-row: 2;
+  }
+  .documentHistoryTable {
+    grid-row: 3;
+  }
+}
+
+/* ===== PANEL UMUMIY ===== */
+
+.documentSettingsPanel,
+.additionalSettingsPanel,
+.documentHistoryTable {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 16px;
+}
+
+/* ===== HUJJATNI SOZLASH (markaz) ===== */
+
+.settingsPanelTitle {
+  margin: 0 0 12px;
+  font-size: 15px;
+  color: #0f172a;
+}
+
+.settingsTabs {
+  display: flex;
+  gap: 18px;
+  border-bottom: 1px solid #e5e7eb;
+  margin-bottom: 16px;
+}
+
+.settingsTabs button {
+  border: none;
+  background: none;
+  padding: 0 0 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #9ca3af;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+}
+
+.settingsTabs button.active {
+  color: #2563eb;
+  border-bottom-color: #2563eb;
+}
+
+.tabComingSoon {
+  color: #9ca3af;
+  font-size: 13px;
+  background: #f9fafb;
+  border-radius: 10px;
+  padding: 16px;
+  line-height: 1.5;
+}
+
+.settingsPanelBody {
+  display: flex;
+  gap: 20px;
+}
+
+.settingsFormColumn {
+  flex: 1;
+  min-width: 0;
+}
+
+.settingsPreviewColumn {
+  flex: 1.5;
+  min-width: 0;
+}
+
+.formSectionLabel {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  margin: 14px 0 8px;
+}
+
+.formSectionLabel:first-child {
+  margin-top: 0;
+}
+
+.formField {
+  margin-bottom: 12px;
+}
+
+.formField label {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 5px;
+}
+
+.formField input,
+.formField select,
+.formField textarea {
+  width: 100%;
+  padding: 9px 10px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  font-family: inherit;
+  font-size: 13px;
+  resize: vertical;
+}
+
+.twoColFields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.richTextField {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.richTextToolbar {
+  display: flex;
+  gap: 4px;
+  background: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 6px 8px;
+}
+
+.richTextToolbar button {
+  border: none;
+  background: transparent;
+  width: 26px;
+  height: 26px;
+  border-radius: 5px;
+  color: #6b7280;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.richTextToolbar button:hover {
+  background: #e5e7eb;
+}
+
+.richTextField textarea {
+  border: none;
+  border-radius: 0;
+  background: #fff;
+}
+
+.richTextArea {
+  height: 110px;
+  max-height: 110px;
+  overflow-y: auto;
+  resize: none;
+}
+
+/* ===== LIVE PREVIEW ===== */
+
+.livePreviewBox {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.livePreviewHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 13px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.livePreviewDeviceToggle {
+  display: flex;
+  gap: 4px;
+}
+
+.livePreviewDeviceToggle button {
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  color: #9ca3af;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+}
+
+.livePreviewDeviceToggle button.active {
+  background: #2563eb;
+  border-color: #2563eb;
+  color: #fff;
+}
+
+.livePreviewPaper {
+  background: #f3f4f6;
+  padding: 24px 20px;
+  min-height: 360px;
+  max-height: 520px;
+  overflow-y: auto;
+}
+
+.livePreviewPaper.mobile {
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+.livePreviewPaper.print {
+  background: #e5e7eb;
+}
+
+.prevWordIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: #2563eb;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  margin: 0 auto 14px;
+}
+
+.prevDocName {
+  text-align: center;
+  font-size: 20px;
+  margin: 0 0 18px;
+  color: #0f172a;
+}
+
+.prevBodyWrapper {
+  background: #fff;
+  border-radius: 8px;
+  padding: 18px;
+  font-size: 13.5px;
+  color: #111827;
+  line-height: 1.6;
+}
+
+.prevTitle {
+  margin: 0 0 10px;
+  font-size: 16px;
+}
+
+.prevBody {
+  margin: 0 0 14px;
+}
+
+.prevSignature {
+  border-top: 1px solid #e5e7eb;
+  padding-top: 10px;
+  font-size: 13px;
+}
+
+.prevEmpty {
+  color: #cbd5e1;
+}
+
+/* ===== QO'SHIMCHA SOZLAMALAR (o'ng) ===== */
+
+.settingsPanelHeaderRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.settingsPanelHeaderIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: #eef2ff;
+  color: #2563eb;
+}
+
+.settingsPanelHeaderRow h3 {
+  margin: 0;
+  font-size: 14.5px;
+  color: #0f172a;
+}
+
+.settingsSubLabel {
+  font-size: 12px;
+  font-weight: 600;
+  color: #6b7280;
+  margin: 14px 0 6px;
+}
+
+.additionalSettingsPanel > select {
+  width: 100%;
+  padding: 9px 10px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  font-size: 13px;
+}
+
+.logoDropzone {
+  border: 1.5px dashed #c7d2fe;
+  border-radius: 12px;
+  background: #f8fafc;
+  text-align: center;
+  padding: 20px 14px;
+  margin-bottom: 8px;
+}
+
+.logoDropzoneIcon {
+  font-size: 22px;
+  color: #2563eb;
+  margin-bottom: 6px;
+}
+
+.logoDropzone p {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.logoDropzone span {
+  font-size: 11px;
+  color: #9ca3af;
+}
+
+.logoDropzone .chooseFileButton {
+  margin-top: 10px;
+}
+
+.logoSelectedBox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 8px;
+  margin-bottom: 8px;
+}
+
+.logoSelectedImg {
+  width: 32px;
+  height: 32px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.logoSelectedName {
+  flex: 1;
+  font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.logoSelectedBox button {
+  border: none;
+  background: transparent;
+  color: #9ca3af;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.toggleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 9px 0;
+  font-size: 13px;
+  color: #374151;
+  border-top: 1px solid #f0f0f0;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 38px;
+  height: 22px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  inset: 0;
+  background: #d1d5db;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: 0.15s;
+}
+
+.slider::before {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  left: 3px;
+  top: 3px;
+  background: #fff;
+  border-radius: 50%;
+  transition: 0.15s;
+}
+
+.switch input:checked + .slider {
+  background: #2563eb;
+}
+
+.switch input:checked + .slider::before {
+  transform: translateX(16px);
+}
+
+.inlineSubSettings {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 4px 0 10px 4px;
+}
+
+.inlineSubSettings input,
+.inlineSubSettings select {
+  padding: 8px 10px;
+  border-radius: 7px;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  font-size: 12.5px;
+}
+
+.generateButton {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: #2563eb;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 18px;
+}
+
+.generateButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.generatedResultBox {
+  margin-top: 14px;
+  background: #ecfdf5;
+  border: 1px solid #bbf7d0;
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.generatedResultTitle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #16a34a;
+  font-weight: 700;
+  font-size: 12.5px;
+  margin-bottom: 6px;
+}
+
+.generatedResultName {
+  margin: 0 0 10px;
+  font-size: 12.5px;
+  color: #065f46;
+  word-break: break-all;
+}
+
+.generatedResultActions {
+  display: flex;
+  gap: 8px;
+}
+
+.pdfNote {
+  font-size: 11px;
+  color: #9ca3af;
+  margin-top: 8px;
+  line-height: 1.4;
+}
+
+.viewDocModal {
+  max-width: 700px;
+}
+
+.docResultPreview {
+  max-height: 55vh;
+  overflow-y: auto;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 16px;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: #111827;
+}
+
+.docResultPreview img {
+  max-width: 100%;
+}
+
+/* ===== TARIX JADVALI (pastki qator) ===== */
+
+.historyHeaderRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.historyHeaderLeft {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #0f172a;
+}
+
+.historyHeaderLeft h3 {
+  margin: 0;
+  font-size: 14.5px;
+}
+
+.historyEmpty {
+  color: #9ca3af;
+  font-size: 13px;
+  text-align: center;
+  padding: 20px 0;
+}
+
+.historyTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+}
+
+.historyTable th {
+  text-align: left;
+  color: #9ca3af;
+  font-weight: 600;
+  padding: 8px 10px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.historyTable td {
+  padding: 10px;
+  border-bottom: 1px solid #f3f4f6;
+  color: #374151;
+}
+
+.historyDocName {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #111827;
+  font-weight: 600;
+}
+
+.formatBadge {
+  background: #eef2ff;
+  color: #2563eb;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 999px;
+}
+
+.historyRowActions {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.historyActionButton {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  border: 1px solid #d1d5db;
+  background: #fff;
+  color: #374151;
+  padding: 6px 10px;
+  border-radius: 7px;
+  font-size: 11.5px;
+  cursor: pointer;
+}
+
+.historyActionButton.primary {
+  background: #2563eb;
+  border-color: #2563eb;
+  color: #fff;
+}
+
+.historyActionButton.danger {
+  color: #ef4444;
+  border-color: #fecaca;
+  padding: 6px 8px;
+}
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.modalBox {
+  background: #fff;
+  border-radius: 16px;
+  padding: 22px;
+  width: 100%;
+  max-width: 620px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modalTopHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.modalTopHeaderLeft {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.modalHeaderIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: #dbeafe;
+  color: #2563eb;
+  flex-shrink: 0;
+}
+
+.modalTopHeaderLeft h3,
+.modalTopHeader h3 {
+  margin: 0;
+  font-size: 16px;
+  color: #0f172a;
+}
+
+.modalTopHeaderLeft p {
+  margin: 2px 0 0;
+  font-size: 12.5px;
+  color: #6b7280;
+}
+
+.modalCloseIcon {
+  border: none;
+  background: transparent;
+  color: #9ca3af;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.modalError {
+  color: #ef4444;
+  font-size: 13px;
+  margin: 4px 0 0;
+}
+
+.modalFooter {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.modalCancelButton,
+.modalSaveButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 9px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 13.5px;
+}
+
+.modalCancelButton {
+  background: #fff;
+  border: 1px solid #d1d5db;
+  color: #374151;
+}
+
+.modalSaveButton {
+  background: #2563eb;
+  border: none;
+  color: #fff;
+}
+
+.modalSaveButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.required {
+  color: #ef4444;
+}
+
+.docxDropzone {
+  border: 1.5px dashed #c7d2fe;
+  border-radius: 12px;
+  background: #f8fafc;
+  text-align: center;
+  padding: 22px 14px;
+}
+
+.docxDropzoneIcon {
+  font-size: 26px;
+  color: #2563eb;
+  margin-bottom: 8px;
+}
+
+.docxDropzoneTitle {
+  margin: 0;
+  font-weight: 600;
+  font-size: 13.5px;
+  color: #0f172a;
+}
+
+.docxDropzoneHint {
+  margin: 10px 0 0;
+  font-size: 11px;
+  color: #9ca3af;
+}
+
+.chooseFileButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px;
+  border-radius: 8px;
+  background: #2563eb;
+  color: #fff;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  border: none;
+}
+
+.chooseFileButton.outline {
+  background: #fff;
+  border: 1px solid #d1d5db;
+  color: #374151;
+}
+
+.chooseFileButton.small {
+  padding: 7px 12px;
+  font-size: 12px;
+}
+
+.docxSelectedBox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid #bbf7d0;
+  background: #ecfdf5;
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.docxSelectedIcon {
+  color: #2563eb;
+  font-size: 18px;
+}
+
+.docxSelectedName {
+  flex: 1;
+  font-size: 13px;
+  color: #0f172a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.docxSelectedCheck {
+  color: #16a34a;
+}
+
+/* ===== YANGI SHABLON - 2-BOSQICH ===== */
+
+.placeholdersFoundText {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #16a34a;
+  background: #ecfdf5;
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 14px;
+}
+
+.placeholdersFoundText.muted {
+  color: #9ca3af;
+  background: #f9fafb;
+}
+
+.detectedFieldsTable {
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.detectedFieldsHeader,
+.detectedFieldsRow {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr 1fr;
+  gap: 8px;
+  align-items: center;
+  padding: 8px 10px;
+}
+
+.detectedFieldsHeader {
+  background: #f9fafb;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #9ca3af;
+  text-transform: uppercase;
+}
+
+.detectedFieldsRow {
+  border-top: 1px solid #f0f0f0;
+}
+
+.detectedFieldKey {
+  font-family: monospace;
+  font-size: 12px;
+  color: #2563eb;
+  background: #eff6ff;
+  padding: 4px 8px;
+  border-radius: 6px;
+  width: fit-content;
+}
+
+.detectedFieldsRow input,
+.detectedFieldsRow select {
+  padding: 7px 9px;
+  border-radius: 7px;
+  border: 1px solid #e5e7eb;
+  font-size: 12.5px;
+}
+
+.addManualFieldButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1.5px dashed #c7d2fe;
+  background: #f8fafc;
+  color: #2563eb;
+  padding: 9px 14px;
+  border-radius: 8px;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.newDocQuestion {
+  font-size: 14px;
+  color: #374151;
+  margin: 0 0 16px;
+}
+
+.newDocOptions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.newDocOption {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 26px 14px;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 12px;
+  background: #fff;
+  cursor: pointer;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.newDocOption:hover {
+  border-color: #2563eb;
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.newDocOption svg {
+  font-size: 26px;
+}
+
+@media (max-width: 640px) {
+  .CreateDocument {
+    padding: 12px;
+  }
+  .cdHeader {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .cdNewDocButton {
+    justify-content: center;
+  }
+  .settingsPanelBody {
+    flex-direction: column;
+  }
+  .twoColFields {
+    grid-template-columns: 1fr;
+  }
+  .detectedFieldsHeader,
+  .detectedFieldsRow {
+    grid-template-columns: 1fr;
+  }
+  .historyTable {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}
