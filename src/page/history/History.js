@@ -12,9 +12,6 @@ import {
 } from '../../components/components'
 import './History.css'
 
-// ===== DEMO ma'lumotlar =====
-// Productionda bu ro'yxat backend'dan (paginatsiya bilan) keladi, va
-// statistik kartalar alohida backend aggregate so'rovi orqali olinadi.
 function daysAgo(n, hour, minute) {
   const d = new Date()
   d.setDate(d.getDate() - n)
