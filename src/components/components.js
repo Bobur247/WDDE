@@ -32,6 +32,14 @@ import FileSettingsCard from './cards/fileSettingsCard/FileSettingsCard'
 import GeneralSettingsCard from './cards/generalSettingsCard/GeneralSettingsCard'
 import SecurityCard from './cards/securityCard/SecurityCard'
 
+import ActivityStatsChart from './layout/activityStatsChart/ActivityStatsChart'
+import HistoryFilters from './layout/historyFilters/HistoryFilters'
+import HistoryTable from './layout/historyTable/HistoryTable'
+import RecentActivity from './layout/recentActivity/RecentActivity'
+import StatCard from './cards/statCard/StatCard'
+import ViewFileModal from './modals/viewFileModal/ViewFileModal'
+import DeleteRecordModal from './modals/deleteRecordModal/DeleteRecordModal'
+
 export {
   Sidebar,
   Navbar,
@@ -65,4 +73,11 @@ export {
   FileSettingsCard,
   GeneralSettingsCard,
   SecurityCard,
+  ActivityStatsChart,
+  HistoryFilters,
+  HistoryTable,
+  RecentActivity,
+  StatCard,
+  ViewFileModal,
+  DeleteRecordModal,
 }

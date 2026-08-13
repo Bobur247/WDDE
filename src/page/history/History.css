@@ -1,0 +1,798 @@
+.HistoryReportPage {
+  background: #f4f8fd;
+  padding: 20px;
+  border-radius: 16px;
+}
+
+/* ===== HEADER ===== */
+
+.hrHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.hrHeaderLeft {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.hrHeaderIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  background: #dbeafe;
+  color: #2563eb;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.hrHeaderLeft h1 {
+  margin: 0;
+  font-size: 22px;
+  color: #0f172a;
+}
+
+.hrHeaderLeft p {
+  margin: 2px 0 0;
+  font-size: 13.5px;
+  color: #64748b;
+}
+
+.exportReportButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border: 1px solid #bfdbfe;
+  border-radius: 10px;
+  background: #eff6ff;
+  color: #2563eb;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+/* ===== STAT KARTALAR ===== */
+
+.statCardsRow {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+@media (max-width: 900px) {
+  .statCardsRow {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 500px) {
+  .statCardsRow {
+    grid-template-columns: 1fr;
+  }
+}
+
+.statCard {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 16px;
+}
+
+.statCardIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.tone-blue .statCardIcon {
+  background: #dbeafe;
+  color: #2563eb;
+}
+.tone-green .statCardIcon {
+  background: #dcfce7;
+  color: #16a34a;
+}
+.tone-red .statCardIcon {
+  background: #fee2e2;
+  color: #ef4444;
+}
+.tone-purple .statCardIcon {
+  background: #ede9fe;
+  color: #7c3aed;
+}
+
+.statCardValue {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.statCardLabel {
+  margin: 2px 0 0;
+  font-size: 12.5px;
+  color: #6b7280;
+}
+
+/* ===== FILTERLAR ===== */
+
+.historyFilters {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 12px 14px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.hfSearchBox {
+  position: relative;
+  flex: 1;
+  min-width: 200px;
+}
+
+.hfSearchIcon {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  color: #9ca3af;
+  font-size: 13px;
+}
+
+.hfSearchBox input {
+  width: 100%;
+  padding: 10px 12px 10px 34px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  font-size: 13px;
+}
+
+.historyFilters select {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  font-size: 13px;
+  min-width: 150px;
+}
+
+.hfDateRangeWrapper {
+  position: relative;
+}
+
+.hfDateRangeButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  color: #374151;
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.hfDateRangePanel {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 14px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 220px;
+}
+
+.hfDateField label {
+  display: block;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #6b7280;
+  margin-bottom: 4px;
+}
+
+.hfDateField input {
+  width: 100%;
+  padding: 8px 9px;
+  border-radius: 7px;
+  border: 1px solid #e5e7eb;
+  font-size: 12.5px;
+}
+
+.hfDateClearButton {
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  border-radius: 7px;
+  padding: 7px;
+  font-size: 12px;
+  color: #374151;
+  cursor: pointer;
+}
+
+/* ===== JADVAL ===== */
+
+.historyTableWrapper {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 8px;
+  margin-bottom: 18px;
+  overflow-x: auto;
+}
+
+.historyReportTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  min-width: 760px;
+}
+
+.historyReportTable th {
+  text-align: left;
+  color: #9ca3af;
+  font-weight: 600;
+  font-size: 12px;
+  padding: 12px 14px;
+  border-bottom: 1px solid #e5e7eb;
+  white-space: nowrap;
+}
+
+.historyReportTable td {
+  padding: 12px 14px;
+  border-bottom: 1px solid #f3f4f6;
+  color: #374151;
+  vertical-align: middle;
+}
+
+.historyEmptyCell {
+  text-align: center;
+  color: #9ca3af;
+  padding: 30px 0;
+}
+
+.historyTypeCell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.historyTypeIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 7px;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+.historyTypeIcon.tone-blue {
+  background: #dbeafe;
+  color: #2563eb;
+}
+.historyTypeIcon.tone-purple {
+  background: #ede9fe;
+  color: #7c3aed;
+}
+.historyTypeIcon.tone-orange {
+  background: #ffedd5;
+  color: #ea580c;
+}
+
+.historyFileName {
+  font-weight: 600;
+  color: #111827;
+  white-space: nowrap;
+}
+
+.historyDate {
+  color: #6b7280;
+  white-space: nowrap;
+}
+
+.historyResult {
+  color: #6b7280;
+  white-space: nowrap;
+}
+
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.statusBadge.success {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.statusBadge.error {
+  background: #fee2e2;
+  color: #ef4444;
+}
+
+.historyActionsCell {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.historyIconButton {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  color: #374151;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+}
+
+.historyMenuWrapper {
+  position: relative;
+}
+
+.historyDropdownMenu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  min-width: 140px;
+  overflow: hidden;
+}
+
+.historyDropdownMenu button {
+  border: none;
+  background: #fff;
+  text-align: left;
+  padding: 10px 12px;
+  font-size: 12.5px;
+  color: #374151;
+  cursor: pointer;
+}
+
+.historyDropdownMenu button:hover {
+  background: #f3f4f6;
+}
+
+.historyDropdownMenu button.danger {
+  color: #ef4444;
+}
+
+/* ===== PASTKI GRID: statistika + oxirgi faoliyat ===== */
+
+.hrBottomGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+@media (max-width: 800px) {
+  .hrBottomGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.activityStatsCard,
+.recentActivityCard {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 16px;
+}
+
+.settingsCardHeaderLike {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.cardHeaderIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: #eef2ff;
+  color: #2563eb;
+  font-size: 13px;
+}
+
+.settingsCardHeaderLike h3 {
+  margin: 0;
+  font-size: 14.5px;
+  color: #0f172a;
+}
+
+/* ===== BAR CHART ===== */
+
+.barChartRow {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  gap: 14px;
+  height: 200px;
+}
+
+.barChartCol {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  height: 100%;
+  justify-content: flex-end;
+}
+
+.barChartValue {
+  font-size: 15px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.barChartTrack {
+  width: 100%;
+  max-width: 56px;
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+}
+
+.barChartFill {
+  width: 100%;
+  border-radius: 8px 8px 0 0;
+  transition: height 0.3s ease;
+  min-height: 4px;
+}
+
+.barChartLabel {
+  font-size: 11.5px;
+  color: #6b7280;
+  text-align: center;
+}
+
+/* ===== OXIRGI FAOLIYAT ===== */
+
+.recentActivityList {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.recentActivityEmpty {
+  color: #9ca3af;
+  font-size: 13px;
+  text-align: center;
+  padding: 20px 0;
+}
+
+.recentActivityRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  border-top: 1px solid #f3f4f6;
+  border-left: none;
+  border-right: none;
+  border-bottom: none;
+  background: transparent;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.recentActivityRow:hover {
+  background: #f9fafb;
+}
+
+.recentActivityRow:first-child {
+  border-top: none;
+}
+
+.recentActivityFile {
+  flex: 1;
+  font-size: 13px;
+  font-weight: 600;
+  color: #111827;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.recentActivityType {
+  font-size: 12px;
+  color: #6b7280;
+  white-space: nowrap;
+}
+
+.recentActivityTime {
+  font-size: 12px;
+  color: #9ca3af;
+  white-space: nowrap;
+}
+
+/* ===== MOBIL MOSLASHUV ===== */
+
+@media (max-width: 640px) {
+  .HistoryReportPage {
+    padding: 12px;
+  }
+  .hrHeader {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .exportReportButton {
+    justify-content: center;
+  }
+  .historyFilters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .historyFilters select,
+  .hfDateRangeWrapper {
+    width: 100%;
+  }
+  .hfDateRangeButton {
+    justify-content: center;
+  }
+  .recentActivityRow {
+    flex-wrap: wrap;
+  }
+}
+
+/* ===== MODAL UMUMIY ===== */
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.modalBox {
+  background: #fff;
+  border-radius: 16px;
+  padding: 22px;
+  width: 100%;
+  max-width: 420px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modalTopHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.modalTopHeader h3 {
+  margin: 0;
+  font-size: 15.5px;
+  color: #0f172a;
+}
+
+.modalCloseIcon {
+  border: none;
+  background: transparent;
+  color: #9ca3af;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.modalFooter {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.modalFooter.center {
+  justify-content: center;
+}
+
+.modalCancelButton,
+.modalSaveButton,
+.modalDangerButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 9px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.modalCancelButton {
+  background: #fff;
+  border: 1px solid #d1d5db;
+  color: #374151;
+}
+
+.modalSaveButton {
+  background: #2563eb;
+  border: none;
+  color: #fff;
+}
+
+.modalSaveButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.modalDangerButton {
+  background: #ef4444;
+  border: none;
+  color: #fff;
+}
+
+/* ===== FAYL KO'RISH MODALI ===== */
+
+.viewFileModal {
+  max-width: 700px;
+}
+
+.viewFileModalSubtitle {
+  margin: 2px 0 0;
+  font-size: 12.5px;
+  color: #6b7280;
+}
+
+.viewFileDemoNote {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  color: #9ca3af;
+  background: #f9fafb;
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin: 0 0 14px;
+}
+
+.viewFileLoading,
+.viewFileError {
+  text-align: center;
+  padding: 30px 10px;
+  color: #6b7280;
+  font-size: 13.5px;
+}
+
+.viewFileError {
+  color: #ef4444;
+}
+
+.pdfViewerFrame {
+  width: 100%;
+  height: 55vh;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+}
+
+.docxViewerContent {
+  max-height: 55vh;
+  overflow-y: auto;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 16px;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: #111827;
+}
+
+.docxViewerContent img {
+  max-width: 100%;
+}
+
+.excelViewerWrapper {
+  max-height: 55vh;
+  overflow: auto;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+}
+
+.excelViewerTable {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 12.5px;
+}
+
+.excelViewerTable td {
+  border: 1px solid #e5e7eb;
+  padding: 6px 10px;
+  white-space: nowrap;
+}
+
+.excelViewerTable tr:first-child td {
+  background: #f9fafb;
+  font-weight: 700;
+}
+
+/* ===== O'CHIRISHNI TASDIQLASH MODALI ===== */
+
+.deleteRecordModal {
+  max-width: 400px;
+  text-align: center;
+}
+
+.deleteRecordIcon {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #fee2e2;
+  color: #ef4444;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  margin: 0 auto 14px;
+}
+
+.deleteRecordModal h3 {
+  margin: 0 0 8px;
+  font-size: 16px;
+  color: #0f172a;
+}
+
+.deleteRecordModal p {
+  margin: 0;
+  font-size: 13.5px;
+  color: #6b7280;
+  line-height: 1.5;
+}
