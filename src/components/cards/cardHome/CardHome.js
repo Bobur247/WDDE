@@ -13,8 +13,8 @@ const CardHome = ({ title, subtitle, color, icon, bgColor }) => {
           {icon}
         </div>
         <div className="cardText">
-          <p>{title}</p>
-          <span>{subtitle}</span>
+          <p title={title}>{title}</p>
+          <span title={subtitle}>{subtitle}</span>
         </div>
       </div>
       <div className="cardnextPage">

@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react'
 import JSZip from 'jszip'
+import { useTranslation } from 'react-i18next'
 import { FaClock, FaFileArchive } from 'react-icons/fa'
 import {
   ActivityStatsChart,
@@ -19,112 +20,107 @@ function daysAgo(n, hour, minute) {
   return d
 }
 
+// Demo yozuvlar: typeLabel/result matnlari render vaqtida t() bilan
+// tarjima qilinadi (pastda useMemo ichida), shuning uchun bu yerda faqat
+// tarjima kaliti (resultKey) va parametrlar (resultCount) saqlanadi.
 const MOCK_RECORDS = [
   {
     id: 1,
     type: 'extraction',
-    typeLabel: "Ma'lumot ajratish",
     fileName: "Talabalar_ro'yxati.docx",
     date: daysAgo(0, 10, 24),
     status: 'success',
-    result: '3 ta record',
+    resultKey: 'resultRecords',
+    resultCount: 3,
   },
   {
     id: 2,
     type: 'conversion',
-    typeLabel: 'Konvertatsiya',
     fileName: 'Hisobot.pdf',
     date: daysAgo(1, 16, 45),
     status: 'success',
-    result: '5 ta fayl',
+    resultKey: 'resultFiles',
+    resultCount: 5,
   },
   {
     id: 3,
     type: 'document',
-    typeLabel: 'Hujjat yaratish',
     fileName: 'Darslik.docx',
     date: daysAgo(2, 14, 32),
     status: 'success',
-    result: '1 ta hujjat',
+    resultKey: 'resultDocuments',
+    resultCount: 1,
   },
   {
     id: 4,
     type: 'extraction',
-    typeLabel: "Ma'lumot ajratish",
     fileName: 'Maqola.docx',
     date: daysAgo(2, 9, 18),
     status: 'error',
-    result: 'Kalit so\u02bbz topilmadi',
+    resultKey: 'keywordNotFound',
   },
   {
     id: 5,
     type: 'conversion',
-    typeLabel: 'Konvertatsiya',
     fileName: 'Foto.png',
     date: daysAgo(3, 18, 20),
     status: 'success',
-    result: '1 ta fayl',
+    resultKey: 'resultFiles',
+    resultCount: 1,
   },
   {
     id: 6,
     type: 'document',
-    typeLabel: 'Hujjat yaratish',
     fileName: 'Taklif_noma.docx',
     date: daysAgo(3, 11, 5),
     status: 'success',
-    result: '2 ta sahifa',
+    resultKey: 'resultPages',
+    resultCount: 2,
   },
   {
     id: 7,
     type: 'extraction',
-    typeLabel: "Ma'lumot ajratish",
     fileName: 'Xodimlar.xlsx',
     date: daysAgo(0, 8, 2),
     status: 'success',
-    result: '12 ta record',
+    resultKey: 'resultRecords',
+    resultCount: 12,
   },
   {
     id: 8,
     type: 'other',
-    typeLabel: 'Boshqalar',
     fileName: 'Skan.pdf',
     date: daysAgo(4, 12, 0),
     status: 'error',
-    result: 'Fayl shikastlangan',
+    resultKey: 'fileCorrupted',
   },
   {
     id: 9,
     type: 'document',
-    typeLabel: 'Hujjat yaratish',
     fileName: 'Ariza.docx',
     date: daysAgo(0, 9, 40),
     status: 'success',
-    result: '1 ta hujjat',
+    resultKey: 'resultDocuments',
+    resultCount: 1,
   },
   {
     id: 10,
     type: 'conversion',
-    typeLabel: 'Konvertatsiya',
     fileName: 'Shartnoma.docx',
     date: daysAgo(5, 15, 10),
     status: 'success',
-    result: '1 ta fayl',
+    resultKey: 'resultFiles',
+    resultCount: 1,
   },
 ]
 
-const TYPE_FILTERS = [
-  { value: 'all', label: 'Barcha tur' },
-  { value: 'extraction', label: "Ma'lumot ajratish" },
-  { value: 'conversion', label: 'Konvertatsiya' },
-  { value: 'document', label: 'Hujjat yaratish' },
-  { value: 'other', label: 'Boshqalar' },
-]
-
-const STATUS_FILTERS = [
-  { value: 'all', label: 'Barcha holat' },
-  { value: 'success', label: 'Muvaffaqiyatli' },
-  { value: 'error', label: 'Xatolik' },
-]
+const TYPE_ORDER = ['extraction', 'conversion', 'document', 'other']
+const TYPE_CHART_COLORS = {
+  extraction: '#2563eb',
+  conversion: '#a855f7',
+  document: '#16a34a',
+  other: '#f59e0b',
+}
 
 function isToday(date) {
   const now = new Date()
@@ -143,6 +139,7 @@ function formatDateForFileName(date) {
 }
 
 const HistoryReport = () => {
+  const { t, i18n } = useTranslation()
   const [records, setRecords] = useState(MOCK_RECORDS)
 
   const [search, setSearch] = useState('')
@@ -155,6 +152,39 @@ const HistoryReport = () => {
   const [deletingRecord, setDeletingRecord] = useState(null)
   const [exporting, setExporting] = useState(false)
 
+  // MOCK_RECORDS'dagi type/resultKey kalitlari asosida joriy tilga
+  // mos typeLabel/result matnlarini quradi (filtrlash mantig'iga tegmaydi).
+  const translatedRecords = useMemo(() => {
+    return records.map((r) => ({
+      ...r,
+      typeLabel: t(`history.types.${r.type}`),
+      result:
+        r.resultCount !== undefined
+          ? t(`history.mock.${r.resultKey}`, { count: r.resultCount })
+          : t(`history.mock.${r.resultKey}`),
+    }))
+  }, [records, t, i18n.language])
+
+  const TYPE_FILTERS = useMemo(
+    () => [
+      { value: 'all', label: t('history.filters.allTypes') },
+      ...TYPE_ORDER.map((type) => ({
+        value: type,
+        label: t(`history.types.${type}`),
+      })),
+    ],
+    [t, i18n.language]
+  )
+
+  const STATUS_FILTERS = useMemo(
+    () => [
+      { value: 'all', label: t('history.filters.allStatuses') },
+      { value: 'success', label: t('history.status.success') },
+      { value: 'error', label: t('history.status.error') },
+    ],
+    [t, i18n.language]
+  )
+
   const stats = useMemo(() => {
     const total = records.length
     const success = records.filter((r) => r.status === 'success').length
@@ -164,7 +194,7 @@ const HistoryReport = () => {
   }, [records])
 
   const filteredRecords = useMemo(() => {
-    return records.filter((r) => {
+    return translatedRecords.filter((r) => {
       const matchesSearch =
         !search.trim() ||
         r.fileName.toLowerCase().includes(search.trim().toLowerCase())
@@ -180,44 +210,24 @@ const HistoryReport = () => {
         matchesTo
       )
     })
-  }, [records, search, typeFilter, statusFilter, dateFrom, dateTo])
+  }, [translatedRecords, search, typeFilter, statusFilter, dateFrom, dateTo])
 
   const typeStats = useMemo(() => {
     const counts = { extraction: 0, conversion: 0, document: 0, other: 0 }
     records.forEach((r) => {
       counts[r.type] = (counts[r.type] || 0) + 1
     })
-    return [
-      {
-        key: 'extraction',
-        label: "Ma'lumot ajratish",
-        value: counts.extraction,
-        color: '#2563eb',
-      },
-      {
-        key: 'conversion',
-        label: 'Konvertatsiya',
-        value: counts.conversion,
-        color: '#a855f7',
-      },
-      {
-        key: 'document',
-        label: 'Hujjat yaratish',
-        value: counts.document,
-        color: '#16a34a',
-      },
-      {
-        key: 'other',
-        label: 'Boshqalar',
-        value: counts.other,
-        color: '#f59e0b',
-      },
-    ]
-  }, [records])
+    return TYPE_ORDER.map((type) => ({
+      key: type,
+      label: t(`history.types.${type}`),
+      value: counts[type],
+      color: TYPE_CHART_COLORS[type],
+    }))
+  }, [records, t, i18n.language])
 
   const recentActivity = useMemo(() => {
-    return [...records].sort((a, b) => b.date - a.date).slice(0, 5)
-  }, [records])
+    return [...translatedRecords].sort((a, b) => b.date - a.date).slice(0, 5)
+  }, [translatedRecords])
 
   function handleDeleteRecord() {
     setRecords((prev) => prev.filter((r) => r.id !== deletingRecord.id))
@@ -234,13 +244,22 @@ const HistoryReport = () => {
       const todayStr = formatDateForFileName(new Date())
 
       const csvRows = [
-        ['№', 'Amal turi', 'Fayl nomi', 'Bajarilgan vaqti', 'Holat', 'Natija'],
+        [
+          t('history.table.headers.index'),
+          t('history.table.headers.type'),
+          t('history.table.headers.fileName'),
+          t('history.table.headers.date'),
+          t('history.table.headers.status'),
+          t('history.table.headers.result'),
+        ],
         ...filteredRecords.map((r, i) => [
           i + 1,
           r.typeLabel,
           r.fileName,
           r.date.toLocaleString('uz-UZ'),
-          r.status === 'success' ? 'Muvaffaqiyatli' : 'Xatolik',
+          r.status === 'success'
+            ? t('history.status.success')
+            : t('history.status.error'),
           r.result,
         ]),
       ]
@@ -278,8 +297,8 @@ const HistoryReport = () => {
             <FaClock />
           </span>
           <div>
-            <h1>Tarix (Hisoboti)</h1>
-            <p>Barcha bajarilgan amallar tarixi va hisobotlar</p>
+            <h1>{t('history.title')}</h1>
+            <p>{t('history.subtitle')}</p>
           </div>
         </div>
         <button
@@ -290,7 +309,7 @@ const HistoryReport = () => {
         >
           <FaFileArchive />
           <span>
-            {exporting ? 'Tayyorlanmoqda...' : 'Hisobotlarni eksport qilish'}
+            {exporting ? t('history.exporting') : t('history.exportButton')}
           </span>
         </button>
       </div>
@@ -299,25 +318,25 @@ const HistoryReport = () => {
         <StatCard
           icon="file"
           value={stats.total}
-          label="Umumiy amallar"
+          label={t('history.stats.total')}
           tone="blue"
         />
         <StatCard
           icon="check"
           value={stats.success}
-          label="Muvaffaqiyatli"
+          label={t('history.stats.success')}
           tone="green"
         />
         <StatCard
           icon="warning"
           value={stats.errors}
-          label="Xatoliklar"
+          label={t('history.stats.errors')}
           tone="red"
         />
         <StatCard
           icon="clock"
           value={stats.today}
-          label="Bugungi amallar"
+          label={t('history.stats.today')}
           tone="purple"
         />
       </div>

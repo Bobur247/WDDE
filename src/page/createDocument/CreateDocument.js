@@ -1,4 +1,5 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import { FaFileAlt, FaPlus } from 'react-icons/fa'
 import {
   DocumentSettingsPanel,
@@ -10,69 +11,94 @@ import './CreateDocument.css'
 
 
 const RASMIY_XAT_FIELDS = [
-  { key: 'SARLAVHA', label: 'Sarlavha', type: 'text' },
-  { key: 'MATN', label: 'Matn', type: 'richtext' },
-  { key: 'MUALLIF', label: 'Muallif', type: 'text' },
-  { key: 'SANA', label: 'Sana', type: 'date' },
+  { key: 'SARLAVHA', labelKey: 'sarlavha', type: 'text' },
+  { key: 'MATN', labelKey: 'matn', type: 'richtext' },
+  { key: 'MUALLIF', labelKey: 'muallif', type: 'text' },
+  { key: 'SANA', labelKey: 'sana', type: 'date' },
 ]
 
 const ARIZA_FIELDS = [
-  { key: 'FISH', label: 'F.I.Sh.', type: 'text' },
-  { key: 'LAVOZIM', label: 'Lavozim', type: 'text' },
-  { key: 'BOLIM', label: "Bo'lim", type: 'text' },
-  { key: 'TATIL_BOSHLANISH', label: "Ta'til boshlanish sanasi", type: 'date' },
-  { key: 'TATIL_TUGASH', label: "Ta'til tugash sanasi", type: 'date' },
-  { key: 'SABAB', label: 'Sabab', type: 'richtext' },
+  { key: 'FISH', labelKey: 'fish', type: 'text' },
+  { key: 'LAVOZIM', labelKey: 'lavozim', type: 'text' },
+  { key: 'BOLIM', labelKey: 'bolim', type: 'text' },
+  { key: 'TATIL_BOSHLANISH', labelKey: 'tatilBoshlanish', type: 'date' },
+  { key: 'TATIL_TUGASH', labelKey: 'tatilTugash', type: 'date' },
+  { key: 'SABAB', labelKey: 'sabab', type: 'richtext' },
 ]
 
 const BLANK_FIELDS = [
-  { key: 'SARLAVHA', label: 'Sarlavha', type: 'text' },
-  { key: 'MATN', label: 'Matn', type: 'richtext' },
+  { key: 'SARLAVHA', labelKey: 'sarlavha', type: 'text' },
+  { key: 'MATN', labelKey: 'matn', type: 'richtext' },
 ]
 
-export const GALLERY_TEMPLATES = [
+const RASMIY_XAT_BODY_HTML =
+  '<h2 class="prevTitle">{{SARLAVHA}}</h2><p class="prevBody">{{MATN}}</p><div class="prevSignature"><b>{{MUALLIF}}</b><br/>{{SANA}}</div>'
+
+// Kadrlar uchun ariza shablonining tanasi statik matnlarni o'z ichiga olgani
+// uchun (masalan "F.I.Sh.:", "Lavozim:"), uni tarjima funksiyasi (t) orqali
+// dinamik tuzamiz. {{PLACEHOLDER}} tokenlari o'zgarmasdan qoladi.
+function buildArizaBodyHtml(t) {
+  return (
+    `<h2 class="prevTitle">${t('createDocument.preview.arizaTitle')}</h2>` +
+    `<p class="prevBody">${t('createDocument.preview.fishLabel')}: {{FISH}}</p>` +
+    `<p class="prevBody">${t('createDocument.preview.lavozimLabel')}: {{LAVOZIM}}</p>` +
+    `<p class="prevBody">${t('createDocument.preview.bolimLabel')}: {{BOLIM}}</p>` +
+    `<p class="prevBody">${t('createDocument.preview.boshlanishSanasiLabel')}: {{TATIL_BOSHLANISH}}</p>` +
+    `<p class="prevBody">${t('createDocument.preview.tugashSanasiLabel')}: {{TATIL_TUGASH}}</p>` +
+    `<p class="prevBody">${t('createDocument.preview.sababLabel')}: {{SABAB}}</p>`
+  )
+}
+
+// Shablon "ta'riflari" — tarjima qilinmaydigan (id, key, type) va tarjima
+// kaliti (nameKey / labelKey) saqlanadi. Haqiqiy matnlar komponent ichida
+// t() yordamida hosil qilinadi (RAW_* massivlar module darajasida bo'lgani
+// uchun bu yerda t() chaqira olmaymiz).
+const RAW_TEMPLATES = [
   {
     id: 'rasmiy-xat',
-    name: 'Rasmiy xat',
+    nameKey: 'rasmiyXat',
     fields: RASMIY_XAT_FIELDS,
-    bodyHtml:
-      '<h2 class="prevTitle">{{SARLAVHA}}</h2><p class="prevBody">{{MATN}}</p><div class="prevSignature"><b>{{MUALLIF}}</b><br/>{{SANA}}</div>',
+    buildBodyHtml: () => RASMIY_XAT_BODY_HTML,
   },
   {
     id: 'tashakkurnoma',
-    name: 'Tashakkurnoma',
+    nameKey: 'tashakkurnoma',
     fields: RASMIY_XAT_FIELDS,
-    bodyHtml:
-      '<h2 class="prevTitle">{{SARLAVHA}}</h2><p class="prevBody">{{MATN}}</p><div class="prevSignature"><b>{{MUALLIF}}</b><br/>{{SANA}}</div>',
+    buildBodyHtml: () => RASMIY_XAT_BODY_HTML,
   },
   {
     id: 'kadrlar-ariza',
-    name: 'Kadrlar uchun ariza',
+    nameKey: 'kadrlarAriza',
     fields: ARIZA_FIELDS,
-    bodyHtml:
-      '<h2 class="prevTitle">ARIZA</h2>' +
-      '<p class="prevBody">F.I.Sh.: {{FISH}}</p>' +
-      '<p class="prevBody">Lavozim: {{LAVOZIM}}</p>' +
-      '<p class="prevBody">Bo\'lim: {{BOLIM}}</p>' +
-      '<p class="prevBody">Boshlanish sanasi: {{TATIL_BOSHLANISH}}</p>' +
-      '<p class="prevBody">Tugash sanasi: {{TATIL_TUGASH}}</p>' +
-      '<p class="prevBody">Sabab: {{SABAB}}</p>',
+    buildBodyHtml: buildArizaBodyHtml,
   },
   {
     id: 'shartnoma',
-    name: 'Shartnoma',
+    nameKey: 'shartnoma',
     fields: RASMIY_XAT_FIELDS,
-    bodyHtml:
-      '<h2 class="prevTitle">{{SARLAVHA}}</h2><p class="prevBody">{{MATN}}</p><div class="prevSignature"><b>{{MUALLIF}}</b><br/>{{SANA}}</div>',
+    buildBodyHtml: () => RASMIY_XAT_BODY_HTML,
   },
 ]
 
-export const BLANK_TEMPLATE = {
+const RAW_BLANK_TEMPLATE = {
   id: 'blank',
-  name: "Bo'sh hujjat",
+  nameKey: 'blank',
   fields: BLANK_FIELDS,
-  bodyHtml:
+  buildBodyHtml: () =>
     '<h2 class="prevTitle">{{SARLAVHA}}</h2><p class="prevBody">{{MATN}}</p>',
+}
+
+function translateTemplate(raw, t) {
+  return {
+    id: raw.id,
+    name: t(`createDocument.templates.${raw.nameKey}.name`),
+    fields: raw.fields.map((f) => ({
+      key: f.key,
+      type: f.type,
+      label: t(`createDocument.fields.${f.labelKey}`),
+    })),
+    bodyHtml: raw.buildBodyHtml(t),
+  }
 }
 
 function defaultValuesFor(template) {
@@ -84,32 +110,61 @@ function defaultValuesFor(template) {
 }
 
 const CreateDocument = () => {
-  const [templates, setTemplates] = useState(GALLERY_TEMPLATES)
-  const [selectedTemplateId, setSelectedTemplateId] = useState(
-    GALLERY_TEMPLATES[0].id,
+  const { t } = useTranslation()
+
+  const galleryTemplates = useMemo(
+    () => RAW_TEMPLATES.map((raw) => translateTemplate(raw, t)),
+    [t],
   )
-  const selectedTemplate = useMemo(
-    () =>
-      templates.find((t) => t.id === selectedTemplateId) ||
-      GALLERY_TEMPLATES[0],
-    [templates, selectedTemplateId],
+  const blankTemplate = useMemo(
+    () => translateTemplate(RAW_BLANK_TEMPLATE, t),
+    [t],
   )
 
-  const [documentName, setDocumentName] = useState('Rahmat xati')
+  const [templates, setTemplates] = useState(galleryTemplates)
+  const [selectedTemplateId, setSelectedTemplateId] = useState(
+    galleryTemplates[0].id,
+  )
+
+  // Til o'zgarganda (yoki ilova birinchi marta yuklanganda) shablonlar
+  // ro'yxatidagi nom/label matnlarini yangi tarjimalar bilan yangilaymiz,
+  // "bo'sh hujjat" shabloni tanlangan bo'lsa uni ham saqlab qolamiz.
+  useEffect(() => {
+    setTemplates((prev) =>
+      prev.map((tpl) => {
+        if (tpl.id === blankTemplate.id) return blankTemplate
+        return galleryTemplates.find((g) => g.id === tpl.id) || tpl
+      }),
+    )
+  }, [galleryTemplates, blankTemplate])
+
+  const selectedTemplate = useMemo(
+    () =>
+      templates.find((tpl) => tpl.id === selectedTemplateId) ||
+      galleryTemplates[0],
+    [templates, selectedTemplateId, galleryTemplates],
+  )
+
+  const [documentName, setDocumentName] = useState(() =>
+    t('createDocument.defaultDocumentName'),
+  )
   const [fieldValues, setFieldValues] = useState(() =>
-    defaultValuesFor(GALLERY_TEMPLATES[0]),
+    defaultValuesFor(galleryTemplates[0]),
   )
 
   function handleSelectTemplate(templateId) {
-    const tpl = templates.find((t) => t.id === templateId) || BLANK_TEMPLATE
+    const tpl =
+      templates.find((item) => item.id === templateId) || blankTemplate
     setSelectedTemplateId(templateId)
     setFieldValues(defaultValuesFor(tpl))
-    setDocumentName(tpl.id === 'blank' ? 'Yangi hujjat' : tpl.name)
+    setDocumentName(
+      tpl.id === 'blank' ? t('createDocument.newDocumentName') : tpl.name,
+    )
   }
 
   function handleSelectBlank() {
     setTemplates((prev) =>
-      prev.find((t) => t.id === 'blank') ? prev : [BLANK_TEMPLATE, ...prev],
+      prev.find((item) => item.id === 'blank') ? prev : [blankTemplate, ...prev],
     )
     handleSelectTemplate('blank')
   }
@@ -150,11 +205,8 @@ const CreateDocument = () => {
             <FaFileAlt />
           </span>
           <div>
-            <h1>Hujjat yaratish</h1>
-            <p>
-              Yangi hujjat yaratish, shablonlardan foydalanish va professional
-              ko'rinishda tayyorlash
-            </p>
+            <h1>{t('createDocument.header.title')}</h1>
+            <p>{t('createDocument.header.subtitle')}</p>
           </div>
         </div>
         <button
@@ -163,7 +215,7 @@ const CreateDocument = () => {
           onClick={() => setShowNewDocModal(true)}
         >
           <FaPlus />
-          <span>Yangi hujjat yaratish</span>
+          <span>{t('createDocument.header.newDocButton')}</span>
         </button>
       </div>
 

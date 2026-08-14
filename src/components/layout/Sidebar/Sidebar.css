@@ -9,3 +9,24 @@
 .sidebarLink{
     width: 100%;
 }
+.sidebarCloseButton{
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .sidebarCloseButton{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        align-self: flex-end;
+        width: 34px;
+        height: 34px;
+        margin-bottom: 10px;
+        border: 1px solid #25355A;
+        border-radius: 8px;
+        background-color: transparent;
+        color: #fff;
+        font-size: 20px;
+        cursor: pointer;
+    }
+}

@@ -1,8 +1,10 @@
+import { useTranslation } from 'react-i18next'
 import { FaFolder, FaFolderOpen } from 'react-icons/fa'
 
 const MAX_SIZES = ['10', '20', '50', '100', '200']
 
 const FileSettingsCard = ({ values, onChange }) => {
+  const { t } = useTranslation()
   const supportsFolderPicker = typeof window.showDirectoryPicker === 'function'
 
   // Haqiqiy brauzer API (Chrome/Edge) — papka tanlaydi. Xavfsizlik
@@ -25,11 +27,11 @@ const FileSettingsCard = ({ values, onChange }) => {
         <span className="settingsCardIcon">
           <FaFolder />
         </span>
-        <h3>Fayl sozlamalari</h3>
+        <h3>{t('settings.file.title')}</h3>
       </div>
 
       <div className="settingsField">
-        <label>Default Download papkasi</label>
+        <label>{t('settings.file.downloadPathLabel')}</label>
         <div className="pathInputRow">
           <input
             type="text"
@@ -43,8 +45,8 @@ const FileSettingsCard = ({ values, onChange }) => {
             disabled={!supportsFolderPicker}
             title={
               supportsFolderPicker
-                ? 'Papka tanlash'
-                : "Brauzeringiz bu funksiyani qo'llab-quvvatlamaydi"
+                ? t('settings.file.pickFolderTitle')
+                : t('settings.file.pickFolderUnsupported')
             }
           >
             <FaFolderOpen />
@@ -53,7 +55,7 @@ const FileSettingsCard = ({ values, onChange }) => {
       </div>
 
       <div className="toggleRow">
-        <span>Avtomatik nomlash</span>
+        <span>{t('settings.file.autoRename')}</span>
         <label className="switch">
           <input
             type="checkbox"
@@ -65,7 +67,7 @@ const FileSettingsCard = ({ values, onChange }) => {
       </div>
 
       <div className="settingsField">
-        <label>Maksimal fayl hajmi</label>
+        <label>{t('settings.file.maxFileSizeLabel')}</label>
         <select
           value={values.maxFileSize}
           onChange={(e) => onChange({ maxFileSize: e.target.value })}

@@ -1,6 +1,9 @@
+import { useTranslation } from 'react-i18next'
 import { FaTimes, FaFileAlt, FaMagic } from 'react-icons/fa'
 
 const NewDocumentModal = ({ onClose, onUseTemplate, onUseBlank }) => {
+  const { t } = useTranslation()
+
   return (
     <div className="modalOverlay" onClick={onClose}>
       <div
@@ -8,13 +11,13 @@ const NewDocumentModal = ({ onClose, onUseTemplate, onUseBlank }) => {
         onClick={(e) => e.stopPropagation()}
       >
         <div className="modalTopHeader">
-          <h3>Yangi hujjat yaratish</h3>
+          <h3>{t('createDocument.newDocModal.title')}</h3>
           <button type="button" className="modalCloseIcon" onClick={onClose}>
             <FaTimes />
           </button>
         </div>
 
-        <p className="newDocQuestion">Qanday hujjat yaratmoqchisiz?</p>
+        <p className="newDocQuestion">{t('createDocument.newDocModal.question')}</p>
 
         <div className="newDocOptions">
           <button
@@ -23,11 +26,11 @@ const NewDocumentModal = ({ onClose, onUseTemplate, onUseBlank }) => {
             onClick={onUseTemplate}
           >
             <FaFileAlt />
-            <span>Shablondan foydalanish</span>
+            <span>{t('createDocument.newDocModal.useTemplate')}</span>
           </button>
           <button type="button" className="newDocOption" onClick={onUseBlank}>
             <FaMagic />
-            <span>Bo'sh hujjat yaratish</span>
+            <span>{t('createDocument.newDocModal.useBlank')}</span>
           </button>
         </div>
       </div>

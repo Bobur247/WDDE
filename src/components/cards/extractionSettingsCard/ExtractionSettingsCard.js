@@ -1,39 +1,35 @@
+import { useTranslation } from 'react-i18next'
 import { FaFileAlt } from 'react-icons/fa'
 
-const METHODS = [
-  { value: 'table', label: 'Jadval (Table)' },
-  { value: 'block', label: 'Blok (Boshlanishi-tugashi)' },
-  { value: 'checkbox', label: 'Checkbox (Har bir qator)' },
-  { value: 'keyword', label: "Kalit so'z bo'yicha" },
-  { value: 'regex', label: "Regex bo'yicha" },
-]
+const METHODS = ['table', 'block', 'checkbox', 'keyword', 'regex']
 
 const ExtractionSettingsCard = ({ values, onChange }) => {
+  const { t } = useTranslation()
   return (
     <div className="settingsCard">
       <div className="settingsCardHeader">
         <span className="settingsCardIcon">
           <FaFileAlt />
         </span>
-        <h3>Ma'lumot ajratish sozlamalari</h3>
+        <h3>{t('settings.extraction.title')}</h3>
       </div>
 
       <div className="settingsField">
-        <label>Standart ajratish usuli</label>
+        <label>{t('settings.extraction.defaultMethodLabel')}</label>
         <select
           value={values.defaultMethod}
           onChange={(e) => onChange({ defaultMethod: e.target.value })}
         >
           {METHODS.map((m) => (
-            <option key={m.value} value={m.value}>
-              {m.label}
+            <option key={m} value={m}>
+              {t(`settings.extraction.methods.${m}`)}
             </option>
           ))}
         </select>
       </div>
 
       <div className="toggleRow">
-        <span>Boshlanish va tugash belgilarini saqlash</span>
+        <span>{t('settings.extraction.saveMarkers')}</span>
         <label className="switch">
           <input
             type="checkbox"
@@ -45,7 +41,7 @@ const ExtractionSettingsCard = ({ values, onChange }) => {
       </div>
 
       <div className="toggleRow">
-        <span>Regex rejimi</span>
+        <span>{t('settings.extraction.regexMode')}</span>
         <label className="switch">
           <input
             type="checkbox"
@@ -57,7 +53,7 @@ const ExtractionSettingsCard = ({ values, onChange }) => {
       </div>
 
       <div className="toggleRow">
-        <span>Shablonlarni avtomatik yuklash</span>
+        <span>{t('settings.extraction.autoLoadTemplates')}</span>
         <label className="switch">
           <input
             type="checkbox"

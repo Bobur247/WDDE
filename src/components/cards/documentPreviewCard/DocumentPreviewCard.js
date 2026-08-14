@@ -6,6 +6,7 @@ import {
   FaExpand,
   FaCompress,
 } from 'react-icons/fa'
+import { useTranslation } from 'react-i18next'
 
 // DOM orqali html ichidagi matn tugunlarini aylanib, berilgan qiymatlarni
 // <mark> bilan o'raydi (real highlight)
@@ -55,6 +56,7 @@ const DocumentPreviewCard = ({
   setPendingSelectedText,
   highlightValues,
 }) => {
+  const { t } = useTranslation()
   const [zoom, setZoom] = useState(100)
   const [fullscreen, setFullscreen] = useState(false)
 
@@ -75,7 +77,7 @@ const DocumentPreviewCard = ({
     >
       <div className="previewTopBar">
         <span className="previewTopBarTitle">
-          <FaFileWord /> Hujjat preview
+          <FaFileWord /> {t('informationAllocation.documentPreview.title')}
         </span>
         <div className="previewTopBarControls">
           <button
@@ -100,12 +102,12 @@ const DocumentPreviewCard = ({
       <div className="previewBody" onMouseUp={handleMouseUp}>
         {!file && (
           <p className="previewEmptyState">
-            Fayl yuklanganda hujjat shu yerda ko'rinadi
+            {t('informationAllocation.documentPreview.emptyNoFile')}
           </p>
         )}
 
         {file && !htmlContent && (
-          <p className="previewEmptyState">Hujjat o'qilmoqda...</p>
+          <p className="previewEmptyState">{t('informationAllocation.documentPreview.emptyLoading')}</p>
         )}
 
         {file && htmlContent && (

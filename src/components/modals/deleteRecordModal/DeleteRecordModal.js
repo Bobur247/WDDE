@@ -1,6 +1,8 @@
+import { Trans, useTranslation } from 'react-i18next'
 import { FaTrash, FaTimes } from 'react-icons/fa'
 
 const DeleteRecordModal = ({ record, onCancel, onConfirm }) => {
+  const { t } = useTranslation()
   return (
     <div className="modalOverlay" onClick={onCancel}>
       <div
@@ -10,10 +12,13 @@ const DeleteRecordModal = ({ record, onCancel, onConfirm }) => {
         <div className="deleteRecordIcon">
           <FaTrash />
         </div>
-        <h3>Yozuvni o'chirish</h3>
+        <h3>{t('history.deleteModal.title')}</h3>
         <p>
-          <b>{record.fileName}</b> tarixdan o'chirilsinmi? Bu amalni ortga
-          qaytarib bo'lmaydi.
+          <Trans
+            i18nKey="history.deleteModal.message"
+            values={{ fileName: record.fileName }}
+            components={{ b: <b /> }}
+          />
         </p>
         <div className="modalFooter center">
           <button
@@ -22,7 +27,7 @@ const DeleteRecordModal = ({ record, onCancel, onConfirm }) => {
             onClick={onCancel}
           >
             <FaTimes />
-            <span>Bekor qilish</span>
+            <span>{t('history.deleteModal.cancel')}</span>
           </button>
           <button
             type="button"
@@ -30,7 +35,7 @@ const DeleteRecordModal = ({ record, onCancel, onConfirm }) => {
             onClick={onConfirm}
           >
             <FaTrash />
-            <span>O'chirish</span>
+            <span>{t('history.deleteModal.confirm')}</span>
           </button>
         </div>
       </div>

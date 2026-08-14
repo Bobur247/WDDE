@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   FaTimes,
   FaFileWord,
@@ -9,6 +10,7 @@ import {
 } from 'react-icons/fa'
 
 const AddTemplateModal = ({ categories, onClose, onSave }) => {
+  const { t } = useTranslation()
   const [name, setName] = useState('')
   const [categoryId, setCategoryId] = useState('')
   const [language, setLanguage] = useState("O'zbekcha")
@@ -28,7 +30,7 @@ const AddTemplateModal = ({ categories, onClose, onSave }) => {
       selected.name.toLowerCase().endsWith(ext),
     )
     if (!isValid) {
-      setError('Faqat DOCX, PDF yoki Excel formatidagi fayl yuklash mumkin!')
+      setError(t('templates.addModal.invalidFileType'))
       return
     }
     setError('')
@@ -42,7 +44,7 @@ const AddTemplateModal = ({ categories, onClose, onSave }) => {
 
   function handleSubmit() {
     if (!name.trim() || !categoryId || !language || !docxFile) {
-      setError("Yulduzcha (*) bilan belgilangan maydonlarni to'ldiring")
+      setError(t('templates.addModal.requiredFields'))
       return
     }
 
@@ -75,8 +77,8 @@ const AddTemplateModal = ({ categories, onClose, onSave }) => {
               <FaFileWord />
             </span>
             <div>
-              <h3>Yangi shablon qo'shish</h3>
-              <p>Yangi Word shablonini tizimga qo'shish</p>
+              <h3>{t('templates.addModal.title')}</h3>
+              <p>{t('templates.addModal.subtitle')}</p>
             </div>
           </div>
           <button type="button" className="modalCloseIcon" onClick={onClose}>
@@ -88,11 +90,12 @@ const AddTemplateModal = ({ categories, onClose, onSave }) => {
           <div className="addTemplateColumn">
             <div className="formField">
               <label>
-                Shablon nomi <span className="required">*</span>
+                {t('templates.addModal.nameLabel')}{' '}
+                <span className="required">*</span>
               </label>
               <input
                 type="text"
-                placeholder="Masalan: Rasmiy xat, Rezyume, Hisobot..."
+                placeholder={t('templates.addModal.namePlaceholder')}
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
@@ -100,13 +103,16 @@ const AddTemplateModal = ({ categories, onClose, onSave }) => {
 
             <div className="formField">
               <label>
-                Kategoriya <span className="required">*</span>
+                {t('templates.addModal.categoryLabel')}{' '}
+                <span className="required">*</span>
               </label>
               <select
                 value={categoryId}
                 onChange={(e) => setCategoryId(e.target.value)}
               >
-                <option value="">Kategoriya tanlang</option>
+                <option value="">
+                  {t('templates.addModal.categoryPlaceholder')}
+                </option>
                 {categories.map((c) => (
                   <option key={c.id} value={c.id}>
                     {c.name}
@@ -117,7 +123,8 @@ const AddTemplateModal = ({ categories, onClose, onSave }) => {
 
             <div className="formField">
               <label>
-                Til <span className="required">*</span>
+                {t('templates.addModal.languageLabel')}{' '}
+                <span className="required">*</span>
               </label>
               <select
                 value={language}
@@ -130,9 +137,9 @@ const AddTemplateModal = ({ categories, onClose, onSave }) => {
             </div>
 
             <div className="formField">
-              <label>Tavsif</label>
+              <label>{t('templates.addModal.descriptionLabel')}</label>
               <textarea
-                placeholder="Shablon haqida qisqacha ma'lumot kiriting..."
+                placeholder={t('templates.addModal.descriptionPlaceholder')}
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 rows={4}
@@ -143,15 +150,18 @@ const AddTemplateModal = ({ categories, onClose, onSave }) => {
           <div className="addTemplateColumn">
             <div className="formField">
               <label>
-                Faylni yuklang <span className="required">*</span>
+                {t('templates.addModal.fileLabel')}{' '}
+                <span className="required">*</span>
               </label>
 
               {!docxFile ? (
                 <div className="docxDropzone">
                   <FaFileWord className="docxDropzoneIcon" />
-                  <p className="docxDropzoneTitle">Faylni shu yerga tashlang</p>
+                  <p className="docxDropzoneTitle">
+                    {t('templates.addModal.dropzoneTitle')}
+                  </p>
                   <p className="docxDropzoneSubtitle">
-                    yoki fayl tanlash tugmasini bosing
+                    {t('templates.addModal.dropzoneSubtitle')}
                   </p>
                   <input
                     ref={docxInputRef}
@@ -166,10 +176,10 @@ const AddTemplateModal = ({ categories, onClose, onSave }) => {
                     className="chooseFileButton"
                   >
                     <FaFolderOpen />
-                    <span>Fayl tanlash</span>
+                    <span>{t('templates.addModal.chooseFile')}</span>
                   </label>
                   <p className="docxDropzoneHint">
-                    Qo'llab-quvvatlanadigan formatlar: DOCX, PDF, XLSX
+                    {t('templates.addModal.dropzoneHint')}
                   </p>
                 </div>
               ) : (
@@ -182,13 +192,13 @@ const AddTemplateModal = ({ categories, onClose, onSave }) => {
             </div>
 
             <div className="formField">
-              <label>Shablon uchun rasm (ixtiyoriy)</label>
+              <label>{t('templates.addModal.imageLabel')}</label>
               <div className="imagePickerRow">
                 <div className="imagePreviewBox">
                   {imageFile ? (
                     <img
                       src={URL.createObjectURL(imageFile)}
-                      alt="preview"
+                      alt={t('templates.addModal.imagePreviewAlt')}
                       className="imagePreviewImg"
                     />
                   ) : (
@@ -208,7 +218,7 @@ const AddTemplateModal = ({ categories, onClose, onSave }) => {
                   className="chooseFileButton outline"
                 >
                   <FaFolderOpen />
-                  <span>Rasm tanlash</span>
+                  <span>{t('templates.addModal.chooseImage')}</span>
                 </label>
               </div>
             </div>
@@ -220,7 +230,7 @@ const AddTemplateModal = ({ categories, onClose, onSave }) => {
         <div className="modalFooter">
           <button type="button" className="modalCancelButton" onClick={onClose}>
             <FaTimes />
-            <span>Bekor qilish</span>
+            <span>{t('templates.addModal.cancel')}</span>
           </button>
           <button
             type="button"
@@ -228,7 +238,7 @@ const AddTemplateModal = ({ categories, onClose, onSave }) => {
             onClick={handleSubmit}
           >
             <FaSave />
-            <span>Saqlash</span>
+            <span>{t('templates.addModal.save')}</span>
           </button>
         </div>
       </div>

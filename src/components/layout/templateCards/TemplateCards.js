@@ -1,10 +1,13 @@
 import { FaEye, FaDownload, FaTrash } from 'react-icons/fa'
+import { useTranslation } from 'react-i18next'
 
 const TemplateCards = ({ templates, viewMode, onView, onDeleteRequest }) => {
+  const { t } = useTranslation()
+
   if (templates.length === 0) {
     return (
       <div className="templateCardsEmpty">
-        <p>Hech qanday shablon topilmadi</p>
+        <p>{t('templates.cards.empty')}</p>
       </div>
     )
   }
@@ -18,7 +21,7 @@ const TemplateCards = ({ templates, viewMode, onView, onDeleteRequest }) => {
             <button
               type="button"
               className="deleteIconButton"
-              title="O'chirish"
+              title={t('templates.cards.deleteTitle')}
               onClick={() => onDeleteRequest(tpl)}
             >
               <FaTrash />
@@ -45,11 +48,11 @@ const TemplateCards = ({ templates, viewMode, onView, onDeleteRequest }) => {
                   onClick={() => onView(tpl)}
                 >
                   <FaEye />
-                  <span>Ko'rish</span>
+                  <span>{t('templates.cards.view')}</span>
                 </button>
                 <button type="button" className="downloadButton">
                   <FaDownload />
-                  <span>Yuklab olish</span>
+                  <span>{t('templates.cards.download')}</span>
                 </button>
               </div>
             </div>

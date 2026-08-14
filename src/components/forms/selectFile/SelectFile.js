@@ -1,5 +1,6 @@
 import React from 'react'
 import mammoth from 'mammoth'
+import { useTranslation } from 'react-i18next'
 import './SelectFile.css'
 import { FaFileWord } from 'react-icons/fa'
 import { TiFolderOpen } from 'react-icons/ti'
@@ -20,6 +21,8 @@ const SelectFile = ({
   setLoading,
   onReset,
 }) => {
+  const { t } = useTranslation()
+
   async function handleFileChange(e) {
     const selectFile = e.target.files[0]
     if (!selectFile) return
@@ -30,7 +33,7 @@ const SelectFile = ({
       selectFile.name.endsWith('.docx')
 
     if (!isDocx) {
-      setError('Faqat .docx formatidagi fayl yuklash mumkin!')
+      setError(t('home.selectFile.errorInvalidType'))
       setFile(null)
       e.target.value = ''
       return
@@ -60,7 +63,7 @@ const SelectFile = ({
       setHtmlContent(htmlResult.value)
       setSelectedItems([])
     } catch (err) {
-      setError("Faylni o'qishda xatolik yuz berdi")
+      setError(t('home.selectFile.errorReadFailed'))
       console.error(err)
     } finally {
       setLoading(false)
@@ -86,9 +89,9 @@ const SelectFile = ({
           <p className="selectFileIcon">
             <FaFileWord />
           </p>
-          <h3>DOCX faylni yuklang</h3>
+          <h3>{t('home.selectFile.title')}</h3>
           <p className="selectFilesubtilte">
-            Faylni bu yerga tashlang yoki tanlang
+            {t('home.selectFile.subtitle')}
           </p>
           {error && <p style={{ color: 'red' }}>{error}</p>}
           <input
@@ -101,7 +104,7 @@ const SelectFile = ({
           <div className="selectFileButtons">
             <label htmlFor="selecteFile" className="selectFileButtona">
               <TiFolderOpen />
-              <span>Fayl tanlang</span>
+              <span>{t('home.selectFile.chooseFile')}</span>
             </label>
           </div>
         </div>
@@ -111,13 +114,13 @@ const SelectFile = ({
             <FaFileWord className="SelectmainFileIcon1" />
             {file && (
               <p>
-                <b>Tanlangan fayl:</b> {file.name}
+                <b>{t('home.selectFile.selectedFileLabel')}</b> {file.name}
               </p>
             )}
           </div>
           <div className="item SelectmainFileIconExit" onClick={clickExit}>
             <CiCircleRemove className="SelectmainFileIconExit1" />
-            <p>Faylni bekor qilish</p>
+            <p>{t('home.selectFile.cancelFile')}</p>
           </div>
         </div>
       </form>

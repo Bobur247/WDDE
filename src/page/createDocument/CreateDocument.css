@@ -60,7 +60,7 @@
 
 .cdGrid {
   display: grid;
-  grid-template-columns: 1fr 300px;
+  grid-template-columns: minmax(0, 1fr) 300px;
   grid-template-rows: auto auto;
   gap: 18px;
 }
@@ -82,7 +82,7 @@
 
 @media (max-width: 1100px) {
   .cdGrid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
   .documentSettingsPanel,
   .additionalSettingsPanel,
@@ -98,6 +98,13 @@
   .documentHistoryTable {
     grid-row: 3;
   }
+}
+
+.documentSettingsPanel,
+.additionalSettingsPanel,
+.documentHistoryTable {
+  min-width: 0;
+  overflow-wrap: break-word;
 }
 
 /* ===== PANEL UMUMIY ===== */

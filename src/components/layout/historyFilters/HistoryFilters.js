@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import { FaSearch, FaCalendarAlt } from 'react-icons/fa'
 
 const HistoryFilters = ({
@@ -15,6 +16,7 @@ const HistoryFilters = ({
   typeOptions,
   statusOptions,
 }) => {
+  const { t } = useTranslation()
   const [showDateRange, setShowDateRange] = useState(false)
   const wrapperRef = useRef(null)
 
@@ -42,7 +44,7 @@ const HistoryFilters = ({
   const dateLabel =
     dateFrom || dateTo
       ? `${dateFrom || '...'} — ${dateTo || '...'}`
-      : "Sana oralig'i"
+      : t('history.filters.dateRangePlaceholder')
 
   return (
     <div className="historyFilters">
@@ -50,7 +52,7 @@ const HistoryFilters = ({
         <FaSearch className="hfSearchIcon" />
         <input
           type="text"
-          placeholder="Amallarni qidirish..."
+          placeholder={t('history.filters.searchPlaceholder')}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
@@ -91,7 +93,7 @@ const HistoryFilters = ({
         {showDateRange && (
           <div className="hfDateRangePanel">
             <div className="hfDateField">
-              <label>Dan</label>
+              <label>{t('history.filters.dateFrom')}</label>
               <input
                 type="date"
                 value={dateFrom}
@@ -99,7 +101,7 @@ const HistoryFilters = ({
               />
             </div>
             <div className="hfDateField">
-              <label>Gacha</label>
+              <label>{t('history.filters.dateTo')}</label>
               <input
                 type="date"
                 value={dateTo}
@@ -115,7 +117,7 @@ const HistoryFilters = ({
                 setShowDateRange(false)
               }}
             >
-              Tozalash
+              {t('history.filters.clear')}
             </button>
           </div>
         )}

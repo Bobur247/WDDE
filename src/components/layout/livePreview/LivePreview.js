@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react'
+import { useTranslation } from 'react-i18next'
 import { FaDesktop, FaMobileAlt, FaPrint } from 'react-icons/fa'
 
 // **qalin**, *qiya*, __tagiga chizilgan__ ni oddiy HTML'ga aylantiradi (demo formatlash)
@@ -23,6 +24,7 @@ function renderBody(bodyHtml, fieldValues) {
 }
 
 const LivePreview = ({ documentName, template, fieldValues }) => {
+  const { t } = useTranslation()
   const [device, setDevice] = useState('desktop')
   const paperRef = useRef(null)
 
@@ -35,7 +37,7 @@ const LivePreview = ({ documentName, template, fieldValues }) => {
     printWindow.document.write(`
       <html>
         <head>
-          <title>${documentName || 'Hujjat'}</title>
+          <title>${documentName || t('createDocument.livePreview.documentFallbackTitle')}</title>
           <style>
             body { font-family: Arial, sans-serif; padding: 30px; color: #111; }
             .prevWordIcon { display: none; }
@@ -63,11 +65,11 @@ const LivePreview = ({ documentName, template, fieldValues }) => {
   return (
     <div className="livePreviewBox">
       <div className="livePreviewHeader">
-        <span>Live Preview</span>
+        <span>{t('createDocument.livePreview.label')}</span>
         <div className="livePreviewDeviceToggle">
           <button
             type="button"
-            title="Desktop ko'rinish"
+            title={t('createDocument.livePreview.desktopTitle')}
             className={device === 'desktop' ? 'active' : ''}
             onClick={() => handleDeviceClick('desktop')}
           >
@@ -75,7 +77,7 @@ const LivePreview = ({ documentName, template, fieldValues }) => {
           </button>
           <button
             type="button"
-            title="Mobil ko'rinish"
+            title={t('createDocument.livePreview.mobileTitle')}
             className={device === 'mobile' ? 'active' : ''}
             onClick={() => handleDeviceClick('mobile')}
           >
@@ -83,7 +85,7 @@ const LivePreview = ({ documentName, template, fieldValues }) => {
           </button>
           <button
             type="button"
-            title="Chop etish"
+            title={t('createDocument.livePreview.printTitle')}
             onClick={() => handleDeviceClick('print')}
           >
             <FaPrint />
@@ -93,7 +95,9 @@ const LivePreview = ({ documentName, template, fieldValues }) => {
 
       <div className={`livePreviewPaper ${device}`} ref={paperRef}>
         <div className="prevWordIcon">W</div>
-        <h1 className="prevDocName">{documentName || 'Nomsiz hujjat'}</h1>
+        <h1 className="prevDocName">
+          {documentName || t('createDocument.livePreview.untitledDocument')}
+        </h1>
         <div
           className="prevBodyWrapper"
           dangerouslySetInnerHTML={{

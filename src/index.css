@@ -1,6 +1,8 @@
-body {
+html, body {
   margin: 0;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 code {

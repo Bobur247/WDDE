@@ -11,6 +11,8 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: 18px;
+  flex-wrap: wrap;
+  gap: 12px;
 }
 
 .headerLeft {

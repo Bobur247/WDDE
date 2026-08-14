@@ -1,4 +1,5 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import './DocxViewer.css'
 const DocxViewer = ({
   isBox,
@@ -12,6 +13,8 @@ const DocxViewer = ({
   setManualPending,
   extractedItems,
 }) => {
+  const { t } = useTranslation()
+
   function handleMouseUp() {
     if (method !== 'manual') return
     const selection = window.getSelection().toString()
@@ -22,18 +25,18 @@ const DocxViewer = ({
     <div className="DocxViewer">
       {!isBox && (
         <p className="docxViewerPlaceholder">
-          Fayl tanlanganda, uning matni shu yerda ko'rinadi
+          {t('home.docxViewer.placeholder')}
         </p>
       )}
 
-      {isBox && loading && <p>Fayl o'qilmoqda...</p>}
+      {isBox && loading && <p>{t('home.docxViewer.loading')}</p>}
 
       {isBox && !loading && (
         <>
           {method === 'checkbox' && lines.length > 0 && (
             <div className="docxContent">
               <h4 className="SubtitleFileTopNavbar">
-                Faylda topilgan matnlar (kerakligini tanlang):
+                {t('home.docxViewer.checkboxTitle')}
               </h4>
               <ul>
                 {lines.map((line, index) => (
@@ -66,14 +69,15 @@ const DocxViewer = ({
           {method === 'manual' && (
             <div className="docxContent">
               <h4 className="SubtitleFileTopNavbar">
-                Kerakli matnni sichqoncha bilan belgilang:
+                {t('home.docxViewer.manualTitle')}
               </h4>
               <pre className="manualText" onMouseUp={handleMouseUp}>
                 {rawText}
               </pre>
               {manualPending && (
                 <p className="manualPendingPreview">
-                  <b>Belgilangan (hali olinmagan):</b> {manualPending}
+                  <b>{t('home.docxViewer.manualPendingLabel')}</b>{' '}
+                  {manualPending}
                 </p>
               )}
             </div>
@@ -84,7 +88,9 @@ const DocxViewer = ({
             method === 'regex' ||
             method === 'table') && (
             <div className="docxContent">
-              <h4 className="SubtitleFileTopNavbar">Fayl matni:</h4>
+              <h4 className="SubtitleFileTopNavbar">
+                {t('home.docxViewer.rawTextTitle')}
+              </h4>
               <pre className="rawTextPreview">{rawText}</pre>
             </div>
           )}
@@ -92,7 +98,9 @@ const DocxViewer = ({
           {extractedItems.length > 0 && (
             <div className="finalResults">
               <h4 className="SubtitleFileTopNavbar">
-                Yakuniy ajratilgan ma'lumotlar ({extractedItems.length} ta):
+                {t('home.docxViewer.finalResultsTitle', {
+                  count: extractedItems.length,
+                })}
               </h4>
               <ol>
                 {extractedItems.map((item) => (

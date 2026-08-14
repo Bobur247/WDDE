@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   FaCog,
   FaImage,
@@ -13,13 +14,13 @@ import { Document, Packer, Paragraph, HeadingLevel, AlignmentType } from 'docx'
 import mammoth from 'mammoth'
 
 const PAGE_SIZES = ['A4', 'A5', 'A3', 'Letter', 'Legal']
-const PAGE_NUM_POSITIONS = [
-  { value: 'bottom-right', label: "Pastki o'ng" },
-  { value: 'bottom-center', label: 'Pastki markaz' },
-  { value: 'bottom-left', label: 'Pastki chap' },
-  { value: 'top-right', label: "Yuqori o'ng" },
-  { value: 'top-center', label: 'Yuqori markaz' },
-  { value: 'top-left', label: 'Yuqori chap' },
+const PAGE_NUM_POSITION_KEYS = [
+  { value: 'bottom-right', labelKey: 'bottomRight' },
+  { value: 'bottom-center', labelKey: 'bottomCenter' },
+  { value: 'bottom-left', labelKey: 'bottomLeft' },
+  { value: 'top-right', labelKey: 'topRight' },
+  { value: 'top-center', labelKey: 'topCenter' },
+  { value: 'top-left', labelKey: 'topLeft' },
 ]
 
 const AdditionalSettingsPanel = ({
@@ -53,6 +54,7 @@ const AdditionalSettingsPanel = ({
   generatedResult,
   onGenerated,
 }) => {
+  const { t } = useTranslation()
   const [generating, setGenerating] = useState(false)
   const [logoPreviewUrl, setLogoPreviewUrl] = useState('')
 
@@ -149,7 +151,9 @@ const AdditionalSettingsPanel = ({
       })
 
       const blob = await Packer.toBlob(doc)
-      const safeName = documentName.trim().replace(/\s+/g, '_') || 'hujjat'
+      const safeName =
+        documentName.trim().replace(/\s+/g, '_') ||
+        t('createDocument.additionalSettings.fallbackFileName')
 
       const entry = {
         id: Date.now(),
@@ -158,7 +162,7 @@ const AdditionalSettingsPanel = ({
         date: new Date().toLocaleString('uz-UZ'),
         format:
           outputFormat === 'docx-pdf'
-            ? 'DOCX + PDF'
+            ? t('createDocument.additionalSettings.outputFormat.docxPdf')
             : outputFormat.toUpperCase(),
         blob,
       }
@@ -197,7 +201,7 @@ const AdditionalSettingsPanel = ({
       setViewHtml(result.value)
     } catch (err) {
       console.error(err)
-      setViewError("Hujjatni ko'rsatishda xatolik yuz berdi")
+      setViewError(t('createDocument.additionalSettings.viewModal.error'))
     } finally {
       setViewLoading(false)
     }
@@ -209,16 +213,18 @@ const AdditionalSettingsPanel = ({
         <span className="settingsPanelHeaderIcon">
           <FaCog />
         </span>
-        <h3>Qo'shimcha sozlamalar</h3>
+        <h3>{t('createDocument.additionalSettings.title')}</h3>
       </div>
 
-      <div className="settingsSubLabel">Rasm va logotip</div>
+      <div className="settingsSubLabel">
+        {t('createDocument.additionalSettings.logo.sectionLabel')}
+      </div>
 
       {!logoFile ? (
         <div className="logoDropzone">
           <FaImage className="logoDropzoneIcon" />
-          <p>Logotip yuklash</p>
-          <span>PNG / JPG, SVG (max 2MB)</span>
+          <p>{t('createDocument.additionalSettings.logo.dropzoneText')}</p>
+          <span>{t('createDocument.additionalSettings.logo.dropzoneHint')}</span>
           <input
             type="file"
             id="logoInput"
@@ -228,13 +234,17 @@ const AdditionalSettingsPanel = ({
           />
           <label htmlFor="logoInput" className="chooseFileButton outline small">
             <FaFolderOpen />
-            <span>Fayl tanlash</span>
+            <span>{t('createDocument.additionalSettings.logo.chooseFile')}</span>
           </label>
         </div>
       ) : (
         <div className="logoSelectedBox">
           {logoPreviewUrl && (
-            <img src={logoPreviewUrl} alt="logo" className="logoSelectedImg" />
+            <img
+              src={logoPreviewUrl}
+              alt={t('createDocument.additionalSettings.logo.altText')}
+              className="logoSelectedImg"
+            />
           )}
           <span className="logoSelectedName">{logoFile.name}</span>
           <button type="button" onClick={() => setLogoFile(null)}>
@@ -245,7 +255,7 @@ const AdditionalSettingsPanel = ({
 
       {/* HEADER */}
       <div className="toggleRow">
-        <span>Header (sarlavha)</span>
+        <span>{t('createDocument.additionalSettings.header.label')}</span>
         <label className="switch">
           <input
             type="checkbox"
@@ -259,13 +269,17 @@ const AdditionalSettingsPanel = ({
         <div className="inlineSubSettings">
           <input
             type="text"
-            placeholder="Tashkilot nomi"
+            placeholder={t(
+              'createDocument.additionalSettings.header.orgNamePlaceholder',
+            )}
             value={headerOrgName}
             onChange={(e) => setHeaderOrgName(e.target.value)}
           />
           <input
             type="text"
-            placeholder="Telefon"
+            placeholder={t(
+              'createDocument.additionalSettings.header.phonePlaceholder',
+            )}
             value={headerPhone}
             onChange={(e) => setHeaderPhone(e.target.value)}
           />
@@ -274,7 +288,7 @@ const AdditionalSettingsPanel = ({
 
       {/* FOOTER */}
       <div className="toggleRow">
-        <span>Footer (pastki qism)</span>
+        <span>{t('createDocument.additionalSettings.footer.label')}</span>
         <label className="switch">
           <input
             type="checkbox"
@@ -288,7 +302,9 @@ const AdditionalSettingsPanel = ({
         <div className="inlineSubSettings">
           <input
             type="text"
-            placeholder="Footer matni (masalan: www.example.uz)"
+            placeholder={t(
+              'createDocument.additionalSettings.footer.textPlaceholder',
+            )}
             value={footerText}
             onChange={(e) => setFooterText(e.target.value)}
           />
@@ -297,7 +313,7 @@ const AdditionalSettingsPanel = ({
 
       {/* SAHIFA RAQAMI */}
       <div className="toggleRow">
-        <span>Sahifa raqamlari</span>
+        <span>{t('createDocument.additionalSettings.pageNumbers.label')}</span>
         <label className="switch">
           <input
             type="checkbox"
@@ -313,16 +329,20 @@ const AdditionalSettingsPanel = ({
             value={pageNumPosition}
             onChange={(e) => setPageNumPosition(e.target.value)}
           >
-            {PAGE_NUM_POSITIONS.map((p) => (
+            {PAGE_NUM_POSITION_KEYS.map((p) => (
               <option key={p.value} value={p.value}>
-                {p.label}
+                {t(
+                  `createDocument.additionalSettings.pageNumbers.positions.${p.labelKey}`,
+                )}
               </option>
             ))}
           </select>
         </div>
       )}
 
-      <div className="settingsSubLabel">Sahifa o'lchami:</div>
+      <div className="settingsSubLabel">
+        {t('createDocument.additionalSettings.pageSizeLabel')}
+      </div>
       <select value={pageSize} onChange={(e) => setPageSize(e.target.value)}>
         {PAGE_SIZES.map((s) => (
           <option key={s} value={s}>
@@ -331,35 +351,57 @@ const AdditionalSettingsPanel = ({
         ))}
       </select>
 
-      <div className="settingsSubLabel">Orientatsiya:</div>
+      <div className="settingsSubLabel">
+        {t('createDocument.additionalSettings.orientation.label')}
+      </div>
       <select
         value={orientation}
         onChange={(e) => setOrientation(e.target.value)}
       >
-        <option value="portrait">Portrait (vertikal)</option>
-        <option value="landscape">Landscape (gorizontal)</option>
+        <option value="portrait">
+          {t('createDocument.additionalSettings.orientation.portrait')}
+        </option>
+        <option value="landscape">
+          {t('createDocument.additionalSettings.orientation.landscape')}
+        </option>
       </select>
 
-      <div className="settingsSubLabel">Hujjat formati:</div>
+      <div className="settingsSubLabel">
+        {t('createDocument.additionalSettings.outputFormat.label')}
+      </div>
       <select
         value={outputFormat}
         onChange={(e) => setOutputFormat(e.target.value)}
       >
-        <option value="docx">DOCX (Word)</option>
-        <option value="pdf">PDF</option>
-        <option value="docx-pdf">DOCX + PDF</option>
+        <option value="docx">
+          {t('createDocument.additionalSettings.outputFormat.docx')}
+        </option>
+        <option value="pdf">
+          {t('createDocument.additionalSettings.outputFormat.pdf')}
+        </option>
+        <option value="docx-pdf">
+          {t('createDocument.additionalSettings.outputFormat.docxPdf')}
+        </option>
       </select>
 
       {(outputFormat === 'pdf' || outputFormat === 'docx-pdf') && (
         <>
-          <div className="settingsSubLabel">PDF sifati:</div>
+          <div className="settingsSubLabel">
+            {t('createDocument.additionalSettings.pdfQuality.label')}
+          </div>
           <select
             value={pdfQuality}
             onChange={(e) => setPdfQuality(e.target.value)}
           >
-            <option value="high">Yuqori</option>
-            <option value="standard">Standart</option>
-            <option value="compressed">Siqilgan</option>
+            <option value="high">
+              {t('createDocument.additionalSettings.pdfQuality.high')}
+            </option>
+            <option value="standard">
+              {t('createDocument.additionalSettings.pdfQuality.standard')}
+            </option>
+            <option value="compressed">
+              {t('createDocument.additionalSettings.pdfQuality.compressed')}
+            </option>
           </select>
         </>
       )}
@@ -371,14 +413,20 @@ const AdditionalSettingsPanel = ({
         disabled={generating}
       >
         <FaFileAlt />
-        <span>{generating ? 'Yaratilmoqda...' : 'Hujjatni yaratish'}</span>
+        <span>
+          {generating
+            ? t('createDocument.additionalSettings.generating')
+            : t('createDocument.additionalSettings.generateButton')}
+        </span>
       </button>
 
       {generatedResult && (
         <div className="generatedResultBox">
           <div className="generatedResultTitle">
             <FaCheckCircle />
-            <span>Hujjat muvaffaqiyatli yaratildi</span>
+            <span>
+              {t('createDocument.additionalSettings.result.successTitle')}
+            </span>
           </div>
           <p className="generatedResultName">{generatedResult.name}</p>
           <div className="generatedResultActions">
@@ -388,7 +436,7 @@ const AdditionalSettingsPanel = ({
               onClick={handleView}
             >
               <FaEye />
-              <span>Ko'rish</span>
+              <span>{t('createDocument.additionalSettings.result.view')}</span>
             </button>
             <button
               type="button"
@@ -396,7 +444,9 @@ const AdditionalSettingsPanel = ({
               onClick={() => handleDownload(generatedResult)}
             >
               <FaDownload />
-              <span>Yuklab olish</span>
+              <span>
+                {t('createDocument.additionalSettings.result.download')}
+              </span>
             </button>
           </div>
         </div>
@@ -405,8 +455,7 @@ const AdditionalSettingsPanel = ({
       {(outputFormat === 'pdf' || outputFormat === 'docx-pdf') &&
         generatedResult && (
           <p className="pdfNote">
-            PDF eksporti brauzerda amalga oshirilmaydi — bu backend (masalan
-            LibreOffice) orqali qo'shiladi.
+            {t('createDocument.additionalSettings.pdfNote')}
           </p>
         )}
 
@@ -428,7 +477,9 @@ const AdditionalSettingsPanel = ({
             </div>
 
             {viewLoading && (
-              <p className="fileViewerLoading">Hujjat ochilmoqda...</p>
+              <p className="fileViewerLoading">
+                {t('createDocument.additionalSettings.viewModal.loading')}
+              </p>
             )}
             {!viewLoading && viewError && (
               <p className="fileViewerError">{viewError}</p>
@@ -446,7 +497,9 @@ const AdditionalSettingsPanel = ({
                 className="modalCancelButton"
                 onClick={() => setViewingDoc(false)}
               >
-                <span>Yopish</span>
+                <span>
+                  {t('createDocument.additionalSettings.viewModal.close')}
+                </span>
               </button>
               <button
                 type="button"
@@ -454,7 +507,9 @@ const AdditionalSettingsPanel = ({
                 onClick={() => handleDownload(generatedResult)}
               >
                 <FaDownload />
-                <span>Yuklab olish</span>
+                <span>
+                  {t('createDocument.additionalSettings.viewModal.download')}
+                </span>
               </button>
             </div>
           </div>

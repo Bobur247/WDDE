@@ -1,9 +1,11 @@
 import React from 'react'
 import './Convert.css'
 import { IoDocumentsOutline } from 'react-icons/io5'
+import { useTranslation } from 'react-i18next'
 import { UniversalTabs,Convertdocxhtml,Convertpdfdocx,Convertdocxtxt } from '../../components/components'
 
 const Convert = () => {
+  const { t } = useTranslation()
   const tabs = [
     {
       label: 'DOCX↔PDF',
@@ -25,8 +27,8 @@ const Convert = () => {
           <IoDocumentsOutline />
         </div>
         <div className="nText">
-          <h3>Konvertatsiya</h3>
-          <span>Fayllarni bir formatdan boshqa formatga aylantiring</span>
+          <h3>{t('convert.page.title')}</h3>
+          <span>{t('convert.page.subtitle')}</span>
         </div>
       </div>
       <div className="ConvertMain">

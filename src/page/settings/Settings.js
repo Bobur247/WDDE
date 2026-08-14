@@ -1,5 +1,6 @@
 // FaSave
 import { useState, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import { FaCog, FaRedo } from 'react-icons/fa'
 import {
   ConfirmModal,
@@ -57,6 +58,7 @@ const DEFAULT_SETTINGS = {
 }
 
 const Settings = () => {
+  const { t } = useTranslation()
   const [settings, setSettings] = useState(DEFAULT_SETTINGS)
   const [savedBanner, setSavedBanner] = useState(false)
   const [showResetConfirm, setShowResetConfirm] = useState(false)
@@ -112,10 +114,9 @@ const Settings = () => {
             <FaCog />
           </span>
           <div>
-            <h1>Sozlamalar</h1>
+            <h1>{t('settings.header.title')}</h1>
             <p>
-              Dastur funksiyalarini o'zingizning ehtiyojlaringizga mos ravishda
-              sozlang
+              {t('settings.header.subtitle')}
             </p>
           </div>
         </div>
@@ -125,12 +126,12 @@ const Settings = () => {
           onClick={() => setShowResetConfirm(true)}
         >
           <FaRedo />
-          <span>Standart holatga qaytarish</span>
+          <span>{t('settings.header.resetButton')}</span>
         </button>
       </div>
 
       {savedBanner && (
-        <div className="savedBanner">Sozlamalar muvaffaqiyatli saqlandi</div>
+        <div className="savedBanner">{t('settings.header.savedBanner')}</div>
       )}
 
       <div className="settingsGrid">
@@ -191,9 +192,9 @@ const Settings = () => {
 
       {showResetConfirm && (
         <ConfirmModal
-          title="Standart holatga qaytarish"
-          message="Barcha sozlamalar dastlabki holatga qaytariladi. Bu amalni ortga qaytarib bo'lmaydi."
-          confirmLabel="Ha, qaytarish"
+          title={t('settings.resetConfirm.title')}
+          message={t('settings.resetConfirm.message')}
+          confirmLabel={t('settings.resetConfirm.confirmLabel')}
           onCancel={() => setShowResetConfirm(false)}
           onConfirm={handleResetDefaults}
         />

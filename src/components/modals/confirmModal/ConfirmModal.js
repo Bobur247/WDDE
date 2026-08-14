@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { FaExclamationTriangle } from 'react-icons/fa'
 
 const ConfirmModal = ({
@@ -7,6 +8,7 @@ const ConfirmModal = ({
   onCancel,
   onConfirm,
 }) => {
+  const { t } = useTranslation()
   return (
     <div className="modalOverlay" onClick={onCancel}>
       <div
@@ -24,7 +26,7 @@ const ConfirmModal = ({
             className="modalCancelButton"
             onClick={onCancel}
           >
-            <span>Bekor qilish</span>
+            <span>{t('settings.confirmModal.cancelButton')}</span>
           </button>
           <button
             type="button"

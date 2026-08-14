@@ -1,6 +1,9 @@
+import { useTranslation } from 'react-i18next'
 import { FaClock, FaEye, FaDownload, FaTrash, FaFileWord } from 'react-icons/fa'
 
 const DocumentHistoryTable = ({ history, onDelete }) => {
+  const { t } = useTranslation()
+
   function handleDownload(entry) {
     if (!entry.blob) return
     const url = URL.createObjectURL(entry.blob)
@@ -18,24 +21,21 @@ const DocumentHistoryTable = ({ history, onDelete }) => {
       <div className="historyHeaderRow">
         <div className="historyHeaderLeft">
           <FaClock />
-          <h3>Yaratilgan hujjatlar tarixi</h3>
+          <h3>{t('createDocument.history.title')}</h3>
         </div>
       </div>
 
       {history.length === 0 ? (
-        <p className="historyEmpty">
-          Hali hech qanday hujjat yaratilmagan. Chapdan shablon tanlab,
-          "Hujjatni yaratish" tugmasini bosing.
-        </p>
+        <p className="historyEmpty">{t('createDocument.history.empty')}</p>
       ) : (
         <table className="historyTable">
           <thead>
             <tr>
-              <th>№</th>
-              <th>Hujjat nomi</th>
-              <th>Shablon</th>
-              <th>Yaratilgan sana</th>
-              <th>Format</th>
+              <th>{t('createDocument.history.columns.number')}</th>
+              <th>{t('createDocument.history.columns.documentName')}</th>
+              <th>{t('createDocument.history.columns.template')}</th>
+              <th>{t('createDocument.history.columns.createdDate')}</th>
+              <th>{t('createDocument.history.columns.format')}</th>
               <th></th>
             </tr>
           </thead>
@@ -63,7 +63,7 @@ const DocumentHistoryTable = ({ history, onDelete }) => {
                       }
                     >
                       <FaEye />
-                      <span>Ko'rish</span>
+                      <span>{t('createDocument.history.actions.view')}</span>
                     </button>
                     <button
                       type="button"
@@ -71,7 +71,7 @@ const DocumentHistoryTable = ({ history, onDelete }) => {
                       onClick={() => handleDownload(entry)}
                     >
                       <FaDownload />
-                      <span>Yuklab olish</span>
+                      <span>{t('createDocument.history.actions.download')}</span>
                     </button>
                     <button
                       type="button"

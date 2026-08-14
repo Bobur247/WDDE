@@ -1,13 +1,5 @@
 import { FaBars, FaPlay } from 'react-icons/fa'
-
-const METHODS = [
-  { value: 'range', label: "Belgi oralig'i", ready: true },
-  { value: 'select', label: 'Matn tanlash', ready: true },
-  { value: 'regex', label: 'Regex (ifoda)', ready: true },
-  { value: 'table', label: 'Jadval', ready: false },
-  { value: 'heading', label: 'Heading (sarlavha)', ready: false },
-  { value: 'bookmark', label: 'Bookmark', ready: false },
-]
+import { useTranslation } from 'react-i18next'
 
 const ExtractionMethodCard = ({
   disabled,
@@ -27,6 +19,15 @@ const ExtractionMethodCard = ({
   onAddSelectedText,
   onExtract,
 }) => {
+  const { t } = useTranslation()
+  const METHODS = [
+    { value: 'range', label: t('informationAllocation.extractionMethod.methods.range'), ready: true },
+    { value: 'select', label: t('informationAllocation.extractionMethod.methods.select'), ready: true },
+    { value: 'regex', label: t('informationAllocation.extractionMethod.methods.regex'), ready: true },
+    { value: 'table', label: t('informationAllocation.extractionMethod.methods.table'), ready: false },
+    { value: 'heading', label: t('informationAllocation.extractionMethod.methods.heading'), ready: false },
+    { value: 'bookmark', label: t('informationAllocation.extractionMethod.methods.bookmark'), ready: false },
+  ]
   const activeMethod = METHODS.find((m) => m.value === method)
 
   return (
@@ -42,7 +43,7 @@ const ExtractionMethodCard = ({
               onChange={() => setMethod(m.value)}
             />
             <span>{m.label}</span>
-            {!m.ready && <span className="methodSoonBadge">tez orada</span>}
+            {!m.ready && <span className="methodSoonBadge">{t('informationAllocation.extractionMethod.soonBadge')}</span>}
           </label>
         ))}
       </div>
@@ -50,11 +51,11 @@ const ExtractionMethodCard = ({
       {method === 'range' && (
         <>
           <div className="settingsField">
-            <label>Boshlanish belgisi:</label>
+            <label>{t('informationAllocation.extractionMethod.rangeStartLabel')}</label>
             <div className="inputWithIcon">
               <input
                 type="text"
-                placeholder="Masalan: Ism:"
+                placeholder={t('informationAllocation.extractionMethod.rangeStartPlaceholder')}
                 value={rangeStart}
                 onChange={(e) => setRangeStart(e.target.value)}
                 disabled={disabled}
@@ -63,11 +64,11 @@ const ExtractionMethodCard = ({
             </div>
           </div>
           <div className="settingsField">
-            <label>Tugash belgisi:</label>
+            <label>{t('informationAllocation.extractionMethod.rangeEndLabel')}</label>
             <div className="inputWithIcon">
               <input
                 type="text"
-                placeholder="Masalan: Manzil:"
+                placeholder={t('informationAllocation.extractionMethod.rangeEndPlaceholder')}
                 value={rangeEnd}
                 onChange={(e) => setRangeEnd(e.target.value)}
                 disabled={disabled}
@@ -82,7 +83,7 @@ const ExtractionMethodCard = ({
               onChange={(e) => setIncludeStart(e.target.checked)}
               disabled={disabled}
             />
-            <span>Boshlanishni qo'sh</span>
+            <span>{t('informationAllocation.extractionMethod.includeStart')}</span>
           </label>
           <label className="checkboxRow">
             <input
@@ -91,16 +92,16 @@ const ExtractionMethodCard = ({
               onChange={(e) => setIncludeEnd(e.target.checked)}
               disabled={disabled}
             />
-            <span>Tugashni qo'sh</span>
+            <span>{t('informationAllocation.extractionMethod.includeEnd')}</span>
           </label>
         </>
       )}
 
       {method === 'select' && (
         <div className="selectMethodBox">
-          <label>Tanlangan matn:</label>
+          <label>{t('informationAllocation.extractionMethod.selectedTextLabel')}</label>
           <div className="selectedTextPreview">
-            {pendingSelectedText || 'Preview oynasida matn belgilang...'}
+            {pendingSelectedText || t('informationAllocation.extractionMethod.selectedTextPlaceholder')}
           </div>
           <button
             type="button"
@@ -108,17 +109,17 @@ const ExtractionMethodCard = ({
             onClick={onAddSelectedText}
             disabled={disabled || !pendingSelectedText}
           >
-            + Ajratishga qo'shish
+            {t('informationAllocation.extractionMethod.addSelectedText')}
           </button>
         </div>
       )}
 
       {method === 'regex' && (
         <div className="settingsField">
-          <label>Regex ifoda:</label>
+          <label>{t('informationAllocation.extractionMethod.regexPatternLabel')}</label>
           <input
             type="text"
-            placeholder="Masalan: \+998\d{9}"
+            placeholder={t('informationAllocation.extractionMethod.regexPatternPlaceholder')}
             value={regexPattern}
             onChange={(e) => setRegexPattern(e.target.value)}
             disabled={disabled}
@@ -130,9 +131,7 @@ const ExtractionMethodCard = ({
         method === 'heading' ||
         method === 'bookmark') && (
         <p className="methodComingSoon">
-          "{activeMethod?.label}" usuli keyingi bosqichda qo'shiladi — bu docx
-          faylning ichki strukturasini (jadval/sarlavha/bookmark) chuqurroq
-          tahlil qilishni talab qiladi.
+          {t('informationAllocation.extractionMethod.comingSoon', { label: activeMethod?.label })}
         </p>
       )}
 
@@ -149,7 +148,7 @@ const ExtractionMethodCard = ({
           }
         >
           <FaPlay />
-          <span>Ajratish</span>
+          <span>{t('informationAllocation.extractionMethod.extract')}</span>
         </button>
       )}
     </div>

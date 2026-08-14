@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   FaDatabase,
   FaDownload,
@@ -8,6 +9,7 @@ import {
 } from 'react-icons/fa'
 
 const BackupCard = ({ settings, onImport }) => {
+  const { t } = useTranslation()
   const importInputRef = useRef(null)
   const restoreInputRef = useRef(null)
   const [message, setMessage] = useState('')
@@ -38,10 +40,10 @@ const BackupCard = ({ settings, onImport }) => {
       const parsed = JSON.parse(text)
       const importedSettings = parsed.settings || parsed
       onImport(importedSettings)
-      setMessage("Ma'lumotlar muvaffaqiyatli import qilindi")
+      setMessage(t('settings.backup.importSuccess'))
     } catch (err) {
       console.error(err)
-      setMessage('Faylni o\u02bbqishda xatolik — JSON formatini tekshiring')
+      setMessage(t('settings.backup.importError'))
     } finally {
       e.target.value = ''
       setTimeout(() => setMessage(''), 3000)
@@ -54,7 +56,7 @@ const BackupCard = ({ settings, onImport }) => {
         <span className="settingsCardIcon">
           <FaDatabase />
         </span>
-        <h3>Zaxira (Backup)</h3>
+        <h3>{t('settings.backup.title')}</h3>
       </div>
 
       {message && <p className="successNote">{message}</p>}
@@ -65,7 +67,7 @@ const BackupCard = ({ settings, onImport }) => {
         onClick={() => downloadJson('sozlamalar-export')}
       >
         <FaDownload />
-        <span>Ma'lumotlarni eksport qilish</span>
+        <span>{t('settings.backup.exportButton')}</span>
       </button>
 
       <button
@@ -74,7 +76,7 @@ const BackupCard = ({ settings, onImport }) => {
         onClick={() => importInputRef.current?.click()}
       >
         <FaUpload />
-        <span>Ma'lumotlarni import qilish</span>
+        <span>{t('settings.backup.importButton')}</span>
       </button>
       <input
         ref={importInputRef}
@@ -90,7 +92,7 @@ const BackupCard = ({ settings, onImport }) => {
         onClick={() => downloadJson('backup')}
       >
         <FaSave />
-        <span>Backup yaratish</span>
+        <span>{t('settings.backup.createBackupButton')}</span>
       </button>
 
       <button
@@ -99,7 +101,7 @@ const BackupCard = ({ settings, onImport }) => {
         onClick={() => restoreInputRef.current?.click()}
       >
         <FaRedo />
-        <span>Restore (tiklash)</span>
+        <span>{t('settings.backup.restoreButton')}</span>
       </button>
       <input
         ref={restoreInputRef}
@@ -110,9 +112,7 @@ const BackupCard = ({ settings, onImport }) => {
       />
 
       <p className="fieldHint">
-        Hozircha faqat sozlamalar (bu sahifadagilar) eksport/import qilinadi.
-        Hujjatlar tarixi va shablonlar kabi ma'lumotlarni backup qilish backend
-        ulanganda qo'shiladi.
+        {t('settings.backup.hint')}
       </p>
     </div>
   )

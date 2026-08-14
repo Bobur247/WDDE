@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { FaTimes, FaDownload, FaFileAlt } from 'react-icons/fa'
+import { useTranslation } from 'react-i18next'
 import mammoth from 'mammoth'
 import * as XLSX from 'xlsx'
 
@@ -14,6 +15,7 @@ function getFileKind(file) {
 }
 
 const ViewTemplateModal = ({ template, onClose }) => {
+  const { t } = useTranslation()
   const PreviewIcon = template.previewIcon
   const file = template.docxFile // AddTemplateModal'dan kelgan haqiqiy fayl (bo'lishi mumkin yoki yo'q)
   const fileKind = getFileKind(file)
@@ -50,7 +52,7 @@ const ViewTemplateModal = ({ template, onClose }) => {
         }
       } catch (err) {
         console.error(err)
-        setError('Faylni ochishda xatolik yuz berdi')
+        setError(t('templates.viewModal.fileError'))
       } finally {
         setLoading(false)
       }
@@ -61,6 +63,7 @@ const ViewTemplateModal = ({ template, onClose }) => {
     return () => {
       if (objectUrl) URL.revokeObjectURL(objectUrl)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [file, fileKind])
 
   function handleDownload() {
@@ -108,15 +111,16 @@ const ViewTemplateModal = ({ template, onClose }) => {
               </span>
             </div>
             <p className="viewTemplateDemoNote">
-              <FaFileAlt /> Bu demo shablon — original fayl yuklanmagan, shuning
-              uchun faqat namuna ko'rinishi ko'rsatilmoqda.
+              <FaFileAlt /> {t('templates.viewModal.demoNote')}
             </p>
           </>
         )}
 
         {/* Haqiqiy fayl bo'lsa — ichini ochib beramiz */}
         {file && loading && (
-          <div className="fileViewerLoading">Fayl ochilmoqda...</div>
+          <div className="fileViewerLoading">
+            {t('templates.viewModal.loading')}
+          </div>
         )}
 
         {file && !loading && error && (
@@ -124,7 +128,11 @@ const ViewTemplateModal = ({ template, onClose }) => {
         )}
 
         {file && !loading && !error && fileKind === 'pdf' && pdfUrl && (
-          <iframe title="pdf-preview" src={pdfUrl} className="pdfViewerFrame" />
+          <iframe
+            title={t('templates.viewModal.pdfPreviewTitle')}
+            src={pdfUrl}
+            className="pdfViewerFrame"
+          />
         )}
 
         {file && !loading && !error && fileKind === 'docx' && (
@@ -152,7 +160,7 @@ const ViewTemplateModal = ({ template, onClose }) => {
 
         {file && !loading && !error && fileKind === 'other' && (
           <p className="viewTemplateDemoNote">
-            Bu fayl turini ko'rib bo'lmaydi — faqat yuklab olishingiz mumkin.
+            {t('templates.viewModal.unsupportedFile')}
           </p>
         )}
 
@@ -162,7 +170,7 @@ const ViewTemplateModal = ({ template, onClose }) => {
 
         <div className="modalFooter">
           <button type="button" className="modalCancelButton" onClick={onClose}>
-            <span>Yopish</span>
+            <span>{t('templates.viewModal.close')}</span>
           </button>
           <button
             type="button"
@@ -171,7 +179,7 @@ const ViewTemplateModal = ({ template, onClose }) => {
             disabled={!file}
           >
             <FaDownload />
-            <span>Yuklab olish</span>
+            <span>{t('templates.viewModal.download')}</span>
           </button>
         </div>
       </div>

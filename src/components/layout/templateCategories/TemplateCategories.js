@@ -1,11 +1,15 @@
+import { useTranslation } from 'react-i18next'
+
 const TemplateCategories = ({
   categories,
   selectedCategory,
   setSelectedCategory,
 }) => {
+  const { t } = useTranslation()
+
   return (
     <div className="templateCategories">
-      <h3>Kategoriyalar</h3>
+      <h3>{t('templates.categories.title')}</h3>
       <ul>
         {categories.map((cat) => {
           const Icon = cat.icon

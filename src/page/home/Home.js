@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react'
 import { NavLink } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import './Home.css'
 import {
   CardHome,
@@ -13,6 +14,7 @@ import { HiOutlineDocumentAdd } from 'react-icons/hi'
 import { LuLayoutTemplate } from 'react-icons/lu'
 
 const Home = () => {
+  const { t } = useTranslation()
   const [file, setFile] = useState(null)
   const [error, setError] = useState('')
   const [isBox, setBox] = useState(false)
@@ -59,8 +61,8 @@ const Home = () => {
   const itemCards = [
     {
       id: 0,
-      title: 'Konvertatsiya',
-      subtitle: 'PDF↔DOCX,TXT,HTML',
+      title: t('home.cards.convert.title'),
+      subtitle: t('home.cards.convert.subtitle'),
       icon: <IoDocumentsOutline />,
       iconColor: '#000CFE',
       bgColor: '#000CFE40',
@@ -68,8 +70,8 @@ const Home = () => {
     },
     {
       id: 1,
-      title: "Ma'lumot ajratish",
-      subtitle: "Kerakli ma'lumotni ajrating",
+      title: t('home.cards.informationAllocation.title'),
+      subtitle: t('home.cards.informationAllocation.subtitle'),
       icon: <SiGoogledataproc />,
       iconColor: '#691CD6',
       bgColor: '#691CD640',
@@ -77,8 +79,8 @@ const Home = () => {
     },
     {
       id: 2,
-      title: 'Hujjat yaratish',
-      subtitle: 'Yangi hujjat yarating',
+      title: t('home.cards.createDocument.title'),
+      subtitle: t('home.cards.createDocument.subtitle'),
       icon: <HiOutlineDocumentAdd />,
       iconColor: '#06A959',
       bgColor: '#06A95940',
@@ -86,8 +88,8 @@ const Home = () => {
     },
     {
       id: 3,
-      title: 'Shablonlar',
-      subtitle: 'Shablonlar bilan ishlash',
+      title: t('home.cards.templates.title'),
+      subtitle: t('home.cards.templates.subtitle'),
       icon: <LuLayoutTemplate />,
       iconColor: '#DD5B12',
       bgColor: '#DD5B1240',
@@ -116,11 +118,8 @@ const Home = () => {
             <SiGoogledataproc />
           </div>
           <div className="subtitle">
-            <p>Ma'lumot ajratish</p>
-            <span>
-              Word hujjatidan kerakli ma'lumotni ajrating va yangi hujjatga
-              saqlang
-            </span>
+            <p>{t('home.body.title')}</p>
+            <span>{t('home.body.subtitle')}</span>
           </div>
         </div>
         <div className="homeBodyMain">

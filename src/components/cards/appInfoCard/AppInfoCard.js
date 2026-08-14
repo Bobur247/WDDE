@@ -1,11 +1,12 @@
 import { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import { FaDesktop, FaGlobe, FaExpand, FaSave } from 'react-icons/fa'
 
 // Brauzer va OS nomini navigator ma'lumotlaridan HAQIQATAN aniqlaydi
-function detectSystemInfo() {
+function detectSystemInfo(unknownLabel) {
   const ua = navigator.userAgent
 
-  let os = "Noma'lum"
+  let os = unknownLabel
   if (ua.includes('Windows NT 10.0')) os = 'Windows 10/11'
   else if (ua.includes('Windows')) os = 'Windows'
   else if (ua.includes('Mac OS X')) os = 'macOS'
@@ -13,7 +14,7 @@ function detectSystemInfo() {
   else if (ua.includes('iPhone') || ua.includes('iPad')) os = 'iOS'
   else if (ua.includes('Linux')) os = 'Linux'
 
-  let browser = "Noma'lum"
+  let browser = unknownLabel
   const edgeMatch = ua.match(/Edg\/([\d.]+)/)
   const chromeMatch = ua.match(/Chrome\/([\d.]+)/)
   const firefoxMatch = ua.match(/Firefox\/([\d.]+)/)
@@ -30,7 +31,8 @@ function detectSystemInfo() {
 }
 
 const AppInfoCard = ({ onSave }) => {
-  const info = useMemo(() => detectSystemInfo(), [])
+  const { t } = useTranslation()
+  const info = useMemo(() => detectSystemInfo(t('settings.appInfo.unknown')), [t])
 
   return (
     <div className="appInfoCard">
@@ -38,19 +40,19 @@ const AppInfoCard = ({ onSave }) => {
       <h3 className="appInfoName">Word Document Toolkit</h3>
 
       <div className="appInfoVersionRow">
-        <span>Versiya:</span>
+        <span>{t('settings.appInfo.versionLabel')}</span>
         <span className="appInfoVersion">1.0.0</span>
-        <span className="appInfoBadge">Faol</span>
+        <span className="appInfoBadge">{t('settings.appInfo.activeBadge')}</span>
       </div>
 
       <div className="appInfoDivider" />
 
-      <h4 className="appInfoSectionTitle">Tizim ma'lumotlari</h4>
+      <h4 className="appInfoSectionTitle">{t('settings.appInfo.systemInfoTitle')}</h4>
 
       <div className="appInfoRow">
         <FaDesktop />
         <div>
-          <p className="appInfoRowLabel">Operatsion tizim:</p>
+          <p className="appInfoRowLabel">{t('settings.appInfo.osLabel')}</p>
           <p className="appInfoRowValue">{info.os}</p>
         </div>
       </div>
@@ -58,7 +60,7 @@ const AppInfoCard = ({ onSave }) => {
       <div className="appInfoRow">
         <FaGlobe />
         <div>
-          <p className="appInfoRowLabel">Brauzer:</p>
+          <p className="appInfoRowLabel">{t('settings.appInfo.browserLabel')}</p>
           <p className="appInfoRowValue">{info.browser}</p>
         </div>
       </div>
@@ -66,14 +68,14 @@ const AppInfoCard = ({ onSave }) => {
       <div className="appInfoRow">
         <FaExpand />
         <div>
-          <p className="appInfoRowLabel">Ekran o'lchami:</p>
+          <p className="appInfoRowLabel">{t('settings.appInfo.screenSizeLabel')}</p>
           <p className="appInfoRowValue">{info.screenSize}</p>
         </div>
       </div>
 
       <button type="button" className="appInfoSaveButton" onClick={onSave}>
         <FaSave />
-        <span>Saqlash</span>
+        <span>{t('settings.appInfo.saveButton')}</span>
       </button>
     </div>
   )

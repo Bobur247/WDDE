@@ -1,6 +1,9 @@
 import { FaTrash, FaTimes } from 'react-icons/fa'
+import { Trans, useTranslation } from 'react-i18next'
 
 const DeleteConfirmModal = ({ template, onCancel, onConfirm }) => {
+  const { t } = useTranslation()
+
   return (
     <div className="modalOverlay" onClick={onCancel}>
       <div
@@ -10,10 +13,15 @@ const DeleteConfirmModal = ({ template, onCancel, onConfirm }) => {
         <div className="deleteConfirmIcon">
           <FaTrash />
         </div>
-        <h3>Shablonni o'chirish</h3>
+        <h3>{t('templates.deleteModal.title')}</h3>
         <p>
-          <b>{template.name}</b> shablonini rostdan ham o'chirmoqchimisiz? Bu
-          amalni orqaga qaytarib bo'lmaydi.
+          <Trans
+            i18nKey="templates.deleteModal.confirmText"
+            values={{ name: template.name }}
+          >
+            <b>{{ name: template.name }}</b> shablonini rostdan ham
+            o'chirmoqchimisiz? Bu amalni orqaga qaytarib bo'lmaydi.
+          </Trans>
         </p>
         <div className="modalFooter center">
           <button
@@ -22,7 +30,7 @@ const DeleteConfirmModal = ({ template, onCancel, onConfirm }) => {
             onClick={onCancel}
           >
             <FaTimes />
-            <span>Bekor qilish</span>
+            <span>{t('templates.deleteModal.cancel')}</span>
           </button>
           <button
             type="button"
@@ -30,7 +38,7 @@ const DeleteConfirmModal = ({ template, onCancel, onConfirm }) => {
             onClick={onConfirm}
           >
             <FaTrash />
-            <span>O'chirish</span>
+            <span>{t('templates.deleteModal.delete')}</span>
           </button>
         </div>
       </div>

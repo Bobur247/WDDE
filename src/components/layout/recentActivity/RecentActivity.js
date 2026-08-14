@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import {
   FaClock,
   FaFileAlt,
@@ -14,18 +15,21 @@ const TYPE_ICONS = {
 }
 
 const RecentActivity = ({ records, onView }) => {
+  const { t } = useTranslation()
   return (
     <div className="recentActivityCard">
       <div className="settingsCardHeaderLike">
         <span className="cardHeaderIcon">
           <FaClock />
         </span>
-        <h3>Oxirgi faoliyat</h3>
+        <h3>{t('history.recentActivity.title')}</h3>
       </div>
 
       <div className="recentActivityList">
         {records.length === 0 && (
-          <p className="recentActivityEmpty">Hozircha faoliyat yo'q</p>
+          <p className="recentActivityEmpty">
+            {t('history.recentActivity.empty')}
+          </p>
         )}
 
         {records.map((r) => {

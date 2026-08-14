@@ -1,0 +1,778 @@
+{
+  "navbar": {
+    "subtitle": "Ворд ҳужжатлари воситаси",
+    "openMenu": "Менюни очиш",
+    "closeMenu": "Менюни ёпиш",
+    "languageLabel": "Тилни танланг"
+  },
+  "sidebar": {
+    "home": "Бош саҳифа",
+    "informationAllocation": "Маълумот ажратиш",
+    "convert": "Конвертация",
+    "createDocument": "Ҳужжат яратиш",
+    "templates": "Шаблонлар",
+    "history": "Тарих (Ҳисоботи)",
+    "settings": "Созламалар"
+  },
+  "home": {
+    "cards": {
+      "convert": {
+        "title": "Конвертация",
+        "subtitle": "PDF↔DOCX,TXT,HTML"
+      },
+      "informationAllocation": {
+        "title": "Маълумот ажратиш",
+        "subtitle": "Керакли маълумотни ажратинг"
+      },
+      "createDocument": {
+        "title": "Ҳужжат яратиш",
+        "subtitle": "Янги ҳужжат яратинг"
+      },
+      "templates": {
+        "title": "Шаблонлар",
+        "subtitle": "Шаблонлар билан ишлаш"
+      }
+    },
+    "body": {
+      "title": "Маълумот ажратиш",
+      "subtitle": "Word ҳужжатидан керакли маълумотни ажратинг ва янги ҳужжатга сақланг"
+    },
+    "selectFile": {
+      "errorInvalidType": "Фақат .docx форматидаги файл юклаш мумкин!",
+      "errorReadFailed": "Файлни ўқишда хатолик юз берди",
+      "title": "DOCX файлни юкланг",
+      "subtitle": "Файлни бу ерга ташланг ёки танланг",
+      "chooseFile": "Файл танланг",
+      "selectedFileLabel": "Танланган файл:",
+      "cancelFile": "Файлни бекор қилиш"
+    },
+    "docxViewer": {
+      "placeholder": "Файл танланганда, унинг матни шу ерда кўринади",
+      "loading": "Файл ўқилмоқда...",
+      "checkboxTitle": "Файлда топилган матнлар (керагини танланг):",
+      "manualTitle": "Керакли матнни сичқонча билан белгиланг:",
+      "manualPendingLabel": "Белгиланган (ҳали олинмаган):",
+      "rawTextTitle": "Файл матни:",
+      "finalResultsTitle": "Якуний ажратилган маълумотлар ({{count}} та):"
+    },
+    "separateOptions": {
+      "methodLabel": "Ажратиш усули",
+      "extractButton": "Ажратиш",
+      "mainExtractButton": "Маълумотни ажратиш",
+      "methods": {
+        "block": "Блок (Бошланиши-тугаши)",
+        "checkbox": "Checkbox (Ҳар бир қатор билан)",
+        "manual": "Матнни қўлда танлаш",
+        "keyword": "Калит сўз бўйича",
+        "regex": "Regex бўйича",
+        "table": "Жадвалдан ажратиш"
+      },
+      "placeholders": {
+        "blockStart": "Бошланиши",
+        "blockEnd": "Тугаши",
+        "keyword": "Калит сўз (масалан: Телефон:)",
+        "keywordCount": "Белгилар сони (масалан: 100)",
+        "regex": "Regex, масалан: \\+998\\d{9}",
+        "selectColumn": "-- Устун танланг --",
+        "tableRowNumber": "ёки қатор рақами (0 = сарлавҳа)",
+        "exportFileName": "Масалан: mijozlar-royxati"
+      },
+      "errors": {
+        "blockMissingInputs": "Бошланиш ва тугаш матнларини киритинг",
+        "blockNotFound": "Белгиланган матн файлда топилмади",
+        "noRowsSelected": "Ҳеч қандай қатор танланмади",
+        "keywordMissing": "Калит сўзни киритинг",
+        "keywordNotFound": "Калит сўз файлда топилмади",
+        "regexMissing": "Regex ифодасини киритинг",
+        "regexNoMatch": "Мос келувчи натижа топилмади",
+        "regexInvalid": "Regex нотўғри киритилди",
+        "tableNotFound": "Файлда жадвал топилмади",
+        "columnNotFound": "Устун топилмади",
+        "rowNotFound": "Бундай қатор топилмади",
+        "selectColumnOrRow": "Устун ёки қатор рақамини танланг",
+        "selectTextFirst": "Аввал матнни сичқонча билан белгиланг",
+        "nothingExtractedYet": "Ҳали ҳеч қандай маълумот ажратилмаган"
+      },
+      "modal": {
+        "title": "Файл номини киритинг",
+        "cancel": "Бекор қилиш",
+        "save": "Сақлаш"
+      }
+    }
+  },
+  "convert": {
+    "page": {
+      "title": "Конвертация",
+      "subtitle": "Файлларни бир форматдан бошқа форматга айлантиринг"
+    },
+    "shared": {
+      "uploadTitle": "Файл юклаш",
+      "dropzoneHint": "Файлни шу ерга ташланг ёки танланг",
+      "uploadButton": "Файл танлаш",
+      "removeFile": "Бекор қилиш",
+      "formatsLabel": "Қўллаб-қувватланадиган форматлар:",
+      "directionTitle": "Конвертация йўналиши",
+      "settingsTitle": "Қўшимча созламалар",
+      "keepStyling": "Форматни сақлаш (асл услуб)",
+      "keepImages": "Расмларни сақлаш",
+      "keepSearchIndex": "Саҳифа қидирувини сақлаш",
+      "convertButton": "Конвертация қилиш",
+      "converting": "Конвертация қилинмоқда...",
+      "resultTitle": "Натижа",
+      "resultPlaceholderEmpty": "Файл юклаб, конвертация қилингандан сўнг натижа шу ерда кўринади",
+      "resultPlaceholderReady": "\"Конвертация қилиш\" тугмасини босинг",
+      "successTitle": "Конвертация тайёр!",
+      "successSubtitle": "Файл муваффақиятли конвертация қилинди.",
+      "detailOriginalFormat": "Асл формат:",
+      "detailNewFormat": "Янги формат:",
+      "detailPages": "Саҳифалар:",
+      "detailTime": "Вақт:",
+      "detailOriginalSize": "Олдинги ҳажм:",
+      "detailNewSize": "Янги ҳажм:",
+      "downloadButton": "Юклаб олиш",
+      "convertAnotherButton": "Бошқа форматга ҳам конвертация"
+    },
+    "docxHtml": {
+      "errorInvalidFormat": "Фақат DOCX ёки HTML форматидаги файл юклаш мумкин!",
+      "directionDocxToHtml": "DOCX дан HTML га",
+      "directionHtmlToDocx": "HTML дан DOCX га",
+      "ocrLabel": "OCR (асл тегларни сақлаш)"
+    },
+    "docxTxt": {
+      "errorInvalidFormat": "Фақат DOCX ёки TXT форматидаги файл юклаш мумкин!",
+      "directionDocxToTxt": "DOCX дан TXT га",
+      "directionTxtToDocx": "TXT дан DOCX га",
+      "ocrLabel": "OCR (сканерланган ҳужжат учун)"
+    },
+    "pdfDocx": {
+      "errorInvalidFormat": "Фақат PDF ёки DOCX форматидаги файл юклаш мумкин!",
+      "directionPdfToDocx": "PDF дан DOCX га",
+      "directionDocxToPdf": "DOCX дан PDF га",
+      "ocrLabel": "OCR (сканерланган PDF учун)"
+    }
+  },
+  "history": {
+    "title": "Тарих (Ҳисоботи)",
+    "subtitle": "Барча бажарилган амаллар тарихи ва ҳисоботлар",
+    "exportButton": "Ҳисоботларни экспорт қилиш",
+    "exporting": "Тайёрланмоқда...",
+    "stats": {
+      "total": "Умумий амаллар",
+      "success": "Муваффақиятли",
+      "errors": "Хатоликлар",
+      "today": "Бугунги амаллар"
+    },
+    "types": {
+      "extraction": "Маълумот ажратиш",
+      "conversion": "Конвертация",
+      "document": "Ҳужжат яратиш",
+      "other": "Бошқалар"
+    },
+    "filters": {
+      "allTypes": "Барча тур",
+      "allStatuses": "Барча ҳолат",
+      "searchPlaceholder": "Амалларни қидириш...",
+      "dateRangePlaceholder": "Сана оралиғи",
+      "dateFrom": "Дан",
+      "dateTo": "Гача",
+      "clear": "Тозалаш"
+    },
+    "status": {
+      "success": "Муваффақиятли",
+      "error": "Хатолик"
+    },
+    "table": {
+      "headers": {
+        "index": "№",
+        "type": "Амал тури",
+        "fileName": "Файл номи",
+        "date": "Бажарилган вақти",
+        "status": "Ҳолат",
+        "result": "Натижа",
+        "actions": "Амаллар"
+      },
+      "empty": "Ҳеч қандай амал топилмади",
+      "download": "Юклаб олиш",
+      "view": "Кўриш",
+      "delete": "Ўчириш"
+    },
+    "chart": {
+      "title": "Амаллар бўйича статистика"
+    },
+    "recentActivity": {
+      "title": "Охирги фаолият",
+      "empty": "Ҳозирча фаолият йўқ"
+    },
+    "deleteModal": {
+      "title": "Ёзувни ўчириш",
+      "message": "<b>{{fileName}}</b> тарихдан ўчирилсинми? Бу амални ортга қайтариб бўлмайди.",
+      "cancel": "Бекор қилиш",
+      "confirm": "Ўчириш"
+    },
+    "viewModal": {
+      "demoNote": "Бу демо ёзув — оригинал файл сақланмаган, шунинг учун ичини кўрсатиб бўлмайди. Ҳақиқий лойиҳада backend файл сақлагичидан (масалан S3, диск) олиб кўрсатилади.",
+      "loading": "Файл очилмоқда...",
+      "error": "Файлни очишда хатолик юз берди",
+      "close": "Ёпиш",
+      "download": "Юклаб олиш"
+    },
+    "mock": {
+      "resultRecords": "{{count}} та ёзув",
+      "resultFiles": "{{count}} та файл",
+      "resultDocuments": "{{count}} та ҳужжат",
+      "resultPages": "{{count}} та саҳифа",
+      "keywordNotFound": "Калит сўз топилмади",
+      "fileCorrupted": "Файл шикастланган"
+    }
+  },
+  "informationAllocation": {
+    "header": {
+      "title": "Маълумот ажратиш",
+      "subtitle": "Word ҳужжатидан керакли маълумотни ажратинг ва янги ҳужжатга сақланг",
+      "newProject": "Янги лойиҳа"
+    },
+    "stepper": {
+      "step1": {
+        "title": "DOCX юклаш",
+        "subtitle": "Файл танланди"
+      },
+      "step2": {
+        "title": "Ажратиш қоидаси",
+        "subtitle": "Созламаларни киритинг"
+      },
+      "step3": {
+        "title": "Кўриб чиқиш",
+        "subtitle": "Натижани текширинг"
+      },
+      "step4": {
+        "title": "Сақлаш",
+        "subtitle": "Файлни сақланг"
+      }
+    },
+    "historyBar": {
+      "title": "Бажарилган амаллар (Тарих)",
+      "empty": "Ҳали ҳеч қандай файл сақланмаган",
+      "blocksCount": "{{count}} та блок",
+      "detail": "Батафсил →"
+    },
+    "extractionMethod": {
+      "methods": {
+        "range": "Белги оралиғи",
+        "select": "Матн танлаш",
+        "regex": "Regex (ифода)",
+        "table": "Жадвал",
+        "heading": "Heading (сарлавҳа)",
+        "bookmark": "Букмарк"
+      },
+      "soonBadge": "тез орада",
+      "rangeStartLabel": "Бошланиш белгиси:",
+      "rangeStartPlaceholder": "Масалан: Исм:",
+      "rangeEndLabel": "Тугаш белгиси:",
+      "rangeEndPlaceholder": "Масалан: Манзил:",
+      "includeStart": "Бошланишни қўш",
+      "includeEnd": "Тугашни қўш",
+      "selectedTextLabel": "Танланган матн:",
+      "selectedTextPlaceholder": "Кўриб чиқиш ойнасида матнни белгиланг...",
+      "addSelectedText": "+ Ажратишга қўшиш",
+      "regexPatternLabel": "Regex ифода:",
+      "regexPatternPlaceholder": "Масалан: \\+998\\d{9}",
+      "comingSoon": "\"{{label}}\" усули кейинги босқичда қўшилади — бу docx файлнинг ички структурасини (жадвал/сарлавҳа/букмарк) чуқурроқ таҳлил қилишни талаб қилади.",
+      "extract": "Ажратиш"
+    },
+    "extractedData": {
+      "title": "Ажратилган маълумотлар",
+      "blockCount": "{{count}} та блок",
+      "empty": "Ҳали ҳеч нарса ажратилмаган",
+      "deleteBlock": "Блокни ўчириш",
+      "fieldCount": "{{count}} та майдон",
+      "newBlock": "+ Янги блок бошлаш",
+      "previewTitle": "Кўриб чиқиш",
+      "statsFound": "Топилди:",
+      "statsChars": "Белгилар:",
+      "statsWords": "Сўзлар:",
+      "formatSectionTitle": "Сақлаш форматлари",
+      "saveToFile": "Янги файлга сақлаш",
+      "defaultFieldLabel": "Майдон",
+      "regexResultLabel": "Натижа {{index}}",
+      "selectedTextValueLabel": "Танланган матн",
+      "blockDefaultName": "Блок",
+      "csv": {
+        "block": "Блок",
+        "field": "Майдон",
+        "value": "Қиймат"
+      }
+    },
+    "documentPreview": {
+      "title": "Ҳужжат кўриниши",
+      "emptyNoFile": "Файл юкланганда ҳужжат шу ерда кўринади",
+      "emptyLoading": "Ҳужжат ўқилмоқда..."
+    },
+    "documentInfo": {
+      "title": "Ҳужжат маълумотлари",
+      "dropzoneText": "DOCX файлни юкланг",
+      "chooseFile": "Файл танлаш",
+      "docxOnlyAlert": "Фақат DOCX форматидаги файл юклаш мумкин!",
+      "replaceFile": "Файлни алмаштириш",
+      "reupload": "Файлни қайта юклаш",
+      "fileInfo": "Файл ҳақида маълумот",
+      "fileInfoAlert": "Файл: {{name}}\nҲажми: {{size}}\nТури: {{type}}",
+      "removeFile": "Файлни олиб ташлаш",
+      "analyzing": "Ҳужжат таҳлил қилинмоқда...",
+      "pages": "Саҳифалар:",
+      "paragraphs": "Параграфлар:",
+      "tables": "Жадваллар:",
+      "images": "Расмлар:"
+    },
+    "saveFileModal": {
+      "title": "Янги файл яратиш",
+      "fileNameLabel": "Файл номи:",
+      "formatLabel": "Формат:",
+      "saveMethodLabel": "Сақлаш усули:",
+      "newFile": "Янги файл яратиш",
+      "appendFile": "Мавжуд файлга қўшиш",
+      "appendHint": "DOCX/PDF файлларга қўшиш backend интеграцияси билан қўшилади — ҳозирча фақат TXT/CSV/JSON учун ишлайди.",
+      "appendToLabel": "Қайси файлга қўшилсин:",
+      "selectFileOption": "Файлни танланг",
+      "cancel": "Бекор қилиш",
+      "save": "Сақлаш"
+    },
+    "historyDetailModal": {
+      "close": "Ёпиш",
+      "documentUploaded": "Ҳужжат юкланди",
+      "blocksCreated": "{{count}} та блок яратилди",
+      "dataExtracted": "Маълумотлар ажратилди",
+      "fileSaved": "{{format}} файл сақланди"
+    }
+  },
+  "createDocument": {
+    "header": {
+      "title": "Ҳужжат яратиш",
+      "subtitle": "Янги ҳужжат яратиш, шаблонлардан фойдаланиш ва профессионал кўринишда тайёрлаш",
+      "newDocButton": "Янги ҳужжат яратиш"
+    },
+    "templates": {
+      "rasmiyXat": {
+        "name": "Расмий хат"
+      },
+      "tashakkurnoma": {
+        "name": "Ташаккурнома"
+      },
+      "kadrlarAriza": {
+        "name": "Кадрлар учун ариза"
+      },
+      "shartnoma": {
+        "name": "Шартнома"
+      },
+      "blank": {
+        "name": "Бўш ҳужжат"
+      }
+    },
+    "fields": {
+      "sarlavha": "Сарлавҳа",
+      "matn": "Матн",
+      "muallif": "Муаллиф",
+      "sana": "Сана",
+      "fish": "Ф.И.Ш.",
+      "lavozim": "Лавозим",
+      "bolim": "Бўлим",
+      "tatilBoshlanish": "Таътил бошланиш санаси",
+      "tatilTugash": "Таътил тугаш санаси",
+      "sabab": "Сабаб"
+    },
+    "preview": {
+      "arizaTitle": "АРИЗА",
+      "fishLabel": "Ф.И.Ш.",
+      "lavozimLabel": "Лавозим",
+      "bolimLabel": "Бўлим",
+      "boshlanishSanasiLabel": "Бошланиш санаси",
+      "tugashSanasiLabel": "Тугаш санаси",
+      "sababLabel": "Сабаб"
+    },
+    "defaultDocumentName": "Раҳмат хати",
+    "newDocumentName": "Янги ҳужжат",
+    "settingsPanel": {
+      "title": "Ҳужжатни созлаш",
+      "tabs": {
+        "asosiy": "Асосий",
+        "headerFooter": "Header/Footer",
+        "qoshimcha": "Қўшимча",
+        "uslub": "Услуб"
+      },
+      "tabComingSoon": "\"{{tab}}\" бўлими кейинги босқичда қўшилади. Ҳозирча лого / header / footer созламаларини ўнг панелдан (\"Қўшимча созламалар\") бошқаришингиз мумкин.",
+      "documentInfo": "Ҳужжат маълумотлари",
+      "documentNameLabel": "Ҳужжат номи:",
+      "templateLabel": "Шаблон:",
+      "templateFieldsLabel": "Шаблон майдонлари",
+      "richText": {
+        "placeholderWord": "матн"
+      }
+    },
+    "livePreview": {
+      "label": "Live Preview",
+      "desktopTitle": "Desktop кўриниш",
+      "mobileTitle": "Мобил кўриниш",
+      "printTitle": "Чоп этиш",
+      "documentFallbackTitle": "Ҳужжат",
+      "untitledDocument": "Номсиз ҳужжат"
+    },
+    "additionalSettings": {
+      "title": "Қўшимча созламалар",
+      "logo": {
+        "sectionLabel": "Расм ва логотип",
+        "dropzoneText": "Логотип юклаш",
+        "dropzoneHint": "PNG / JPG, SVG (макс. 2 МБ)",
+        "chooseFile": "Файл танлаш",
+        "altText": "логотип"
+      },
+      "header": {
+        "label": "Header (сарлавҳа)",
+        "orgNamePlaceholder": "Ташкилот номи",
+        "phonePlaceholder": "Телефон"
+      },
+      "footer": {
+        "label": "Footer (пастки қисм)",
+        "textPlaceholder": "Footer матни (масалан: www.example.uz)"
+      },
+      "pageNumbers": {
+        "label": "Саҳифа рақамлари",
+        "positions": {
+          "bottomRight": "Пастки ўнг",
+          "bottomCenter": "Пастки марказ",
+          "bottomLeft": "Пастки чап",
+          "topRight": "Юқори ўнг",
+          "topCenter": "Юқори марказ",
+          "topLeft": "Юқори чап"
+        }
+      },
+      "pageSizeLabel": "Саҳифа ўлчами:",
+      "orientation": {
+        "label": "Ориентация:",
+        "portrait": "Portrait (вертикал)",
+        "landscape": "Landscape (горизонтал)"
+      },
+      "outputFormat": {
+        "label": "Ҳужжат формати:",
+        "docx": "DOCX (Word)",
+        "pdf": "PDF",
+        "docxPdf": "DOCX + PDF"
+      },
+      "pdfQuality": {
+        "label": "PDF сифати:",
+        "high": "Юқори",
+        "standard": "Стандарт",
+        "compressed": "Сиқилган"
+      },
+      "generateButton": "Ҳужжатни яратиш",
+      "generating": "Яратилмоқда...",
+      "result": {
+        "successTitle": "Ҳужжат муваффақиятли яратилди",
+        "view": "Кўриш",
+        "download": "Юклаб олиш"
+      },
+      "pdfNote": "PDF экспорти браузерда амалга оширилмайди — бу backend (масалан LibreOffice) орқали қўшилади.",
+      "fallbackFileName": "ҳужжат",
+      "viewModal": {
+        "loading": "Ҳужжат очилмоқда...",
+        "error": "Ҳужжатни кўрсатишда хатолик юз берди",
+        "close": "Ёпиш",
+        "download": "Юклаб олиш"
+      }
+    },
+    "history": {
+      "title": "Яратилган ҳужжатлар тарихи",
+      "empty": "Ҳали ҳеч қандай ҳужжат яратилмаган. Чапдан шаблон танлаб, \"Ҳужжатни яратиш\" тугмасини босинг.",
+      "columns": {
+        "number": "№",
+        "documentName": "Ҳужжат номи",
+        "template": "Шаблон",
+        "createdDate": "Яратилган сана",
+        "format": "Формат"
+      },
+      "actions": {
+        "view": "Кўриш",
+        "download": "Юклаб олиш"
+      }
+    },
+    "newDocModal": {
+      "title": "Янги ҳужжат яратиш",
+      "question": "Қандай ҳужжат яратмоқчисиз?",
+      "useTemplate": "Шаблондан фойдаланиш",
+      "useBlank": "Бўш ҳужжат яратиш"
+    }
+  },
+  "templates": {
+    "header": {
+      "title": "Шаблонлар",
+      "subtitle": "Иш, таълим ва бизнес учун тайёр Word ҳужжат шаблонлари",
+      "addButton": "Янги шаблон қўшиш"
+    },
+    "categories": {
+      "title": "Категориялар",
+      "all": "Барчаси",
+      "biznes": "Бизнес",
+      "talim": "Таълим",
+      "shaxsiy": "Шахсий",
+      "huquqiy": "Ҳуқуқий",
+      "texnik": "Техник",
+      "boshqalar": "Бошқалар"
+    },
+    "mock": {
+      "template1": {
+        "name": "Расмий хат",
+        "description": "Компания ва ташкилотлар учун расмий хат шаблони",
+        "previewTitle": "РАСМИЙ ХАТ"
+      },
+      "template2": {
+        "name": "Ишга қабул қилиш учун резюме",
+        "description": "Профессионал резюме шаблони",
+        "previewTitle": "РЕЗЮМЕ"
+      },
+      "template3": {
+        "name": "Компания тақдимоти",
+        "description": "Компания тақдимоти учун шаблон",
+        "previewTitle": "КОМПАНИЯ ТАҚДИМОТИ"
+      },
+      "template4": {
+        "name": "Дарс ишланма",
+        "description": "Ўқитувчилар учун дарс ишланма шаблони",
+        "previewTitle": "ДАРС ИШЛАНМА"
+      },
+      "template5": {
+        "name": "Шартнома",
+        "description": "Ҳуқуқий ҳужжатлар учун шаблон",
+        "previewTitle": "ШАРТНОМА"
+      },
+      "template6": {
+        "name": "Ҳисобот",
+        "description": "Йиллик ёки даврий ҳисобот шаблони",
+        "previewTitle": "ҲИСОБОТ"
+      }
+    },
+    "filters": {
+      "searchPlaceholder": "Шаблон номи ёки категория бўйича қидириш...",
+      "categoryLabel": "Категория",
+      "languageLabel": "Тиллар",
+      "allLanguages": "Барчаси",
+      "sortLabel": "Тартиб",
+      "sortNewest": "Янги аввал",
+      "sortOldest": "Эски аввал",
+      "sortByName": "Номи бўйича",
+      "gridView": "Катакча кўриниш",
+      "listView": "Рўйхат кўриниши"
+    },
+    "cards": {
+      "empty": "Ҳеч қандай шаблон топилмади",
+      "deleteTitle": "Ўчириш",
+      "view": "Кўриш",
+      "download": "Юклаб олиш"
+    },
+    "viewModal": {
+      "demoNote": "Бу демо шаблон — оригинал файл юкланмаган, шунинг учун фақат намуна кўриниши кўрсатилмоқда.",
+      "loading": "Файл очилмоқда...",
+      "fileError": "Файлни очишда хатолик юз берди",
+      "unsupportedFile": "Бу файл турини кўриб бўлмайди — фақат юклаб олишингиз мумкин.",
+      "close": "Ёпиш",
+      "download": "Юклаб олиш",
+      "pdfPreviewTitle": "PDF кўриниши"
+    },
+    "addModal": {
+      "title": "Янги шаблон қўшиш",
+      "subtitle": "Янги Word шаблонини тизимга қўшиш",
+      "nameLabel": "Шаблон номи",
+      "namePlaceholder": "Масалан: Расмий хат, Резюме, Ҳисобот...",
+      "categoryLabel": "Категория",
+      "categoryPlaceholder": "Категория танланг",
+      "languageLabel": "Тил",
+      "descriptionLabel": "Тавсиф",
+      "descriptionPlaceholder": "Шаблон ҳақида қисқача маълумот киритинг...",
+      "fileLabel": "Файлни юкланг",
+      "dropzoneTitle": "Файлни шу ерга ташланг",
+      "dropzoneSubtitle": "ёки файл танлаш тугмасини босинг",
+      "dropzoneHint": "Қўллаб-қувватланадиган форматлар: DOCX, PDF, XLSX",
+      "chooseFile": "Файл танлаш",
+      "imageLabel": "Шаблон учун расм (ихтиёрий)",
+      "chooseImage": "Расм танлаш",
+      "imagePreviewAlt": "Олдиндан кўриш",
+      "invalidFileType": "Фақат DOCX, PDF ёки Excel форматидаги файл юклаш мумкин!",
+      "requiredFields": "Юлдузча (*) билан белгиланган майдонларни тўлдиринг",
+      "cancel": "Бекор қилиш",
+      "save": "Сақлаш"
+    },
+    "deleteModal": {
+      "title": "Шаблонни ўчириш",
+      "confirmText": "<0>{{name}}</0> шаблонини ростдан ҳам ўчирмоқчимисиз? Бу амални орқага қайтариб бўлмайди.",
+      "cancel": "Бекор қилиш",
+      "delete": "Ўчириш"
+    }
+  },
+  "settings": {
+    "header": {
+      "title": "Созламалар",
+      "subtitle": "Дастур функцияларини ўзингизнинг эҳтиёжларингизга мос равишда созланг",
+      "resetButton": "Стандарт ҳолатга қайтариш",
+      "savedBanner": "Созламалар муваффақиятли сақланди"
+    },
+    "resetConfirm": {
+      "title": "Стандарт ҳолатга қайтариш",
+      "message": "Барча созламалар дастлабки ҳолатга қайтарилади. Бу амални ортга қайтариб бўлмайди.",
+      "confirmLabel": "Ҳа, қайтариш"
+    },
+    "confirmModal": {
+      "cancelButton": "Бекор қилиш"
+    },
+    "general": {
+      "title": "Умумий созламалар",
+      "languageLabel": "Дастур тили",
+      "languages": {
+        "uz": "Ўзбекча",
+        "ru": "Русча",
+        "en": "Инглизча"
+      },
+      "dateFormatLabel": "Сана ва вақт формати",
+      "regionLabel": "Минтақа",
+      "regions": {
+        "uzbekistan": "Ўзбекистон",
+        "russia": "Россия",
+        "kazakhstan": "Қозоғистон",
+        "usa": "АҚШ"
+      },
+      "darkMode": "Тунги режим",
+      "notifications": "Билдиришномалар"
+    },
+    "document": {
+      "title": "Ҳужжат созламалари",
+      "defaultFormatLabel": "Стандарт сақлаш формати",
+      "formats": {
+        "docx": "DOCX (Word)",
+        "pdf": "PDF",
+        "docx-pdf": "DOCX + PDF"
+      },
+      "defaultFontLabel": "Стандарт шрифт",
+      "pageSizeLabel": "Саҳифа ўлчами",
+      "marginsLabel": "Маргинлар",
+      "margins": {
+        "narrow": "Тор (1.27 см)",
+        "normal": "Нормал (2.5 см)",
+        "wide": "Кенг (3.18 см)"
+      },
+      "headerFooterAuto": "Header / Footer автоматик қўшиш",
+      "pageNumbers": "Саҳифа рақамлари"
+    },
+    "conversion": {
+      "title": "Конвертация созламалари",
+      "pdfQualityLabel": "PDF сифати",
+      "pdfQualities": {
+        "high": "Юқори (600 DPI)",
+        "standard": "Стандарт (300 DPI)",
+        "compressed": "Сиқилган (150 DPI)"
+      },
+      "ocr": "OCR (матнни таниб олиш)",
+      "imageQuality": "Расм сифатини сақлаш",
+      "embedFonts": "Фонтларни embed қилиш"
+    },
+    "extraction": {
+      "title": "Маълумот ажратиш созламалари",
+      "defaultMethodLabel": "Стандарт ажратиш усули",
+      "methods": {
+        "table": "Жадвал (Table)",
+        "block": "Блок (Бошланиши-тугаши)",
+        "checkbox": "Checkbox (Ҳар бир қатор)",
+        "keyword": "Калит сўз бўйича",
+        "regex": "Regex бўйича"
+      },
+      "saveMarkers": "Бошланиш ва тугаш белгиларини сақлаш",
+      "regexMode": "Regex режими",
+      "autoLoadTemplates": "Шаблонларни автоматик юклаш"
+    },
+    "file": {
+      "title": "Файл созламалари",
+      "downloadPathLabel": "Юклаб олинадиган стандарт папка",
+      "pickFolderTitle": "Папка танлаш",
+      "pickFolderUnsupported": "Браузерингиз бу функцияни қўллаб-қувватламайди",
+      "autoRename": "Автоматик номлаш",
+      "maxFileSizeLabel": "Максимал файл ҳажми"
+    },
+    "security": {
+      "title": "Хавфсизлик",
+      "changePassword": "Паролни ўзгартириш",
+      "twoFA": "2 босқичли тасдиқлаш (2FA)",
+      "twoFAHint": "2FA ёқилди (демо). Ҳақиқий QR-код орқали созлаш учун backend интеграцияси керак бўлади.",
+      "apiToken": "API Token",
+      "tokensButton": "Токенлар",
+      "activeSessions": "Актив сессиялар",
+      "sessionsButton": "Сессиялар",
+      "passwordModal": {
+        "title": "Паролни ўзгартириш",
+        "successNote": "Сўров тайёрланди. Бу демо — ҳақиқий парол backend API уланганда алмаштирилади.",
+        "currentPasswordLabel": "Жорий парол",
+        "newPasswordLabel": "Янги парол",
+        "confirmPasswordLabel": "Янги паролни тасдиқланг",
+        "errorFillAll": "Барча майдонларни тўлдиринг",
+        "errorMinLength": "Янги парол камида 8 белгидан иборат бўлиши керак",
+        "errorMismatch": "Янги пароллар мос келмади",
+        "closeButton": "Ёпиш",
+        "cancelButton": "Бекор қилиш",
+        "saveButton": "Сақлаш"
+      },
+      "tokensModal": {
+        "title": "API Токенлар",
+        "hint": "Демо режими — бу токенлар фақат кўриниш учун, ҳақиқий аутентификацияда ишлатилмайди.",
+        "generateButton": "Янги токен яратиш",
+        "emptyList": "Токенлар йўқ",
+        "createdLabel": "Яратилган",
+        "closeButton": "Ёпиш"
+      },
+      "sessionsModal": {
+        "title": "Актив сессиялар",
+        "currentSuffix": "(жорий сессия)",
+        "mobileDevice": "Мобил қурилма",
+        "computerDevice": "Компьютер",
+        "hint": "Бошқа қурилмалардаги сессиялар рўйхати backend (сервер томонидаги сессия базаси) уланганда шу ерда кўринади.",
+        "closeButton": "Ёпиш"
+      }
+    },
+    "backup": {
+      "title": "Захира (Backup)",
+      "importSuccess": "Маълумотлар муваффақиятли import қилинди",
+      "importError": "Файлни ўқишда хатолик — JSON форматини текширинг",
+      "exportButton": "Маълумотларни экспорт қилиш",
+      "importButton": "Маълумотларни import қилиш",
+      "createBackupButton": "Backup яратиш",
+      "restoreButton": "Restore (тиклаш)",
+      "hint": "Ҳозирча фақат созламалар (бу саҳифадагилар) экспорт/import қилинади. Ҳужжатлар тарихи ва шаблонлар каби маълумотларни backup қилиш backend уланганда қўшилади."
+    },
+    "additional": {
+      "title": "Қўшимча",
+      "checkUpdates": "Янгиланишларни текшириш",
+      "checking": "Текширилмоқда...",
+      "checkButton": "Текшириш",
+      "updateResult": "Сиз энг сўнгги версиядасиз (v1.0.0)",
+      "clearCache": "Кешни тозалаш",
+      "clearButton": "Тозалаш",
+      "cacheCleared": "Кеш тозаланди",
+      "aboutApp": "Дастур ҳақида",
+      "aboutButton": "Маълумот",
+      "clearConfirm": {
+        "title": "Кешни тозалаш",
+        "message": "Вақтинчалик сақланган маълумотлар тозаланади. Созламаларингизга таъсир қилмайди.",
+        "confirmLabel": "Тозалаш"
+      },
+      "aboutModal": {
+        "title": "Дастур ҳақида",
+        "description": "ҳужжатлар билан ишлаш, улардан маълумот ажратиш, форматлар орасида конвертация қилиш ва шаблонлар асосида янги ҳужжатлар яратиш учун мўлжалланган восита.",
+        "version": "Версия: 1.0.0",
+        "closeButton": "Ёпиш"
+      }
+    },
+    "appInfo": {
+      "versionLabel": "Версия:",
+      "activeBadge": "Фаол",
+      "systemInfoTitle": "Тизим маълумотлари",
+      "osLabel": "Операцион тизим:",
+      "browserLabel": "Браузер:",
+      "screenSizeLabel": "Экран ўлчами:",
+      "saveButton": "Сақлаш",
+      "unknown": "Номаълум"
+    }
+  }
+}

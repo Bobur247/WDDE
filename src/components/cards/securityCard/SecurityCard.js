@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   FaShieldAlt,
   FaKey,
@@ -20,6 +21,7 @@ function generateFakeToken() {
 }
 
 const SecurityCard = ({ values, onChange }) => {
+  const { t } = useTranslation()
   const [showPasswordModal, setShowPasswordModal] = useState(false)
   const [showTokensModal, setShowTokensModal] = useState(false)
   const [showSessionsModal, setShowSessionsModal] = useState(false)
@@ -33,15 +35,15 @@ const SecurityCard = ({ values, onChange }) => {
 
   function handlePasswordSubmit() {
     if (!oldPassword || !newPassword || !confirmPassword) {
-      setPasswordError("Barcha maydonlarni to'ldiring")
+      setPasswordError(t('settings.security.passwordModal.errorFillAll'))
       return
     }
     if (newPassword.length < 8) {
-      setPasswordError("Yangi parol kamida 8 belgidan iborat bo'lishi kerak")
+      setPasswordError(t('settings.security.passwordModal.errorMinLength'))
       return
     }
     if (newPassword !== confirmPassword) {
-      setPasswordError('Yangi parollar mos kelmadi')
+      setPasswordError(t('settings.security.passwordModal.errorMismatch'))
       return
     }
     setPasswordError('')
@@ -79,8 +81,8 @@ const SecurityCard = ({ values, onChange }) => {
   // ===== Aktiv sessiyalar (faqat joriy brauzer haqiqiy, qolganlari backend kerak) =====
   const currentSession = {
     device: navigator.userAgent.includes('Mobile')
-      ? 'Mobil qurilma'
-      : 'Kompyuter',
+      ? t('settings.security.sessionsModal.mobileDevice')
+      : t('settings.security.sessionsModal.computerDevice'),
     browser: navigator.userAgent,
     time: new Date().toLocaleString('uz-UZ'),
   }
@@ -91,23 +93,23 @@ const SecurityCard = ({ values, onChange }) => {
         <span className="settingsCardIcon">
           <FaShieldAlt />
         </span>
-        <h3>Xavfsizlik</h3>
+        <h3>{t('settings.security.title')}</h3>
       </div>
 
       <div className="actionRow">
-        <span>Parolni o'zgartirish</span>
+        <span>{t('settings.security.changePassword')}</span>
         <button
           type="button"
           className="cardActionButton"
           onClick={() => setShowPasswordModal(true)}
         >
           <FaKey />
-          <span>Parolni o'zgartirish</span>
+          <span>{t('settings.security.changePassword')}</span>
         </button>
       </div>
 
       <div className="toggleRow">
-        <span>2 bosqichli tasdiqlash (2FA)</span>
+        <span>{t('settings.security.twoFA')}</span>
         <label className="switch">
           <input
             type="checkbox"
@@ -119,32 +121,31 @@ const SecurityCard = ({ values, onChange }) => {
       </div>
       {values.twoFA && (
         <p className="fieldHint">
-          2FA yoqildi (demo). Haqiqiy QR-kod orqali sozlash uchun backend
-          integratsiyasi kerak bo'ladi.
+          {t('settings.security.twoFAHint')}
         </p>
       )}
 
       <div className="actionRow">
-        <span>API Token</span>
+        <span>{t('settings.security.apiToken')}</span>
         <button
           type="button"
           className="cardActionButton"
           onClick={() => setShowTokensModal(true)}
         >
           <FaKey />
-          <span>Tokenlar</span>
+          <span>{t('settings.security.tokensButton')}</span>
         </button>
       </div>
 
       <div className="actionRow">
-        <span>Aktiv sessiyalar</span>
+        <span>{t('settings.security.activeSessions')}</span>
         <button
           type="button"
           className="cardActionButton"
           onClick={() => setShowSessionsModal(true)}
         >
           <FaLaptop />
-          <span>Sessiyalar</span>
+          <span>{t('settings.security.sessionsButton')}</span>
         </button>
       </div>
 
@@ -153,7 +154,7 @@ const SecurityCard = ({ values, onChange }) => {
         <div className="modalOverlay" onClick={closePasswordModal}>
           <div className="modalBox" onClick={(e) => e.stopPropagation()}>
             <div className="modalTopHeader">
-              <h3>Parolni o'zgartirish</h3>
+              <h3>{t('settings.security.passwordModal.title')}</h3>
               <button
                 type="button"
                 className="modalCloseIcon"
@@ -165,13 +166,12 @@ const SecurityCard = ({ values, onChange }) => {
 
             {passwordSubmitted ? (
               <p className="successNote">
-                So'rov tayyorlandi. Bu demo — haqiqiy parol backend API
-                ulanganda almashtiriladi.
+                {t('settings.security.passwordModal.successNote')}
               </p>
             ) : (
               <>
                 <div className="settingsField">
-                  <label>Joriy parol</label>
+                  <label>{t('settings.security.passwordModal.currentPasswordLabel')}</label>
                   <input
                     type="password"
                     value={oldPassword}
@@ -179,7 +179,7 @@ const SecurityCard = ({ values, onChange }) => {
                   />
                 </div>
                 <div className="settingsField">
-                  <label>Yangi parol</label>
+                  <label>{t('settings.security.passwordModal.newPasswordLabel')}</label>
                   <input
                     type="password"
                     value={newPassword}
@@ -187,7 +187,7 @@ const SecurityCard = ({ values, onChange }) => {
                   />
                 </div>
                 <div className="settingsField">
-                  <label>Yangi parolni tasdiqlang</label>
+                  <label>{t('settings.security.passwordModal.confirmPasswordLabel')}</label>
                   <input
                     type="password"
                     value={confirmPassword}
@@ -204,7 +204,7 @@ const SecurityCard = ({ values, onChange }) => {
                 className="modalCancelButton"
                 onClick={closePasswordModal}
               >
-                <span>{passwordSubmitted ? 'Yopish' : 'Bekor qilish'}</span>
+                <span>{passwordSubmitted ? t('settings.security.passwordModal.closeButton') : t('settings.security.passwordModal.cancelButton')}</span>
               </button>
               {!passwordSubmitted && (
                 <button
@@ -212,7 +212,7 @@ const SecurityCard = ({ values, onChange }) => {
                   className="modalSaveButton"
                   onClick={handlePasswordSubmit}
                 >
-                  <span>Saqlash</span>
+                  <span>{t('settings.security.passwordModal.saveButton')}</span>
                 </button>
               )}
             </div>
@@ -225,7 +225,7 @@ const SecurityCard = ({ values, onChange }) => {
         <div className="modalOverlay" onClick={() => setShowTokensModal(false)}>
           <div className="modalBox" onClick={(e) => e.stopPropagation()}>
             <div className="modalTopHeader">
-              <h3>API Tokenlar</h3>
+              <h3>{t('settings.security.tokensModal.title')}</h3>
               <button
                 type="button"
                 className="modalCloseIcon"
@@ -236,8 +236,7 @@ const SecurityCard = ({ values, onChange }) => {
             </div>
 
             <p className="fieldHint">
-              Demo rejimi — bu tokenlar faqat ko'rinish uchun, haqiqiy
-              autentifikatsiyada ishlatilmaydi.
+              {t('settings.security.tokensModal.hint')}
             </p>
 
             <button
@@ -246,23 +245,23 @@ const SecurityCard = ({ values, onChange }) => {
               onClick={handleGenerateToken}
             >
               <FaPlus />
-              <span>Yangi token yaratish</span>
+              <span>{t('settings.security.tokensModal.generateButton')}</span>
             </button>
 
             <div className="tokenList">
               {tokens.length === 0 && (
-                <p className="emptyListText">Tokenlar yo'q</p>
+                <p className="emptyListText">{t('settings.security.tokensModal.emptyList')}</p>
               )}
-              {tokens.map((t) => (
-                <div className="tokenRow" key={t.id}>
+              {tokens.map((tok) => (
+                <div className="tokenRow" key={tok.id}>
                   <div>
-                    <p className="tokenValue">{t.value}</p>
-                    <p className="tokenDate">Yaratilgan: {t.created}</p>
+                    <p className="tokenValue">{tok.value}</p>
+                    <p className="tokenDate">{t('settings.security.tokensModal.createdLabel')}: {tok.created}</p>
                   </div>
                   <button
                     type="button"
                     className="tokenRevokeButton"
-                    onClick={() => handleRevokeToken(t.id)}
+                    onClick={() => handleRevokeToken(tok.id)}
                   >
                     <FaTrash />
                   </button>
@@ -276,7 +275,7 @@ const SecurityCard = ({ values, onChange }) => {
                 className="modalCancelButton"
                 onClick={() => setShowTokensModal(false)}
               >
-                <span>Yopish</span>
+                <span>{t('settings.security.tokensModal.closeButton')}</span>
               </button>
             </div>
           </div>
@@ -291,7 +290,7 @@ const SecurityCard = ({ values, onChange }) => {
         >
           <div className="modalBox" onClick={(e) => e.stopPropagation()}>
             <div className="modalTopHeader">
-              <h3>Aktiv sessiyalar</h3>
+              <h3>{t('settings.security.sessionsModal.title')}</h3>
               <button
                 type="button"
                 className="modalCloseIcon"
@@ -305,15 +304,14 @@ const SecurityCard = ({ values, onChange }) => {
               <FaLaptop />
               <div>
                 <p className="sessionDevice">
-                  {currentSession.device} (joriy sessiya)
+                  {currentSession.device} {t('settings.security.sessionsModal.currentSuffix')}
                 </p>
                 <p className="sessionMeta">{currentSession.time}</p>
               </div>
             </div>
 
             <p className="fieldHint">
-              Boshqa qurilmalardagi sessiyalar ro'yxati backend (server
-              tomonidagi sessiya bazasi) ulanganda shu yerda ko'rinadi.
+              {t('settings.security.sessionsModal.hint')}
             </p>
 
             <div className="modalFooter">
@@ -322,7 +320,7 @@ const SecurityCard = ({ values, onChange }) => {
                 className="modalCancelButton"
                 onClick={() => setShowSessionsModal(false)}
               >
-                <span>Yopish</span>
+                <span>{t('settings.security.sessionsModal.closeButton')}</span>
               </button>
             </div>
           </div>

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   FaFileAlt,
   FaExchangeAlt,
@@ -17,6 +18,7 @@ const TYPE_ICONS = {
 }
 
 const HistoryTable = ({ records, onView, onDeleteRequest }) => {
+  const { t } = useTranslation()
   const [openMenuId, setOpenMenuId] = useState(null)
 
   // Fayl qanday formatda (word/excel/pdf) yaratilgan/ishlangan bo'lsa,
@@ -42,20 +44,20 @@ const HistoryTable = ({ records, onView, onDeleteRequest }) => {
       <table className="historyReportTable">
         <thead>
           <tr>
-            <th>№</th>
-            <th>Amal turi</th>
-            <th>Fayl nomi</th>
-            <th>Bajarilgan vaqti</th>
-            <th>Holat</th>
-            <th>Natija</th>
-            <th>Amallar</th>
+            <th>{t('history.table.headers.index')}</th>
+            <th>{t('history.table.headers.type')}</th>
+            <th>{t('history.table.headers.fileName')}</th>
+            <th>{t('history.table.headers.date')}</th>
+            <th>{t('history.table.headers.status')}</th>
+            <th>{t('history.table.headers.result')}</th>
+            <th>{t('history.table.headers.actions')}</th>
           </tr>
         </thead>
         <tbody>
           {records.length === 0 && (
             <tr>
               <td colSpan={7} className="historyEmptyCell">
-                Hech qanday amal topilmadi
+                {t('history.table.empty')}
               </td>
             </tr>
           )}
@@ -86,11 +88,11 @@ const HistoryTable = ({ records, onView, onDeleteRequest }) => {
                 <td>
                   {r.status === 'success' ? (
                     <span className="statusBadge success">
-                      <FaCheckCircle /> Muvaffaqiyatli
+                      <FaCheckCircle /> {t('history.status.success')}
                     </span>
                   ) : (
                     <span className="statusBadge error">
-                      <FaExclamationCircle /> Xatolik
+                      <FaExclamationCircle /> {t('history.status.error')}
                     </span>
                   )}
                 </td>
@@ -100,7 +102,7 @@ const HistoryTable = ({ records, onView, onDeleteRequest }) => {
                     <button
                       type="button"
                       className="historyIconButton"
-                      title="Yuklab olish"
+                      title={t('history.table.download')}
                       onClick={() => handleDownload(r)}
                     >
                       <FaDownload />
@@ -124,7 +126,7 @@ const HistoryTable = ({ records, onView, onDeleteRequest }) => {
                               onView(r)
                             }}
                           >
-                            Ko'rish
+                            {t('history.table.view')}
                           </button>
                           <button
                             type="button"
@@ -134,7 +136,7 @@ const HistoryTable = ({ records, onView, onDeleteRequest }) => {
                               onDeleteRequest(r)
                             }}
                           >
-                            O'chirish
+                            {t('history.table.delete')}
                           </button>
                         </div>
                       )}

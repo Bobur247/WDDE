@@ -1,23 +1,25 @@
 import { FaTimes } from 'react-icons/fa'
+import { useTranslation } from 'react-i18next'
 
 // DIQQAT: haqiqiy loyihada har bir amal (yuklash/ajratish/saqlash)
 // alohida vaqt bilan backendda log qilinishi kerak. Bu yerda faqat
 // saqlash vaqti haqiqiy — qolgan bosqichlar demo uchun taxminiy
 // (saqlashdan bir necha daqiqa oldingi) vaqt bilan ko'rsatilgan.
-function buildTimeline(item) {
+function buildTimeline(item, t) {
   const saveTime = item.time
   const minus = (mins) => new Date(saveTime.getTime() - mins * 60000)
 
   return [
-    { time: minus(3), text: 'Hujjat yuklandi' },
-    { time: minus(2), text: `${item.blocksCount} ta block yaratildi` },
-    { time: minus(1), text: "Ma'lumotlar ajratildi" },
-    { time: saveTime, text: `${item.format} fayl saqlandi` },
+    { time: minus(3), text: t('informationAllocation.historyDetailModal.documentUploaded') },
+    { time: minus(2), text: t('informationAllocation.historyDetailModal.blocksCreated', { count: item.blocksCount }) },
+    { time: minus(1), text: t('informationAllocation.historyDetailModal.dataExtracted') },
+    { time: saveTime, text: t('informationAllocation.historyDetailModal.fileSaved', { format: item.format }) },
   ]
 }
 
 const HistoryDetailModal = ({ item, onClose }) => {
-  const timeline = buildTimeline(item)
+  const { t } = useTranslation()
+  const timeline = buildTimeline(item, t)
 
   return (
     <div className="modalOverlay" onClick={onClose}>
@@ -46,7 +48,7 @@ const HistoryDetailModal = ({ item, onClose }) => {
 
         <div className="modalFooter">
           <button type="button" className="modalCancelButton" onClick={onClose}>
-            <span>Yopish</span>
+            <span>{t('informationAllocation.historyDetailModal.close')}</span>
           </button>
         </div>
       </div>

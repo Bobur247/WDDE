@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   FaBold,
   FaItalic,
@@ -10,7 +11,7 @@ import {
 } from 'react-icons/fa'
 import {LivePreview} from '../../components'
 
-const TABS = ['Asosiy', 'Header/Footer', "Qo'shimcha", 'Uslub']
+const TAB_IDS = ['asosiy', 'headerFooter', 'qoshimcha', 'uslub']
 
 const DocumentSettingsPanel = ({
   templates,
@@ -21,7 +22,15 @@ const DocumentSettingsPanel = ({
   fieldValues,
   setFieldValues,
 }) => {
-  const [activeTab, setActiveTab] = useState('Asosiy')
+  const { t } = useTranslation()
+  const [activeTab, setActiveTab] = useState('asosiy')
+
+  const tabs = TAB_IDS.map((id) => ({
+    id,
+    label: t(`createDocument.settingsPanel.tabs.${id}`),
+  }))
+  const activeTabLabel =
+    tabs.find((tab) => tab.id === activeTab)?.label || ''
 
   function updateField(key, value) {
     setFieldValues((prev) => ({ ...prev, [key]: value }))
@@ -32,7 +41,9 @@ const DocumentSettingsPanel = ({
     const textarea = document.getElementById(`field-${key}`)
     if (!textarea) return
     const { selectionStart, selectionEnd, value } = textarea
-    const selected = value.slice(selectionStart, selectionEnd) || 'matn'
+    const selected =
+      value.slice(selectionStart, selectionEnd) ||
+      t('createDocument.settingsPanel.richText.placeholderWord')
     const newValue =
       value.slice(0, selectionStart) +
       wrapper[0] +
@@ -44,36 +55,40 @@ const DocumentSettingsPanel = ({
 
   return (
     <div className="documentSettingsPanel">
-      <h3 className="settingsPanelTitle">Hujjatni sozlash</h3>
+      <h3 className="settingsPanelTitle">
+        {t('createDocument.settingsPanel.title')}
+      </h3>
 
       <div className="settingsTabs">
-        {TABS.map((tab) => (
+        {tabs.map((tab) => (
           <button
-            key={tab}
+            key={tab.id}
             type="button"
-            className={activeTab === tab ? 'active' : ''}
-            onClick={() => setActiveTab(tab)}
+            className={activeTab === tab.id ? 'active' : ''}
+            onClick={() => setActiveTab(tab.id)}
           >
-            {tab}
+            {tab.label}
           </button>
         ))}
       </div>
 
-      {activeTab !== 'Asosiy' && (
+      {activeTab !== 'asosiy' && (
         <p className="tabComingSoon">
-          "{activeTab}" bo'limi keyingi bosqichda qo'shiladi. Hozircha logo /
-          header / footer sozlamalarini o'ng paneldan ("Qo'shimcha sozlamalar")
-          boshqarishingiz mumkin.
+          {t('createDocument.settingsPanel.tabComingSoon', {
+            tab: activeTabLabel,
+          })}
         </p>
       )}
 
-      {activeTab === 'Asosiy' && (
+      {activeTab === 'asosiy' && (
         <div className="settingsPanelBody">
           <div className="settingsFormColumn">
-            <div className="formSectionLabel">Hujjat ma'lumotlari</div>
+            <div className="formSectionLabel">
+              {t('createDocument.settingsPanel.documentInfo')}
+            </div>
 
             <div className="formField">
-              <label>Hujjat nomi:</label>
+              <label>{t('createDocument.settingsPanel.documentNameLabel')}</label>
               <input
                 type="text"
                 value={documentName}
@@ -82,25 +97,29 @@ const DocumentSettingsPanel = ({
             </div>
 
             <div className="formField">
-              <label>Shablon:</label>
+              <label>{t('createDocument.settingsPanel.templateLabel')}</label>
               <select
                 value={selectedTemplate.id}
                 onChange={(e) => onSelectTemplate(e.target.value)}
               >
                 {templates
-                  .filter((t) => t.id !== 'blank')
-                  .map((t) => (
-                    <option key={t.id} value={t.id}>
-                      {t.name}
+                  .filter((tpl) => tpl.id !== 'blank')
+                  .map((tpl) => (
+                    <option key={tpl.id} value={tpl.id}>
+                      {tpl.name}
                     </option>
                   ))}
                 {selectedTemplate.id === 'blank' && (
-                  <option value="blank">Bo'sh hujjat</option>
+                  <option value="blank">
+                    {t('createDocument.templates.blank.name')}
+                  </option>
                 )}
               </select>
             </div>
 
-            <div className="formSectionLabel">Shablon maydonlari</div>
+            <div className="formSectionLabel">
+              {t('createDocument.settingsPanel.templateFieldsLabel')}
+            </div>
 
             {selectedTemplate.fields.map((field) => (
               <div className="formField" key={field.key}>

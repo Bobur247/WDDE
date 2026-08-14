@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { FaTimes, FaDownload, FaFileAlt } from 'react-icons/fa'
 import mammoth from 'mammoth'
 import * as XLSX from 'xlsx'
@@ -12,6 +13,7 @@ function getFileKind(fileName) {
 }
 
 const ViewFileModal = ({ record, onClose }) => {
+  const { t } = useTranslation()
   const fileKind = getFileKind(record.fileName)
 
   const [loading, setLoading] = useState(false)
@@ -44,7 +46,7 @@ const ViewFileModal = ({ record, onClose }) => {
         }
       } catch (err) {
         console.error(err)
-        setError('Faylni ochishda xatolik yuz berdi')
+        setError(t('history.viewModal.error'))
       } finally {
         setLoading(false)
       }
@@ -54,7 +56,7 @@ const ViewFileModal = ({ record, onClose }) => {
     return () => {
       if (objectUrl) URL.revokeObjectURL(objectUrl)
     }
-  }, [record, fileKind])
+  }, [record, fileKind, t])
 
   function handleDownload() {
     if (!record.blob) return
@@ -88,14 +90,12 @@ const ViewFileModal = ({ record, onClose }) => {
 
         {!record.blob && (
           <p className="viewFileDemoNote">
-            <FaFileAlt /> Bu demo yozuv — original fayl saqlanmagan, shuning
-            uchun ichini ko'rsatib bo'lmaydi. Haqiqiy loyihada backend fayl
-            saqlagichidan (masalan S3, disk) olib ko'rsatiladi.
+            <FaFileAlt /> {t('history.viewModal.demoNote')}
           </p>
         )}
 
         {record.blob && loading && (
-          <p className="viewFileLoading">Fayl ochilmoqda...</p>
+          <p className="viewFileLoading">{t('history.viewModal.loading')}</p>
         )}
         {record.blob && !loading && error && (
           <p className="viewFileError">{error}</p>
@@ -134,7 +134,7 @@ const ViewFileModal = ({ record, onClose }) => {
 
         <div className="modalFooter">
           <button type="button" className="modalCancelButton" onClick={onClose}>
-            <span>Yopish</span>
+            <span>{t('history.viewModal.close')}</span>
           </button>
           <button
             type="button"
@@ -143,7 +143,7 @@ const ViewFileModal = ({ record, onClose }) => {
             disabled={!record.blob}
           >
             <FaDownload />
-            <span>Yuklab olish</span>
+            <span>{t('history.viewModal.download')}</span>
           </button>
         </div>
       </div>

@@ -11,8 +11,10 @@ import {
 } from 'react-icons/fa'
 import '../../../page/convert/Convert.css'
 import { CiCircleRemove } from 'react-icons/ci'
+import { useTranslation } from 'react-i18next'
 
 const ConvertPdfDocx = () => {
+  const { t } = useTranslation()
   const [file, setFile] = useState(null)
   const [fileType, setFileType] = useState(null) // 'pdf' | 'docx'
   const [direction, setDirection] = useState(null) // 'pdf-to-docx' | 'docx-to-pdf'
@@ -53,7 +55,7 @@ const ConvertPdfDocx = () => {
 
     const type = detectType(selected)
     if (!type) {
-      setError('Faqat PDF yoki DOCX formatidagi fayl yuklash mumkin!')
+      setError(t('convert.pdfDocx.errorInvalidFormat'))
       e.target.value = ''
       return
     }
@@ -151,13 +153,13 @@ const ConvertPdfDocx = () => {
           <span className="panelIcon">
             <FaCloudUploadAlt />
           </span>
-          <h3>Fayl yuklash</h3>
+          <h3>{t('convert.shared.uploadTitle')}</h3>
         </div>
 
         {!file ? (
           <div className="dropzone">
             <FaCloudUploadAlt className="dropzoneIcon" />
-            <p>Faylni shu yerga tashlang yoki tanlang</p>
+            <p>{t('convert.shared.dropzoneHint')}</p>
             <input
               ref={inputRef}
               type="file"
@@ -168,7 +170,7 @@ const ConvertPdfDocx = () => {
             />
             <label htmlFor="convertFileInput" className="uploadButton">
               <FaCloudUploadAlt />
-              <span>Fayl tanlash</span>
+              <span>{t('convert.shared.uploadButton')}</span>
             </label>
           </div>
         ) : (
@@ -183,14 +185,14 @@ const ConvertPdfDocx = () => {
             </div>
             <div className="removeFileAction" onClick={handleRemoveFile}>
               <CiCircleRemove className="removeFileActionIcon" />
-              <span>Bekor qilish</span>
+              <span>{t('convert.shared.removeFile')}</span>
             </div>
           </div>
         )}
 
         {error && <p className="errorText">{error}</p>}
 
-        <p className="formatsLabel">Qo'llab-quvvatlanadigan formatlar:</p>
+        <p className="formatsLabel">{t('convert.shared.formatsLabel')}</p>
         <div className="formatsRow">
           <span className={`formatPill ${fileType === 'pdf' ? 'active' : ''}`}>
             PDF
@@ -207,7 +209,7 @@ const ConvertPdfDocx = () => {
           <span className="panelIcon">
             <FaExchangeAlt />
           </span>
-          <h3>Konvertatsiya yo'nalishi</h3>
+          <h3>{t('convert.shared.directionTitle')}</h3>
         </div>
 
         <div
@@ -218,7 +220,7 @@ const ConvertPdfDocx = () => {
           <FaFilePdf className="directionIcon pdf" />
           <span className="directionArrow">→</span>
           <FaFileWord className="directionIcon docx" />
-          <p>PDF dan DOCX ga</p>
+          <p>{t('convert.pdfDocx.directionPdfToDocx')}</p>
         </div>
 
         <div
@@ -229,7 +231,7 @@ const ConvertPdfDocx = () => {
           <FaFileWord className="directionIcon docx" />
           <span className="directionArrow">→</span>
           <FaFilePdf className="directionIcon pdf" />
-          <p>DOCX dan PDF ga</p>
+          <p>{t('convert.pdfDocx.directionDocxToPdf')}</p>
         </div>
 
         <div className="settingsBlock">
@@ -237,7 +239,7 @@ const ConvertPdfDocx = () => {
             <span className="panelIcon">
               <FaCog />
             </span>
-            <h4>Qo'shimcha sozlamalar</h4>
+            <h4>{t('convert.shared.settingsTitle')}</h4>
           </div>
 
           <label className="settingRow">
@@ -246,7 +248,7 @@ const ConvertPdfDocx = () => {
               checked={keepStyling}
               onChange={(e) => setKeepStyling(e.target.checked)}
             />
-            Formatni saqlash (original styling)
+            {t('convert.shared.keepStyling')}
           </label>
 
           <label className="settingRow">
@@ -255,7 +257,7 @@ const ConvertPdfDocx = () => {
               checked={keepImages}
               onChange={(e) => setKeepImages(e.target.checked)}
             />
-            Rasmlarni saqlash
+            {t('convert.shared.keepImages')}
           </label>
 
           <label className="settingRow">
@@ -264,7 +266,7 @@ const ConvertPdfDocx = () => {
               checked={keepSearchIndex}
               onChange={(e) => setKeepSearchIndex(e.target.checked)}
             />
-            Sahifa qidiruvini saqlash
+            {t('convert.shared.keepSearchIndex')}
           </label>
 
           <label
@@ -278,7 +280,7 @@ const ConvertPdfDocx = () => {
               disabled={direction !== 'pdf-to-docx'}
               onChange={(e) => setUseOcr(e.target.checked)}
             />
-            OCR (skanerlangan PDF uchun)
+            {t('convert.pdfDocx.ocrLabel')}
           </label>
         </div>
 
@@ -288,7 +290,7 @@ const ConvertPdfDocx = () => {
           disabled={!file || converting}
           onClick={startConversion}
         >
-          {converting ? 'Konvertatsiya qilinmoqda...' : 'Konvertatsiya qilish'}
+          {converting ? t('convert.shared.converting') : t('convert.shared.convertButton')}
         </button>
       </div>
 
@@ -298,26 +300,25 @@ const ConvertPdfDocx = () => {
           <span className="panelIcon">
             <FaFileWord />
           </span>
-          <h3>Natija</h3>
+          <h3>{t('convert.shared.resultTitle')}</h3>
         </div>
 
         {!file && !converting && !result && (
           <p className="resultPlaceholder">
-            Fayl yuklab, konvertatsiya qilingandan so'ng natija shu yerda
-            ko'rinadi
+            {t('convert.shared.resultPlaceholderEmpty')}
           </p>
         )}
 
         {file && !converting && !result && (
           <p className="resultPlaceholder">
-            "Konvertatsiya qilish" tugmasini bosing
+            {t('convert.shared.resultPlaceholderReady')}
           </p>
         )}
 
         {converting && (
           <div className="convertingBox">
             <div className="spinner" />
-            <p>Konvertatsiya qilinmoqda...</p>
+            <p>{t('convert.shared.converting')}</p>
             <div className="progressBarOuter">
               <div
                 className="progressBarInner"
@@ -333,9 +334,9 @@ const ConvertPdfDocx = () => {
             <div className="successBanner">
               <FaCheckCircle className="successIcon" />
               <div>
-                <p className="successTitle">Konvertatsiya tayyor!</p>
+                <p className="successTitle">{t('convert.shared.successTitle')}</p>
                 <p className="successSubtitle">
-                  Fayl muvaffaqiyatli konvertatsiya qilindi.
+                  {t('convert.shared.successSubtitle')}
                 </p>
               </div>
             </div>
@@ -361,27 +362,27 @@ const ConvertPdfDocx = () => {
 
             <div className="resultDetails">
               <div className="resultDetailRow">
-                <span>Asl format:</span>
+                <span>{t('convert.shared.detailOriginalFormat')}</span>
                 <span>{result.originalFormat}</span>
               </div>
               <div className="resultDetailRow">
-                <span>Yangi format:</span>
+                <span>{t('convert.shared.detailNewFormat')}</span>
                 <span>{result.outputFormat}</span>
               </div>
               <div className="resultDetailRow">
-                <span>Sahifalar:</span>
+                <span>{t('convert.shared.detailPages')}</span>
                 <span>{result.pages}</span>
               </div>
               <div className="resultDetailRow">
-                <span>Vaqt:</span>
+                <span>{t('convert.shared.detailTime')}</span>
                 <span>{result.time}</span>
               </div>
               <div className="resultDetailRow">
-                <span>Oldingi hajm:</span>
+                <span>{t('convert.shared.detailOriginalSize')}</span>
                 <span>{result.originalSizeKb} KB</span>
               </div>
               <div className="resultDetailRow">
-                <span>Yangi hajm:</span>
+                <span>{t('convert.shared.detailNewSize')}</span>
                 <span>{result.newSizeKb} KB</span>
               </div>
             </div>
@@ -392,7 +393,7 @@ const ConvertPdfDocx = () => {
               onClick={handleDownload}
             >
               <FaDownload />
-              <span>Yuklab olish</span>
+              <span>{t('convert.shared.downloadButton')}</span>
             </button>
 
             <button
@@ -401,7 +402,7 @@ const ConvertPdfDocx = () => {
               onClick={handleConvertAnother}
             >
               <FaRedo />
-              <span>Boshqa formatga ham konvertatsiya</span>
+              <span>{t('convert.shared.convertAnotherButton')}</span>
             </button>
           </>
         )}

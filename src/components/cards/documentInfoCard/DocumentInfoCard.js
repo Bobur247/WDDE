@@ -5,6 +5,7 @@ import {
   FaCloudUploadAlt,
   FaFolderOpen,
 } from 'react-icons/fa'
+import { useTranslation } from 'react-i18next'
 
 const DocumentInfoCard = ({
   file,
@@ -13,6 +14,7 @@ const DocumentInfoCard = ({
   onFileSelected,
   onRemoveFile,
 }) => {
+  const { t } = useTranslation()
   const [showMenu, setShowMenu] = useState(false)
   const inputRef = useRef(null)
 
@@ -20,7 +22,7 @@ const DocumentInfoCard = ({
     const selected = e.target.files[0]
     if (!selected) return
     if (!selected.name.toLowerCase().endsWith('.docx')) {
-      alert('Faqat DOCX formatidagi fayl yuklash mumkin!')
+      alert(t('informationAllocation.documentInfo.docxOnlyAlert'))
       return
     }
     onFileSelected(selected)
@@ -33,13 +35,13 @@ const DocumentInfoCard = ({
         <span className="settingsCardIcon">
           <FaFileAlt />
         </span>
-        <h3>Hujjat ma'lumotlari</h3>
+        <h3>{t('informationAllocation.documentInfo.title')}</h3>
       </div>
 
       {!file ? (
         <div className="docInfoDropzone">
           <FaCloudUploadAlt className="docInfoDropzoneIcon" />
-          <p>DOCX faylni yuklang</p>
+          <p>{t('informationAllocation.documentInfo.dropzoneText')}</p>
           <input
             ref={inputRef}
             type="file"
@@ -50,7 +52,7 @@ const DocumentInfoCard = ({
           />
           <label htmlFor="iaFileInput" className="chooseFileButton">
             <FaFolderOpen />
-            <span>Fayl tanlash</span>
+            <span>{t('informationAllocation.documentInfo.chooseFile')}</span>
           </label>
         </div>
       ) : (
@@ -75,7 +77,7 @@ const DocumentInfoCard = ({
               </button>
               {showMenu && (
                 <div className="docInfoDropdownMenu">
-                  <label htmlFor="iaFileInput">Faylni almashtirish</label>
+                  <label htmlFor="iaFileInput">{t('informationAllocation.documentInfo.replaceFile')}</label>
                   <input
                     ref={inputRef}
                     type="file"
@@ -85,18 +87,22 @@ const DocumentInfoCard = ({
                     onChange={handleChange}
                   />
                   <button type="button" onClick={() => onFileSelected(file)}>
-                    Faylni qayta yuklash
+                    {t('informationAllocation.documentInfo.reupload')}
                   </button>
                   <button
                     type="button"
                     onClick={() => {
                       setShowMenu(false)
                       alert(
-                        `Fayl: ${file.name}\nHajmi: ${docInfo?.sizeLabel}\nTuri: ${file.type || 'DOCX'}`,
+                        t('informationAllocation.documentInfo.fileInfoAlert', {
+                          name: file.name,
+                          size: docInfo?.sizeLabel,
+                          type: file.type || 'DOCX',
+                        }),
                       )
                     }}
                   >
-                    Fayl haqida ma'lumot
+                    {t('informationAllocation.documentInfo.fileInfo')}
                   </button>
                   <button
                     type="button"
@@ -106,7 +112,7 @@ const DocumentInfoCard = ({
                       onRemoveFile()
                     }}
                   >
-                    Faylni olib tashlash
+                    {t('informationAllocation.documentInfo.removeFile')}
                   </button>
                 </div>
               )}
@@ -114,25 +120,25 @@ const DocumentInfoCard = ({
           </div>
 
           {analyzing && (
-            <p className="docInfoAnalyzing">Hujjat tahlil qilinmoqda...</p>
+            <p className="docInfoAnalyzing">{t('informationAllocation.documentInfo.analyzing')}</p>
           )}
 
           {!analyzing && docInfo && (
             <div className="docInfoStats">
               <div className="docInfoStatRow">
-                <span>Sahifalar:</span>
+                <span>{t('informationAllocation.documentInfo.pages')}</span>
                 <span>{docInfo.pages}</span>
               </div>
               <div className="docInfoStatRow">
-                <span>Paragraflar:</span>
+                <span>{t('informationAllocation.documentInfo.paragraphs')}</span>
                 <span>{docInfo.paragraphs}</span>
               </div>
               <div className="docInfoStatRow">
-                <span>Jadvallar:</span>
+                <span>{t('informationAllocation.documentInfo.tables')}</span>
                 <span>{docInfo.tables}</span>
               </div>
               <div className="docInfoStatRow">
-                <span>Rasmlar:</span>
+                <span>{t('informationAllocation.documentInfo.images')}</span>
                 <span>{docInfo.images}</span>
               </div>
             </div>

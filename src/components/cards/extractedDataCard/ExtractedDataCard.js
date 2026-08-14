@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { FaFileAlt, FaChartBar, FaDownload } from 'react-icons/fa'
+import { useTranslation } from 'react-i18next'
 
 const FORMATS = [
   { value: 'docx', label: 'DOCX' },
@@ -20,6 +21,7 @@ const ExtractedDataCard = ({
   setSaveFormat,
   onOpenSaveModal,
 }) => {
+  const { t } = useTranslation()
   const [openMenuBlockId, setOpenMenuBlockId] = useState(null)
 
   return (
@@ -28,13 +30,13 @@ const ExtractedDataCard = ({
         <span className="settingsCardIcon">
           <FaFileAlt />
         </span>
-        <h3>Ajratilgan ma'lumotlar</h3>
-        <span className="blockCountBadge">{blocks.length} ta blok</span>
+        <h3>{t('informationAllocation.extractedData.title')}</h3>
+        <span className="blockCountBadge">{t('informationAllocation.extractedData.blockCount', { count: blocks.length })}</span>
       </div>
 
       <div className="blocksList">
         {blocks.length === 0 && (
-          <p className="blocksEmpty">Hali hech narsa ajratilmagan</p>
+          <p className="blocksEmpty">{t('informationAllocation.extractedData.empty')}</p>
         )}
 
         {blocks.map((block) => (
@@ -75,7 +77,7 @@ const ExtractedDataCard = ({
                         onDeleteBlock(block.id)
                       }}
                     >
-                      Blokni o'chirish
+                      {t('informationAllocation.extractedData.deleteBlock')}
                     </button>
                   </div>
                 )}
@@ -88,7 +90,7 @@ const ExtractedDataCard = ({
               </p>
             ))}
 
-            <p className="blockFieldCount">{block.fields.length} ta maydon</p>
+            <p className="blockFieldCount">{t('informationAllocation.extractedData.fieldCount', { count: block.fields.length })}</p>
           </div>
         ))}
       </div>
@@ -98,12 +100,12 @@ const ExtractedDataCard = ({
         className="newBlockButton"
         onClick={onStartNewBlock}
       >
-        + Yangi block boshlash
+        {t('informationAllocation.extractedData.newBlock')}
       </button>
 
       {stats.fieldCount > 0 && (
         <div className="previewMiniCard">
-          <p className="previewMiniTitle">Preview</p>
+          <p className="previewMiniTitle">{t('informationAllocation.extractedData.previewTitle')}</p>
           {stats.selectedFields.map((f) => (
             <div className="previewMiniRow" key={f.id}>
               <span>{f.label}:</span>
@@ -119,21 +121,21 @@ const ExtractedDataCard = ({
         </span>
         <div className="statsMiniRows">
           <div className="statsMiniRow">
-            <span>Topildi:</span>
-            <span>{stats.fieldCount} ta maydon</span>
+            <span>{t('informationAllocation.extractedData.statsFound')}</span>
+            <span>{t('informationAllocation.extractedData.fieldCount', { count: stats.fieldCount })}</span>
           </div>
           <div className="statsMiniRow">
-            <span>Belgilar:</span>
+            <span>{t('informationAllocation.extractedData.statsChars')}</span>
             <span>{stats.chars}</span>
           </div>
           <div className="statsMiniRow">
-            <span>So'zlar:</span>
+            <span>{t('informationAllocation.extractedData.statsWords')}</span>
             <span>{stats.words}</span>
           </div>
         </div>
       </div>
 
-      <p className="formatSectionTitle">Saqlash formatlari</p>
+      <p className="formatSectionTitle">{t('informationAllocation.extractedData.formatSectionTitle')}</p>
       <div className="formatPillsGrid">
         {FORMATS.map((f) => (
           <button
@@ -155,7 +157,7 @@ const ExtractedDataCard = ({
         disabled={stats.fieldCount === 0}
       >
         <FaDownload />
-        <span>Yangi faylga saqlash</span>
+        <span>{t('informationAllocation.extractedData.saveToFile')}</span>
       </button>
     </div>
   )

@@ -39,14 +39,25 @@
   color: #0C1A38;
   position: relative;
   z-index: 100;
+  flex: 1;
+  min-width: 0;
+  width: 100%;
 }
 .CardHome .cardAbout .cardText p{
     font-size: 17px;
     font-weight: 600;
     margin-bottom: 8px;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .CardHome .cardAbout .cardText span{
     font-size: 12px;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .CardHome .cardAbout .cardImg {
   width: 65px;

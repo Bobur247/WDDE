@@ -4,6 +4,7 @@
   justify-content: start;
   gap: 20px;
   margin-bottom: 20px;
+  flex-wrap: wrap;
 }
 .ConvertNavbar .nIcon {
   width: 65px;
@@ -15,9 +16,18 @@
   font-size: 35px;
   background-color: #000cfe30;
   color: #000cfe;
+  flex-shrink: 0;
 }
 .ConvertNavbar .nText h3 {
   margin-bottom: 5px;
+}
+
+@media (max-width: 640px) {
+  .ConvertNavbar .nIcon {
+    width: 52px;
+    height: 52px;
+    font-size: 26px;
+  }
 }
 
 .ConvertGrid {

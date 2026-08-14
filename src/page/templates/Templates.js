@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   FaFileAlt,
   FaPlus,
@@ -24,95 +25,85 @@ import {
 } from '../../components/components'
 import './Templates.css'
 
-// Kategoriya RO'YXATI (nom + icon) — count endi bu yerda YO'Q,
-// u pastda templates massividan avtomatik hisoblanadi
+// Kategoriya RO'YXATI (id + icon) — nomlar tarjima kaliti orqali
+// render vaqtida hisoblanadi, count esa pastda templates massividan
+// avtomatik hisoblanadi
 const CATEGORY_DEFS = [
-  { id: 'biznes', name: 'Biznes', icon: FaBriefcase },
-  { id: 'talim', name: "Ta'lim", icon: FaGraduationCap },
-  { id: 'shaxsiy', name: 'Shaxsiy', icon: FaUser },
-  { id: 'huquqiy', name: 'Huquqiy', icon: FaGavel },
-  { id: 'texnik', name: 'Texnik', icon: FaCog },
-  { id: 'boshqalar', name: 'Boshqalar', icon: FaEllipsisH },
+  { id: 'biznes', icon: FaBriefcase },
+  { id: 'talim', icon: FaGraduationCap },
+  { id: 'shaxsiy', icon: FaUser },
+  { id: 'huquqiy', icon: FaGavel },
+  { id: 'texnik', icon: FaCog },
+  { id: 'boshqalar', icon: FaEllipsisH },
 ]
 
-// DEMO uchun shablonlar — haqiqiy loyihada backenddan keladi
+// DEMO uchun shablonlar — haqiqiy loyihada backenddan keladi.
+// Matnli maydonlar (name/description/previewTitle) tarjima kaliti
+// orqali render vaqtida hisoblanadi (pastga qarang).
 const MOCK_TEMPLATES = [
   {
     id: 1,
-    name: 'Rasmiy xat',
+    key: 'template1',
     categoryId: 'biznes',
-    categoryLabel: 'Biznes',
     badgeColor: 'blue',
     language: "O'zbekcha",
-    description: 'Kompaniya va tashkilotlar uchun rasmiy xat shabloni',
-    previewTitle: 'RASMIY XAT',
     previewIcon: FaFileAlt,
     previewTheme: 'light',
   },
   {
     id: 2,
-    name: 'Ishga qabul qilish uchun rezyume',
+    key: 'template2',
     categoryId: 'shaxsiy',
-    categoryLabel: 'Shaxsiy',
     badgeColor: 'green',
     language: "O'zbekcha",
-    description: 'Professional rezyume shabloni',
-    previewTitle: 'REZYUME',
     previewIcon: FaUserCircle,
     previewTheme: 'light',
   },
   {
     id: 3,
-    name: 'Kompaniya taqdimoti',
+    key: 'template3',
     categoryId: 'biznes',
-    categoryLabel: 'Biznes',
     badgeColor: 'blue',
     language: "O'zbekcha",
-    description: 'Kompaniya taqdimoti uchun shablon',
-    previewTitle: 'COMPANY PRESENTATION',
     previewIcon: FaBuilding,
     previewTheme: 'gradient',
   },
   {
     id: 4,
-    name: 'Dars ishlanma',
+    key: 'template4',
     categoryId: 'talim',
-    categoryLabel: "Ta'lim",
     badgeColor: 'purple',
     language: "O'zbekcha",
-    description: "O'qituvchilar uchun dars ishlanma shabloni",
-    previewTitle: 'DARS ISHLANMA',
     previewIcon: FaBook,
     previewTheme: 'light',
   },
   {
     id: 5,
-    name: 'Shartnoma',
+    key: 'template5',
     categoryId: 'huquqiy',
-    categoryLabel: 'Huquqiy',
     badgeColor: 'orange',
     language: "O'zbekcha",
-    description: 'Huquqiy hujjatlar uchun shablon',
-    previewTitle: 'SHARTNOMA',
     previewIcon: FaBalanceScale,
     previewTheme: 'light',
   },
   {
     id: 6,
-    name: 'Hisobot',
+    key: 'template6',
     categoryId: 'biznes',
-    categoryLabel: 'Biznes',
     badgeColor: 'blue',
     language: "O'zbekcha",
-    description: 'Yillik yoki davriy hisobot shabloni',
-    previewTitle: 'HISOBOT',
     previewIcon: FaChartBar,
     previewTheme: 'light',
   },
 ]
 
 const Templates = () => {
-  const [templates, setTemplates] = useState(MOCK_TEMPLATES)
+  const { t, i18n } = useTranslation()
+
+  // Foydalanuvchi qo'shgan shablonlar (haqiqiy matn bilan, tarjima talab qilmaydi)
+  const [customTemplates, setCustomTemplates] = useState([])
+  // O'chirilgan demo (mock) shablonlarning id'lari
+  const [deletedMockIds, setDeletedMockIds] = useState([])
 
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('all')
@@ -124,21 +115,44 @@ const Templates = () => {
   const [viewingTemplate, setViewingTemplate] = useState(null)
   const [deletingTemplate, setDeletingTemplate] = useState(null)
 
+  // Demo shablonlar tili UI tiliga qarab o'zgarganda ham qayta tarjima qilinadi
+  const translatedMockTemplates = useMemo(
+    () =>
+      MOCK_TEMPLATES.filter((item) => !deletedMockIds.includes(item.id)).map(
+        (item) => ({
+          ...item,
+          name: t(`templates.mock.${item.key}.name`),
+          categoryLabel: t(`templates.categories.${item.categoryId}`),
+          description: t(`templates.mock.${item.key}.description`),
+          previewTitle: t(`templates.mock.${item.key}.previewTitle`),
+        }),
+      ),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [t, i18n.language, deletedMockIds],
+  )
+
+  const templates = useMemo(
+    () => [...customTemplates, ...translatedMockTemplates],
+    [customTemplates, translatedMockTemplates],
+  )
+
   // Kategoriya sonlari HAQIQIY templates massividan hisoblanadi —
   // qattiq yozilgan raqamlar emas
   const categories = useMemo(() => {
     const all = {
       id: 'all',
-      name: 'Barchasi',
+      name: t('templates.categories.all'),
       count: templates.length,
       icon: FaFileAlt,
     }
     const rest = CATEGORY_DEFS.map((def) => ({
       ...def,
-      count: templates.filter((t) => t.categoryId === def.id).length,
+      name: t(`templates.categories.${def.id}`),
+      count: templates.filter((tpl) => tpl.categoryId === def.id).length,
     }))
     return [all, ...rest]
-  }, [templates])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [templates, t, i18n.language])
 
   const filteredTemplates = useMemo(() => {
     let result = [...templates]
@@ -146,18 +160,18 @@ const Templates = () => {
     if (searchTerm.trim()) {
       const q = searchTerm.trim().toLowerCase()
       result = result.filter(
-        (t) =>
-          t.name.toLowerCase().includes(q) ||
-          t.categoryLabel.toLowerCase().includes(q),
+        (tpl) =>
+          tpl.name.toLowerCase().includes(q) ||
+          tpl.categoryLabel.toLowerCase().includes(q),
       )
     }
 
     if (selectedCategory !== 'all') {
-      result = result.filter((t) => t.categoryId === selectedCategory)
+      result = result.filter((tpl) => tpl.categoryId === selectedCategory)
     }
 
     if (selectedLanguage !== 'all') {
-      result = result.filter((t) => t.language === selectedLanguage)
+      result = result.filter((tpl) => tpl.language === selectedLanguage)
     }
 
     if (sortOrder === 'newest') {
@@ -172,12 +186,17 @@ const Templates = () => {
   }, [templates, searchTerm, selectedCategory, selectedLanguage, sortOrder])
 
   function handleAddTemplate(newTemplate) {
-    setTemplates((prev) => [{ id: Date.now(), ...newTemplate }, ...prev])
+    setCustomTemplates((prev) => [{ id: Date.now(), ...newTemplate }, ...prev])
     setShowAddModal(false)
   }
 
   function handleConfirmDelete() {
-    setTemplates((prev) => prev.filter((t) => t.id !== deletingTemplate.id))
+    const id = deletingTemplate.id
+    if (customTemplates.some((tpl) => tpl.id === id)) {
+      setCustomTemplates((prev) => prev.filter((tpl) => tpl.id !== id))
+    } else {
+      setDeletedMockIds((prev) => [...prev, id])
+    }
     setDeletingTemplate(null)
   }
 
@@ -189,8 +208,8 @@ const Templates = () => {
             <FaFileAlt />
           </span>
           <div>
-            <h1>Shablonlar</h1>
-            <p>Ish, ta'lim va biznes uchun tayyor Word hujjat shablonlari</p>
+            <h1>{t('templates.header.title')}</h1>
+            <p>{t('templates.header.subtitle')}</p>
           </div>
         </div>
         <button
@@ -199,7 +218,7 @@ const Templates = () => {
           onClick={() => setShowAddModal(true)}
         >
           <FaPlus />
-          <span>Yangi shablon qo'shish</span>
+          <span>{t('templates.header.addButton')}</span>
         </button>
       </div>
 

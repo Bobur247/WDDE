@@ -1,6 +1,8 @@
+import { useTranslation } from 'react-i18next'
 import { FaChartBar } from 'react-icons/fa'
 
 const ActivityStatsChart = ({ data }) => {
+  const { t } = useTranslation()
   const maxValue = Math.max(...data.map((d) => d.value), 1)
 
   return (
@@ -9,7 +11,7 @@ const ActivityStatsChart = ({ data }) => {
         <span className="cardHeaderIcon">
           <FaChartBar />
         </span>
-        <h3>Amallar bo'yicha statistika</h3>
+        <h3>{t('history.chart.title')}</h3>
       </div>
 
       <div className="barChartRow">

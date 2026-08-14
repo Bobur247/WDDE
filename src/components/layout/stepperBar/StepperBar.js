@@ -1,13 +1,14 @@
 import { FaCheck } from 'react-icons/fa'
-
-const STEPS = [
-  { id: 1, title: 'DOCX yuklash', subtitle: 'Fayl tanlandi' },
-  { id: 2, title: 'Ajratish qoidasi', subtitle: 'Sozlamalarni kiriting' },
-  { id: 3, title: 'Preview', subtitle: 'Natijani tekshiring' },
-  { id: 4, title: 'Saqlash', subtitle: 'Faylni saqlang' },
-]
+import { useTranslation } from 'react-i18next'
 
 const StepperBar = ({ currentStep }) => {
+  const { t } = useTranslation()
+  const STEPS = [
+    { id: 1, title: t('informationAllocation.stepper.step1.title'), subtitle: t('informationAllocation.stepper.step1.subtitle') },
+    { id: 2, title: t('informationAllocation.stepper.step2.title'), subtitle: t('informationAllocation.stepper.step2.subtitle') },
+    { id: 3, title: t('informationAllocation.stepper.step3.title'), subtitle: t('informationAllocation.stepper.step3.subtitle') },
+    { id: 4, title: t('informationAllocation.stepper.step4.title'), subtitle: t('informationAllocation.stepper.step4.subtitle') },
+  ]
   return (
     <div className="stepperBar">
       {STEPS.map((step, index) => {

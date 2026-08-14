@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react'
 import { FaFileAlt, FaPlus } from 'react-icons/fa'
 import mammoth from 'mammoth'
 import { Document, Packer, Paragraph } from 'docx'
+import { useTranslation } from 'react-i18next'
 import {
   SaveFileModal,
   HistoryDetailModal,
@@ -18,6 +19,7 @@ let nextFieldId = 1
 let nextBlockId = 1
 
 const InformationAllocation = () => {
+  const { t } = useTranslation()
   // ===== Fayl va tahlil =====
   const [file, setFile] = useState(null)
   const [rawText, setRawText] = useState('')
@@ -107,7 +109,7 @@ const InformationAllocation = () => {
         return [
           {
             id: nextBlockId++,
-            name: `Block 1`,
+            name: `${t('informationAllocation.extractedData.blockDefaultName')} 1`,
             selected: true,
             fields: [{ id: nextFieldId++, label, value }],
           },
@@ -126,7 +128,7 @@ const InformationAllocation = () => {
       ...prev,
       {
         id: nextBlockId++,
-        name: `Block ${prev.length + 1}`,
+        name: `${t('informationAllocation.extractedData.blockDefaultName')} ${prev.length + 1}`,
         selected: true,
         fields: [],
       },
@@ -165,7 +167,7 @@ const InformationAllocation = () => {
         extracted +
         (includeEnd ? rangeEnd : '')
       addFieldToCurrentBlock(
-        rangeStart.replace(':', '').trim() || 'Maydon',
+        rangeStart.replace(':', '').trim() || t('informationAllocation.extractedData.defaultFieldLabel'),
         finalValue,
       )
       return
@@ -176,7 +178,7 @@ const InformationAllocation = () => {
       try {
         const re = new RegExp(regexPattern, 'g')
         const matches = [...rawText.matchAll(re)].map((m) => m[0])
-        matches.forEach((m, i) => addFieldToCurrentBlock(`Natija ${i + 1}`, m))
+        matches.forEach((m, i) => addFieldToCurrentBlock(t('informationAllocation.extractedData.regexResultLabel', { index: i + 1 }), m))
       } catch (err) {
         console.error('Regex xato:', err)
       }
@@ -187,7 +189,7 @@ const InformationAllocation = () => {
 
   function handleAddSelectedText() {
     if (!pendingSelectedText) return
-    addFieldToCurrentBlock('Tanlangan matn', pendingSelectedText)
+    addFieldToCurrentBlock(t('informationAllocation.extractedData.selectedTextValueLabel'), pendingSelectedText)
     setPendingSelectedText('')
   }
 
@@ -226,7 +228,11 @@ const InformationAllocation = () => {
           2,
         )
       } else if (saveFormat === 'csv') {
-        const rows = [['Block', 'Maydon', 'Qiymat']]
+        const rows = [[
+          t('informationAllocation.extractedData.csv.block'),
+          t('informationAllocation.extractedData.csv.field'),
+          t('informationAllocation.extractedData.csv.value'),
+        ]]
         blocks
           .filter((b) => b.selected)
           .forEach((b) =>
@@ -314,10 +320,9 @@ const InformationAllocation = () => {
             <FaFileAlt />
           </span>
           <div>
-            <h1>Ma'lumot ajratish</h1>
+            <h1>{t('informationAllocation.header.title')}</h1>
             <p>
-              Word hujjatidan kerakli ma'lumotni ajrating va yangi hujjatga
-              saqlang
+              {t('informationAllocation.header.subtitle')}
             </p>
           </div>
         </div>
@@ -327,7 +332,7 @@ const InformationAllocation = () => {
           onClick={handleRemoveFile}
         >
           <FaPlus />
-          <span>Yangi loyiha</span>
+          <span>{t('informationAllocation.header.newProject')}</span>
         </button>
       </div>
 

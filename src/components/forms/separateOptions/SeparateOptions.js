@@ -1,26 +1,19 @@
 import React, { useState, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import { GrLinkPrevious } from 'react-icons/gr'
 import { MdSwitchAccessShortcut } from 'react-icons/md'
 import './SeparateOptions.css'
 import { Document, Packer, Paragraph } from 'docx'
 import { saveAs } from 'file-saver'
 
-const METHODS = [
-  { value: 'block', label: 'Blok (Boshlanishi-tugashi)' },
-  { value: 'checkbox', label: 'Checkbox (Har bir qator bilan)' },
-  { value: 'manual', label: "Matnni qo'lda tanlash" },
-  { value: 'keyword', label: "Kalit so'z bo'yicha" },
-  { value: 'regex', label: "Regex bo'yicha" },
-  { value: 'table', label: 'Jadvaldan ajratish' },
+const METHOD_VALUES = [
+  'block',
+  'checkbox',
+  'manual',
+  'keyword',
+  'regex',
+  'table',
 ]
-
-const METHOD_BUTTON_LABEL = {
-  block: 'Ajratish',
-  checkbox: 'Ajratish',
-  keyword: 'Ajratish',
-  regex: 'Ajratish',
-  table: 'Ajratish',
-}
 
 const SeparateOptions = ({
   method,
@@ -35,6 +28,11 @@ const SeparateOptions = ({
   hasExtractedItems,
   extractedItems,
 }) => {
+  const { t } = useTranslation()
+  const METHODS = METHOD_VALUES.map((value) => ({
+    value,
+    label: t(`home.separateOptions.methods.${value}`),
+  }))
   const [blockStart, setBlockStart] = useState('')
   const [blockEnd, setBlockEnd] = useState('')
   const [keyword, setKeyword] = useState('')
@@ -72,13 +70,13 @@ const SeparateOptions = ({
 
     if (method === 'block') {
       if (!blockStart || !blockEnd) {
-        setLocalError('Boshlanish va tugash matnlarini kiriting')
+        setLocalError(t('home.separateOptions.errors.blockMissingInputs'))
         return
       }
       const startIdx = rawText.indexOf(blockStart)
       const endIdx = rawText.indexOf(blockEnd, startIdx + blockStart.length)
       if (startIdx === -1 || endIdx === -1) {
-        setLocalError('Belgilangan matn faylda topilmadi')
+        setLocalError(t('home.separateOptions.errors.blockNotFound'))
         return
       }
       const extracted = rawText
@@ -90,7 +88,7 @@ const SeparateOptions = ({
 
     if (method === 'checkbox') {
       if (selectedItems.length === 0) {
-        setLocalError('Hech qanday qator tanlanmadi')
+        setLocalError(t('home.separateOptions.errors.noRowsSelected'))
         return
       }
       onExtract('checkbox', selectedItems)
@@ -99,12 +97,12 @@ const SeparateOptions = ({
 
     if (method === 'keyword') {
       if (!keyword) {
-        setLocalError("Kalit so'zni kiriting")
+        setLocalError(t('home.separateOptions.errors.keywordMissing'))
         return
       }
       const idx = rawText.indexOf(keyword)
       if (idx === -1) {
-        setLocalError("Kalit so'z faylda topilmadi")
+        setLocalError(t('home.separateOptions.errors.keywordNotFound'))
         return
       }
       const startPos = idx + keyword.length
@@ -117,32 +115,32 @@ const SeparateOptions = ({
 
     if (method === 'regex') {
       if (!regexPattern) {
-        setLocalError('Regex ifodasini kiriting')
+        setLocalError(t('home.separateOptions.errors.regexMissing'))
         return
       }
       try {
         const re = new RegExp(regexPattern, 'g')
         const matches = [...rawText.matchAll(re)].map((m) => m[0])
         if (matches.length === 0) {
-          setLocalError('Mos keluvchi natija topilmadi')
+          setLocalError(t('home.separateOptions.errors.regexNoMatch'))
           return
         }
         onExtract('regex', matches)
       } catch (err) {
-        setLocalError("Regex noto'g'ri kiritildi")
+        setLocalError(t('home.separateOptions.errors.regexInvalid'))
       }
       return
     }
 
     if (method === 'table') {
       if (tableRows.length === 0) {
-        setLocalError('Faylda jadval topilmadi')
+        setLocalError(t('home.separateOptions.errors.tableNotFound'))
         return
       }
       if (tableColumn) {
         const headerIndex = tableRows[0].indexOf(tableColumn)
         if (headerIndex === -1) {
-          setLocalError('Ustun topilmadi')
+          setLocalError(t('home.separateOptions.errors.columnNotFound'))
           return
         }
         const values = tableRows.slice(1).map((row) => row[headerIndex])
@@ -150,12 +148,12 @@ const SeparateOptions = ({
       } else if (tableRowNumber !== '') {
         const rowIndex = Number(tableRowNumber)
         if (!tableRows[rowIndex]) {
-          setLocalError('Bunday qator topilmadi')
+          setLocalError(t('home.separateOptions.errors.rowNotFound'))
           return
         }
         onExtract('table', [tableRows[rowIndex].join(' | ')])
       } else {
-        setLocalError('Ustun yoki qator raqamini tanlang')
+        setLocalError(t('home.separateOptions.errors.selectColumnOrRow'))
       }
       return
     }
@@ -163,7 +161,7 @@ const SeparateOptions = ({
 
   function handleManualTake() {
     if (!manualPending) {
-      setLocalError('Avval matnni sichqoncha bilan belgilang')
+      setLocalError(t('home.separateOptions.errors.selectTextFirst'))
       return
     }
     onExtract('manual', [manualPending])
@@ -204,7 +202,9 @@ const SeparateOptions = ({
   return (
     <div className="separate">
       <form onSubmit={(e) => e.preventDefault()}>
-        <p className="subtitleSelect">Ajratish usuli</p>
+        <p className="subtitleSelect">
+          {t('home.separateOptions.methodLabel')}
+        </p>
         <select value={method} onChange={(e) => setMethod(e.target.value)}>
           {METHODS.map((m) => (
             <option key={m.value} value={m.value}>
@@ -217,13 +217,13 @@ const SeparateOptions = ({
           <div className="methodInputs">
             <input
               type="text"
-              placeholder="Boshlanishi"
+              placeholder={t('home.separateOptions.placeholders.blockStart')}
               value={blockStart}
               onChange={(e) => setBlockStart(e.target.value)}
             />
             <input
               type="text"
-              placeholder="Tugashi"
+              placeholder={t('home.separateOptions.placeholders.blockEnd')}
               value={blockEnd}
               onChange={(e) => setBlockEnd(e.target.value)}
             />
@@ -234,13 +234,15 @@ const SeparateOptions = ({
           <div className="methodInputs">
             <input
               type="text"
-              placeholder="Kalit so'z (masalan: Telefon:)"
+              placeholder={t('home.separateOptions.placeholders.keyword')}
               value={keyword}
               onChange={(e) => setKeyword(e.target.value)}
             />
             <input
               type="number"
-              placeholder="Belgilar soni (masalan: 100)"
+              placeholder={t(
+                'home.separateOptions.placeholders.keywordCount',
+              )}
               value={keywordCount}
               onChange={(e) => setKeywordCount(e.target.value)}
             />
@@ -251,7 +253,7 @@ const SeparateOptions = ({
           <div className="methodInputs">
             <input
               type="text"
-              placeholder="Regex, masalan: \+998\d{9}"
+              placeholder={t('home.separateOptions.placeholders.regex')}
               value={regexPattern}
               onChange={(e) => setRegexPattern(e.target.value)}
             />
@@ -269,7 +271,9 @@ const SeparateOptions = ({
                     setTableRowNumber('')
                   }}
                 >
-                  <option value="">-- Ustun tanlang --</option>
+                  <option value="">
+                    {t('home.separateOptions.placeholders.selectColumn')}
+                  </option>
                   {tableRows[0].map((col, i) => (
                     <option key={i} value={col}>
                       {col}
@@ -278,7 +282,9 @@ const SeparateOptions = ({
                 </select>
                 <input
                   type="number"
-                  placeholder="yoki qator raqami (0 = sarlavha)"
+                  placeholder={t(
+                    'home.separateOptions.placeholders.tableRowNumber',
+                  )}
                   value={tableRowNumber}
                   onChange={(e) => {
                     setTableRowNumber(e.target.value)
@@ -287,7 +293,9 @@ const SeparateOptions = ({
                 />
               </>
             ) : (
-              <p className="methodHint">Faylda jadval topilmadi</p>
+              <p className="methodHint">
+                {t('home.separateOptions.errors.tableNotFound')}
+              </p>
             )}
           </div>
         )}
@@ -300,7 +308,7 @@ const SeparateOptions = ({
             onClick={handleMethodExtract}
           >
             <MdSwitchAccessShortcut />
-            <span>{METHOD_BUTTON_LABEL[method]}</span>
+            <span>{t('home.separateOptions.extractButton')}</span>
           </button>
         )}
 
@@ -312,7 +320,7 @@ const SeparateOptions = ({
               onClick={handleManualTake}
             >
               <MdSwitchAccessShortcut />
-              <span>Ajratish</span>
+              <span>{t('home.separateOptions.extractButton')}</span>
             </button>
             <button
               type="button"
@@ -343,7 +351,9 @@ const SeparateOptions = ({
           className="clickSeparate"
           onClick={() => {
             if (!hasExtractedItems) {
-              setLocalError("Hali hech qanday ma'lumot ajratilmagan")
+              setLocalError(
+                t('home.separateOptions.errors.nothingExtractedYet'),
+              )
               return
             }
             setShowNameModal(true)
@@ -351,18 +361,20 @@ const SeparateOptions = ({
           disabled={!hasExtractedItems}
         >
           <MdSwitchAccessShortcut />
-          <span>Ma'lumotni ajratish</span>
+          <span>{t('home.separateOptions.mainExtractButton')}</span>
         </button>
       </div>
 
       {showNameModal && (
         <div className="modalOverlay" onClick={() => setShowNameModal(false)}>
           <div className="modalBox" onClick={(e) => e.stopPropagation()}>
-            <h4>Fayl nomini kiriting</h4>
+            <h4>{t('home.separateOptions.modal.title')}</h4>
             <input
               type="text"
               autoFocus
-              placeholder="Masalan: mijozlar-royxati"
+              placeholder={t(
+                'home.separateOptions.placeholders.exportFileName',
+              )}
               value={exportFileName}
               onChange={(e) => setExportFileName(e.target.value)}
               onKeyDown={(e) => {
@@ -375,14 +387,14 @@ const SeparateOptions = ({
                 className="clickBackModal"
                 onClick={() => setShowNameModal(false)}
               >
-                Bekor qilish
+                {t('home.separateOptions.modal.cancel')}
               </button>
               <button
                 type="button"
                 className="clickSeparateModal"
                 onClick={handleExportToWord}
               >
-                Saqlash
+                {t('home.separateOptions.modal.save')}
               </button>
             </div>
           </div>

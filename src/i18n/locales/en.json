@@ -1,0 +1,778 @@
+{
+  "navbar": {
+    "subtitle": "Word Document Toolkit",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "languageLabel": "Select language"
+  },
+  "sidebar": {
+    "home": "Home",
+    "informationAllocation": "Data extraction",
+    "convert": "Conversion",
+    "createDocument": "Create document",
+    "templates": "Templates",
+    "history": "History (Report)",
+    "settings": "Settings"
+  },
+  "home": {
+    "cards": {
+      "convert": {
+        "title": "Conversion",
+        "subtitle": "PDF↔DOCX,TXT,HTML"
+      },
+      "informationAllocation": {
+        "title": "Data Extraction",
+        "subtitle": "Extract the data you need"
+      },
+      "createDocument": {
+        "title": "Create Document",
+        "subtitle": "Create a new document"
+      },
+      "templates": {
+        "title": "Templates",
+        "subtitle": "Work with templates"
+      }
+    },
+    "body": {
+      "title": "Data Extraction",
+      "subtitle": "Extract the data you need from a Word document and save it to a new document"
+    },
+    "selectFile": {
+      "errorInvalidType": "Only .docx files can be uploaded!",
+      "errorReadFailed": "An error occurred while reading the file",
+      "title": "Upload a DOCX file",
+      "subtitle": "Drop a file here or choose one",
+      "chooseFile": "Choose File",
+      "selectedFileLabel": "Selected file:",
+      "cancelFile": "Remove File"
+    },
+    "docxViewer": {
+      "placeholder": "Once a file is selected, its text will appear here",
+      "loading": "Reading file...",
+      "checkboxTitle": "Text found in the file (select what you need):",
+      "manualTitle": "Select the text you need with your mouse:",
+      "manualPendingLabel": "Selected (not yet added):",
+      "rawTextTitle": "File text:",
+      "finalResultsTitle": "Final extracted data ({{count}}):"
+    },
+    "separateOptions": {
+      "methodLabel": "Extraction method",
+      "extractButton": "Extract",
+      "mainExtractButton": "Extract Data",
+      "methods": {
+        "block": "Block (Start-End)",
+        "checkbox": "Checkbox (per line)",
+        "manual": "Manual text selection",
+        "keyword": "By keyword",
+        "regex": "By regex",
+        "table": "Extract from table"
+      },
+      "placeholders": {
+        "blockStart": "Start",
+        "blockEnd": "End",
+        "keyword": "Keyword (e.g. Phone:)",
+        "keywordCount": "Number of characters (e.g. 100)",
+        "regex": "Regex, e.g. \\+998\\d{9}",
+        "selectColumn": "-- Select column --",
+        "tableRowNumber": "or row number (0 = header)",
+        "exportFileName": "e.g. customer-list"
+      },
+      "errors": {
+        "blockMissingInputs": "Enter the start and end text",
+        "blockNotFound": "The specified text was not found in the file",
+        "noRowsSelected": "No rows were selected",
+        "keywordMissing": "Enter a keyword",
+        "keywordNotFound": "Keyword not found in the file",
+        "regexMissing": "Enter a regex pattern",
+        "regexNoMatch": "No matching results found",
+        "regexInvalid": "Invalid regex pattern",
+        "tableNotFound": "No table found in the file",
+        "columnNotFound": "Column not found",
+        "rowNotFound": "No such row found",
+        "selectColumnOrRow": "Select a column or row number",
+        "selectTextFirst": "First select text with your mouse",
+        "nothingExtractedYet": "No data has been extracted yet"
+      },
+      "modal": {
+        "title": "Enter a file name",
+        "cancel": "Cancel",
+        "save": "Save"
+      }
+    }
+  },
+  "convert": {
+    "page": {
+      "title": "Convert",
+      "subtitle": "Convert files from one format to another"
+    },
+    "shared": {
+      "uploadTitle": "Upload file",
+      "dropzoneHint": "Drop your file here or select it",
+      "uploadButton": "Select file",
+      "removeFile": "Remove",
+      "formatsLabel": "Supported formats:",
+      "directionTitle": "Conversion direction",
+      "settingsTitle": "Additional settings",
+      "keepStyling": "Preserve formatting (original styling)",
+      "keepImages": "Preserve images",
+      "keepSearchIndex": "Preserve page search index",
+      "convertButton": "Convert",
+      "converting": "Converting...",
+      "resultTitle": "Result",
+      "resultPlaceholderEmpty": "The result will appear here once you upload and convert a file",
+      "resultPlaceholderReady": "Click \"Convert\" to continue",
+      "successTitle": "Conversion complete!",
+      "successSubtitle": "The file was converted successfully.",
+      "detailOriginalFormat": "Original format:",
+      "detailNewFormat": "New format:",
+      "detailPages": "Pages:",
+      "detailTime": "Time:",
+      "detailOriginalSize": "Original size:",
+      "detailNewSize": "New size:",
+      "downloadButton": "Download",
+      "convertAnotherButton": "Convert another file"
+    },
+    "docxHtml": {
+      "errorInvalidFormat": "Only DOCX or HTML files can be uploaded!",
+      "directionDocxToHtml": "DOCX to HTML",
+      "directionHtmlToDocx": "HTML to DOCX",
+      "ocrLabel": "OCR (preserve original tags)"
+    },
+    "docxTxt": {
+      "errorInvalidFormat": "Only DOCX or TXT files can be uploaded!",
+      "directionDocxToTxt": "DOCX to TXT",
+      "directionTxtToDocx": "TXT to DOCX",
+      "ocrLabel": "OCR (for scanned documents)"
+    },
+    "pdfDocx": {
+      "errorInvalidFormat": "Only PDF or DOCX files can be uploaded!",
+      "directionPdfToDocx": "PDF to DOCX",
+      "directionDocxToPdf": "DOCX to PDF",
+      "ocrLabel": "OCR (for scanned PDFs)"
+    }
+  },
+  "history": {
+    "title": "History (Report)",
+    "subtitle": "History of all performed operations and reports",
+    "exportButton": "Export reports",
+    "exporting": "Preparing...",
+    "stats": {
+      "total": "Total operations",
+      "success": "Successful",
+      "errors": "Errors",
+      "today": "Today's operations"
+    },
+    "types": {
+      "extraction": "Data extraction",
+      "conversion": "Conversion",
+      "document": "Document creation",
+      "other": "Other"
+    },
+    "filters": {
+      "allTypes": "All types",
+      "allStatuses": "All statuses",
+      "searchPlaceholder": "Search operations...",
+      "dateRangePlaceholder": "Date range",
+      "dateFrom": "From",
+      "dateTo": "To",
+      "clear": "Clear"
+    },
+    "status": {
+      "success": "Successful",
+      "error": "Error"
+    },
+    "table": {
+      "headers": {
+        "index": "No.",
+        "type": "Operation type",
+        "fileName": "File name",
+        "date": "Date performed",
+        "status": "Status",
+        "result": "Result",
+        "actions": "Actions"
+      },
+      "empty": "No operations found",
+      "download": "Download",
+      "view": "View",
+      "delete": "Delete"
+    },
+    "chart": {
+      "title": "Statistics by operation"
+    },
+    "recentActivity": {
+      "title": "Recent activity",
+      "empty": "No activity yet"
+    },
+    "deleteModal": {
+      "title": "Delete record",
+      "message": "Delete <b>{{fileName}}</b> from history? This action cannot be undone.",
+      "cancel": "Cancel",
+      "confirm": "Delete"
+    },
+    "viewModal": {
+      "demoNote": "This is a demo record — the original file was not saved, so its contents cannot be shown. In a real project, it would be retrieved from backend file storage (e.g. S3, disk).",
+      "loading": "Opening file...",
+      "error": "An error occurred while opening the file",
+      "close": "Close",
+      "download": "Download"
+    },
+    "mock": {
+      "resultRecords": "{{count}} record(s)",
+      "resultFiles": "{{count}} file(s)",
+      "resultDocuments": "{{count}} document(s)",
+      "resultPages": "{{count}} page(s)",
+      "keywordNotFound": "Keyword not found",
+      "fileCorrupted": "File is corrupted"
+    }
+  },
+  "informationAllocation": {
+    "header": {
+      "title": "Extract Information",
+      "subtitle": "Extract the information you need from a Word document and save it to a new document",
+      "newProject": "New Project"
+    },
+    "stepper": {
+      "step1": {
+        "title": "Upload DOCX",
+        "subtitle": "File selected"
+      },
+      "step2": {
+        "title": "Extraction Rule",
+        "subtitle": "Enter settings"
+      },
+      "step3": {
+        "title": "Preview",
+        "subtitle": "Review the result"
+      },
+      "step4": {
+        "title": "Save",
+        "subtitle": "Save the file"
+      }
+    },
+    "historyBar": {
+      "title": "Completed Actions (History)",
+      "empty": "No files saved yet",
+      "blocksCount": "{{count}} blocks",
+      "detail": "Details →"
+    },
+    "extractionMethod": {
+      "methods": {
+        "range": "Character Range",
+        "select": "Text Selection",
+        "regex": "Regex (Pattern)",
+        "table": "Table",
+        "heading": "Heading",
+        "bookmark": "Bookmark"
+      },
+      "soonBadge": "coming soon",
+      "rangeStartLabel": "Start marker:",
+      "rangeStartPlaceholder": "e.g. Name:",
+      "rangeEndLabel": "End marker:",
+      "rangeEndPlaceholder": "e.g. Address:",
+      "includeStart": "Include start",
+      "includeEnd": "Include end",
+      "selectedTextLabel": "Selected text:",
+      "selectedTextPlaceholder": "Select text in the preview window...",
+      "addSelectedText": "+ Add to extraction",
+      "regexPatternLabel": "Regex pattern:",
+      "regexPatternPlaceholder": "e.g. \\+998\\d{9}",
+      "comingSoon": "The \"{{label}}\" method will be added in a later stage — it requires deeper analysis of the docx file's internal structure (table/heading/bookmark).",
+      "extract": "Extract"
+    },
+    "extractedData": {
+      "title": "Extracted Data",
+      "blockCount": "{{count}} blocks",
+      "empty": "Nothing extracted yet",
+      "deleteBlock": "Delete block",
+      "fieldCount": "{{count}} fields",
+      "newBlock": "+ Start new block",
+      "previewTitle": "Preview",
+      "statsFound": "Found:",
+      "statsChars": "Characters:",
+      "statsWords": "Words:",
+      "formatSectionTitle": "Save formats",
+      "saveToFile": "Save to new file",
+      "defaultFieldLabel": "Field",
+      "regexResultLabel": "Result {{index}}",
+      "selectedTextValueLabel": "Selected text",
+      "blockDefaultName": "Block",
+      "csv": {
+        "block": "Block",
+        "field": "Field",
+        "value": "Value"
+      }
+    },
+    "documentPreview": {
+      "title": "Document Preview",
+      "emptyNoFile": "The document will appear here once a file is uploaded",
+      "emptyLoading": "Loading document..."
+    },
+    "documentInfo": {
+      "title": "Document Information",
+      "dropzoneText": "Upload a DOCX file",
+      "chooseFile": "Choose file",
+      "docxOnlyAlert": "Only DOCX format files can be uploaded!",
+      "replaceFile": "Replace file",
+      "reupload": "Re-upload file",
+      "fileInfo": "File information",
+      "fileInfoAlert": "File: {{name}}\nSize: {{size}}\nType: {{type}}",
+      "removeFile": "Remove file",
+      "analyzing": "Analyzing document...",
+      "pages": "Pages:",
+      "paragraphs": "Paragraphs:",
+      "tables": "Tables:",
+      "images": "Images:"
+    },
+    "saveFileModal": {
+      "title": "Create New File",
+      "fileNameLabel": "File name:",
+      "formatLabel": "Format:",
+      "saveMethodLabel": "Save method:",
+      "newFile": "Create new file",
+      "appendFile": "Append to existing file",
+      "appendHint": "Appending to DOCX/PDF files will be added with backend integration — currently only works for TXT/CSV/JSON.",
+      "appendToLabel": "Which file to append to:",
+      "selectFileOption": "Select a file",
+      "cancel": "Cancel",
+      "save": "Save"
+    },
+    "historyDetailModal": {
+      "close": "Close",
+      "documentUploaded": "Document uploaded",
+      "blocksCreated": "{{count}} blocks created",
+      "dataExtracted": "Data extracted",
+      "fileSaved": "{{format}} file saved"
+    }
+  },
+  "createDocument": {
+    "header": {
+      "title": "Create Document",
+      "subtitle": "Create a new document, use templates, and prepare it with a professional look",
+      "newDocButton": "Create New Document"
+    },
+    "templates": {
+      "rasmiyXat": {
+        "name": "Official Letter"
+      },
+      "tashakkurnoma": {
+        "name": "Thank-You Letter"
+      },
+      "kadrlarAriza": {
+        "name": "HR Application"
+      },
+      "shartnoma": {
+        "name": "Contract"
+      },
+      "blank": {
+        "name": "Blank Document"
+      }
+    },
+    "fields": {
+      "sarlavha": "Title",
+      "matn": "Text",
+      "muallif": "Author",
+      "sana": "Date",
+      "fish": "Full Name",
+      "lavozim": "Position",
+      "bolim": "Department",
+      "tatilBoshlanish": "Leave Start Date",
+      "tatilTugash": "Leave End Date",
+      "sabab": "Reason"
+    },
+    "preview": {
+      "arizaTitle": "APPLICATION",
+      "fishLabel": "Full Name",
+      "lavozimLabel": "Position",
+      "bolimLabel": "Department",
+      "boshlanishSanasiLabel": "Start Date",
+      "tugashSanasiLabel": "End Date",
+      "sababLabel": "Reason"
+    },
+    "defaultDocumentName": "Thank-You Letter",
+    "newDocumentName": "New Document",
+    "settingsPanel": {
+      "title": "Document Settings",
+      "tabs": {
+        "asosiy": "General",
+        "headerFooter": "Header/Footer",
+        "qoshimcha": "Additional",
+        "uslub": "Style"
+      },
+      "tabComingSoon": "The \"{{tab}}\" section will be added in a future update. For now, you can manage logo / header / footer settings from the right panel (\"Additional Settings\").",
+      "documentInfo": "Document Information",
+      "documentNameLabel": "Document name:",
+      "templateLabel": "Template:",
+      "templateFieldsLabel": "Template Fields",
+      "richText": {
+        "placeholderWord": "text"
+      }
+    },
+    "livePreview": {
+      "label": "Live Preview",
+      "desktopTitle": "Desktop view",
+      "mobileTitle": "Mobile view",
+      "printTitle": "Print",
+      "documentFallbackTitle": "Document",
+      "untitledDocument": "Untitled document"
+    },
+    "additionalSettings": {
+      "title": "Additional Settings",
+      "logo": {
+        "sectionLabel": "Image and Logo",
+        "dropzoneText": "Upload Logo",
+        "dropzoneHint": "PNG / JPG, SVG (max 2MB)",
+        "chooseFile": "Choose File",
+        "altText": "logo"
+      },
+      "header": {
+        "label": "Header",
+        "orgNamePlaceholder": "Organization name",
+        "phonePlaceholder": "Phone number"
+      },
+      "footer": {
+        "label": "Footer",
+        "textPlaceholder": "Footer text (e.g. www.example.uz)"
+      },
+      "pageNumbers": {
+        "label": "Page Numbers",
+        "positions": {
+          "bottomRight": "Bottom right",
+          "bottomCenter": "Bottom center",
+          "bottomLeft": "Bottom left",
+          "topRight": "Top right",
+          "topCenter": "Top center",
+          "topLeft": "Top left"
+        }
+      },
+      "pageSizeLabel": "Page size:",
+      "orientation": {
+        "label": "Orientation:",
+        "portrait": "Portrait (vertical)",
+        "landscape": "Landscape (horizontal)"
+      },
+      "outputFormat": {
+        "label": "Document format:",
+        "docx": "DOCX (Word)",
+        "pdf": "PDF",
+        "docxPdf": "DOCX + PDF"
+      },
+      "pdfQuality": {
+        "label": "PDF quality:",
+        "high": "High",
+        "standard": "Standard",
+        "compressed": "Compressed"
+      },
+      "generateButton": "Generate Document",
+      "generating": "Generating...",
+      "result": {
+        "successTitle": "Document generated successfully",
+        "view": "View",
+        "download": "Download"
+      },
+      "pdfNote": "PDF export is not performed in the browser — it is added via a backend (e.g. LibreOffice).",
+      "fallbackFileName": "document",
+      "viewModal": {
+        "loading": "Opening document...",
+        "error": "An error occurred while displaying the document",
+        "close": "Close",
+        "download": "Download"
+      }
+    },
+    "history": {
+      "title": "Document Generation History",
+      "empty": "No documents have been generated yet. Select a template on the left and click \"Generate Document\".",
+      "columns": {
+        "number": "No.",
+        "documentName": "Document Name",
+        "template": "Template",
+        "createdDate": "Created Date",
+        "format": "Format"
+      },
+      "actions": {
+        "view": "View",
+        "download": "Download"
+      }
+    },
+    "newDocModal": {
+      "title": "Create New Document",
+      "question": "What kind of document would you like to create?",
+      "useTemplate": "Use a Template",
+      "useBlank": "Create a Blank Document"
+    }
+  },
+  "templates": {
+    "header": {
+      "title": "Templates",
+      "subtitle": "Ready-made Word document templates for work, education, and business",
+      "addButton": "Add New Template"
+    },
+    "categories": {
+      "title": "Categories",
+      "all": "All",
+      "biznes": "Business",
+      "talim": "Education",
+      "shaxsiy": "Personal",
+      "huquqiy": "Legal",
+      "texnik": "Technical",
+      "boshqalar": "Other"
+    },
+    "mock": {
+      "template1": {
+        "name": "Formal Letter",
+        "description": "A formal letter template for companies and organizations",
+        "previewTitle": "FORMAL LETTER"
+      },
+      "template2": {
+        "name": "Job Application Resume",
+        "description": "A professional resume template",
+        "previewTitle": "RESUME"
+      },
+      "template3": {
+        "name": "Company Presentation",
+        "description": "A template for company presentations",
+        "previewTitle": "COMPANY PRESENTATION"
+      },
+      "template4": {
+        "name": "Lesson Plan",
+        "description": "A lesson plan template for teachers",
+        "previewTitle": "LESSON PLAN"
+      },
+      "template5": {
+        "name": "Contract",
+        "description": "A template for legal documents",
+        "previewTitle": "CONTRACT"
+      },
+      "template6": {
+        "name": "Report",
+        "description": "An annual or periodic report template",
+        "previewTitle": "REPORT"
+      }
+    },
+    "filters": {
+      "searchPlaceholder": "Search by template name or category...",
+      "categoryLabel": "Category",
+      "languageLabel": "Languages",
+      "allLanguages": "All",
+      "sortLabel": "Sort",
+      "sortNewest": "Newest first",
+      "sortOldest": "Oldest first",
+      "sortByName": "By name",
+      "gridView": "Grid view",
+      "listView": "List view"
+    },
+    "cards": {
+      "empty": "No templates found",
+      "deleteTitle": "Delete",
+      "view": "View",
+      "download": "Download"
+    },
+    "viewModal": {
+      "demoNote": "This is a demo template — the original file hasn't been uploaded, so only a preview is shown.",
+      "loading": "Opening file...",
+      "fileError": "An error occurred while opening the file",
+      "unsupportedFile": "This file type can't be previewed — you can only download it.",
+      "close": "Close",
+      "download": "Download",
+      "pdfPreviewTitle": "PDF preview"
+    },
+    "addModal": {
+      "title": "Add New Template",
+      "subtitle": "Add a new Word template to the system",
+      "nameLabel": "Template name",
+      "namePlaceholder": "E.g.: Formal Letter, Resume, Report...",
+      "categoryLabel": "Category",
+      "categoryPlaceholder": "Select a category",
+      "languageLabel": "Language",
+      "descriptionLabel": "Description",
+      "descriptionPlaceholder": "Enter a brief description of the template...",
+      "fileLabel": "Upload file",
+      "dropzoneTitle": "Drop the file here",
+      "dropzoneSubtitle": "or click the button to choose a file",
+      "dropzoneHint": "Supported formats: DOCX, PDF, XLSX",
+      "chooseFile": "Choose file",
+      "imageLabel": "Template image (optional)",
+      "chooseImage": "Choose image",
+      "imagePreviewAlt": "Preview",
+      "invalidFileType": "Only DOCX, PDF, or Excel files can be uploaded!",
+      "requiredFields": "Please fill in the fields marked with an asterisk (*)",
+      "cancel": "Cancel",
+      "save": "Save"
+    },
+    "deleteModal": {
+      "title": "Delete Template",
+      "confirmText": "Are you sure you want to delete <0>{{name}}</0>? This action cannot be undone.",
+      "cancel": "Cancel",
+      "delete": "Delete"
+    }
+  },
+  "settings": {
+    "header": {
+      "title": "Settings",
+      "subtitle": "Configure the app's features to match your needs",
+      "resetButton": "Reset to defaults",
+      "savedBanner": "Settings saved successfully"
+    },
+    "resetConfirm": {
+      "title": "Reset to defaults",
+      "message": "All settings will be restored to their initial state. This action cannot be undone.",
+      "confirmLabel": "Yes, reset"
+    },
+    "confirmModal": {
+      "cancelButton": "Cancel"
+    },
+    "general": {
+      "title": "General settings",
+      "languageLabel": "App language",
+      "languages": {
+        "uz": "Uzbek",
+        "ru": "Russian",
+        "en": "English"
+      },
+      "dateFormatLabel": "Date and time format",
+      "regionLabel": "Region",
+      "regions": {
+        "uzbekistan": "Uzbekistan",
+        "russia": "Russia",
+        "kazakhstan": "Kazakhstan",
+        "usa": "USA"
+      },
+      "darkMode": "Dark mode",
+      "notifications": "Notifications"
+    },
+    "document": {
+      "title": "Document settings",
+      "defaultFormatLabel": "Default save format",
+      "formats": {
+        "docx": "DOCX (Word)",
+        "pdf": "PDF",
+        "docx-pdf": "DOCX + PDF"
+      },
+      "defaultFontLabel": "Default font",
+      "pageSizeLabel": "Page size",
+      "marginsLabel": "Margins",
+      "margins": {
+        "narrow": "Narrow (1.27 cm)",
+        "normal": "Normal (2.5 cm)",
+        "wide": "Wide (3.18 cm)"
+      },
+      "headerFooterAuto": "Automatically add header / footer",
+      "pageNumbers": "Page numbers"
+    },
+    "conversion": {
+      "title": "Conversion settings",
+      "pdfQualityLabel": "PDF quality",
+      "pdfQualities": {
+        "high": "High (600 DPI)",
+        "standard": "Standard (300 DPI)",
+        "compressed": "Compressed (150 DPI)"
+      },
+      "ocr": "OCR (text recognition)",
+      "imageQuality": "Preserve image quality",
+      "embedFonts": "Embed fonts"
+    },
+    "extraction": {
+      "title": "Data extraction settings",
+      "defaultMethodLabel": "Default extraction method",
+      "methods": {
+        "table": "Table",
+        "block": "Block (start-end markers)",
+        "checkbox": "Checkbox (per row)",
+        "keyword": "By keyword",
+        "regex": "By regex"
+      },
+      "saveMarkers": "Keep start and end markers",
+      "regexMode": "Regex mode",
+      "autoLoadTemplates": "Automatically load templates"
+    },
+    "file": {
+      "title": "File settings",
+      "downloadPathLabel": "Default download folder",
+      "pickFolderTitle": "Choose folder",
+      "pickFolderUnsupported": "Your browser does not support this feature",
+      "autoRename": "Automatic renaming",
+      "maxFileSizeLabel": "Maximum file size"
+    },
+    "security": {
+      "title": "Security",
+      "changePassword": "Change password",
+      "twoFA": "Two-factor authentication (2FA)",
+      "twoFAHint": "2FA is enabled (demo). Real QR-code setup will require backend integration.",
+      "apiToken": "API Token",
+      "tokensButton": "Tokens",
+      "activeSessions": "Active sessions",
+      "sessionsButton": "Sessions",
+      "passwordModal": {
+        "title": "Change password",
+        "successNote": "Request prepared. This is a demo — the actual password change will happen once the backend API is connected.",
+        "currentPasswordLabel": "Current password",
+        "newPasswordLabel": "New password",
+        "confirmPasswordLabel": "Confirm new password",
+        "errorFillAll": "Please fill in all fields",
+        "errorMinLength": "The new password must be at least 8 characters long",
+        "errorMismatch": "The new passwords do not match",
+        "closeButton": "Close",
+        "cancelButton": "Cancel",
+        "saveButton": "Save"
+      },
+      "tokensModal": {
+        "title": "API Tokens",
+        "hint": "Demo mode — these tokens are for display only and are not used for real authentication.",
+        "generateButton": "Generate new token",
+        "emptyList": "No tokens",
+        "createdLabel": "Created",
+        "closeButton": "Close"
+      },
+      "sessionsModal": {
+        "title": "Active sessions",
+        "currentSuffix": "(current session)",
+        "mobileDevice": "Mobile device",
+        "computerDevice": "Computer",
+        "hint": "The list of sessions on other devices will appear here once the backend (server-side session store) is connected.",
+        "closeButton": "Close"
+      }
+    },
+    "backup": {
+      "title": "Backup",
+      "importSuccess": "Data imported successfully",
+      "importError": "Error reading file — please check the JSON format",
+      "exportButton": "Export data",
+      "importButton": "Import data",
+      "createBackupButton": "Create backup",
+      "restoreButton": "Restore",
+      "hint": "Currently only these settings (on this page) can be exported/imported. Backing up data such as document history and templates will be added once the backend is connected."
+    },
+    "additional": {
+      "title": "Additional",
+      "checkUpdates": "Check for updates",
+      "checking": "Checking...",
+      "checkButton": "Check",
+      "updateResult": "You are using the latest version (v1.0.0)",
+      "clearCache": "Clear cache",
+      "clearButton": "Clear",
+      "cacheCleared": "Cache cleared",
+      "aboutApp": "About the app",
+      "aboutButton": "Info",
+      "clearConfirm": {
+        "title": "Clear cache",
+        "message": "Temporarily stored data will be cleared. This will not affect your settings.",
+        "confirmLabel": "Clear"
+      },
+      "aboutModal": {
+        "title": "About the app",
+        "description": "a tool designed for working with documents, extracting data from them, converting between formats, and creating new documents from templates.",
+        "version": "Version: 1.0.0",
+        "closeButton": "Close"
+      }
+    },
+    "appInfo": {
+      "versionLabel": "Version:",
+      "activeBadge": "Active",
+      "systemInfoTitle": "System information",
+      "osLabel": "Operating system:",
+      "browserLabel": "Browser:",
+      "screenSizeLabel": "Screen size:",
+      "saveButton": "Save",
+      "unknown": "Unknown"
+    }
+  }
+}

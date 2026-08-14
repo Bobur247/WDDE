@@ -1,11 +1,17 @@
 import { FaSearch, FaThLarge, FaListUl } from 'react-icons/fa'
+import { useTranslation } from 'react-i18next'
 
+// Diqqat: bu yerdagi qiymatlar ("Barchasi" bundan mustasno) shablon
+// hujjatining TILINI bildiruvchi ma'lumot qiymatlari (filtrlash uchun
+// MOCK_TEMPLATES'dagi `language` maydoni bilan solishtiriladi), shuning
+// uchun ular UI tiliga qarab tarjima qilinmaydi — faqat "Barchasi" varianti
+// tarjima qilinadi.
 const LANGUAGES = ['Barchasi', "O'zbekcha", 'Ruscha', 'Inglizcha']
 
 const SORT_OPTIONS = [
-  { value: 'newest', label: 'Yangi avval' },
-  { value: 'oldest', label: 'Eski avval' },
-  { value: 'name', label: "Nomi bo'yicha" },
+  { value: 'newest', labelKey: 'templates.filters.sortNewest' },
+  { value: 'oldest', labelKey: 'templates.filters.sortOldest' },
+  { value: 'name', labelKey: 'templates.filters.sortByName' },
 ]
 
 const TemplateFilters = ({
@@ -21,20 +27,22 @@ const TemplateFilters = ({
   viewMode,
   setViewMode,
 }) => {
+  const { t } = useTranslation()
+
   return (
     <div className="templateFilters">
       <div className="searchBox">
         <FaSearch className="searchIcon" />
         <input
           type="text"
-          placeholder="Shablon nomi yoki kategoriya bo'yicha qidirish..."
+          placeholder={t('templates.filters.searchPlaceholder')}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
       </div>
 
       <div className="filterField">
-        <label>Kategoriya</label>
+        <label>{t('templates.filters.categoryLabel')}</label>
         <select
           value={selectedCategory}
           onChange={(e) => setSelectedCategory(e.target.value)}
@@ -48,7 +56,7 @@ const TemplateFilters = ({
       </div>
 
       <div className="filterField">
-        <label>Tillar</label>
+        <label>{t('templates.filters.languageLabel')}</label>
         <select
           value={selectedLanguage === 'all' ? 'Barchasi' : selectedLanguage}
           onChange={(e) =>
@@ -59,21 +67,21 @@ const TemplateFilters = ({
         >
           {LANGUAGES.map((lang) => (
             <option key={lang} value={lang}>
-              {lang}
+              {lang === 'Barchasi' ? t('templates.filters.allLanguages') : lang}
             </option>
           ))}
         </select>
       </div>
 
       <div className="filterField">
-        <label>Tartib</label>
+        <label>{t('templates.filters.sortLabel')}</label>
         <select
           value={sortOrder}
           onChange={(e) => setSortOrder(e.target.value)}
         >
           {SORT_OPTIONS.map((opt) => (
             <option key={opt.value} value={opt.value}>
-              {opt.label}
+              {t(opt.labelKey)}
             </option>
           ))}
         </select>
@@ -84,6 +92,8 @@ const TemplateFilters = ({
           type="button"
           className={viewMode === 'grid' ? 'active' : ''}
           onClick={() => setViewMode('grid')}
+          aria-label={t('templates.filters.gridView')}
+          title={t('templates.filters.gridView')}
         >
           <FaThLarge />
         </button>
@@ -91,6 +101,8 @@ const TemplateFilters = ({
           type="button"
           className={viewMode === 'list' ? 'active' : ''}
           onClick={() => setViewMode('list')}
+          aria-label={t('templates.filters.listView')}
+          title={t('templates.filters.listView')}
         >
           <FaListUl />
         </button>

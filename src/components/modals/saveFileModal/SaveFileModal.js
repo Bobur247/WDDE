@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import { FaTimes, FaSave } from 'react-icons/fa'
+import { useTranslation } from 'react-i18next'
 
 const SaveFileModal = ({ defaultName, format, history, onClose, onSave }) => {
+  const { t } = useTranslation()
   const [fileName, setFileName] = useState(defaultName)
   const [mode, setMode] = useState('new')
   const [existingHistoryId, setExistingHistoryId] = useState('')
@@ -27,14 +29,14 @@ const SaveFileModal = ({ defaultName, format, history, onClose, onSave }) => {
     <div className="modalOverlay" onClick={onClose}>
       <div className="modalBox" onClick={(e) => e.stopPropagation()}>
         <div className="modalTopHeader">
-          <h3>Yangi fayl yaratish</h3>
+          <h3>{t('informationAllocation.saveFileModal.title')}</h3>
           <button type="button" className="modalCloseIcon" onClick={onClose}>
             <FaTimes />
           </button>
         </div>
 
         <div className="settingsField">
-          <label>Fayl nomi:</label>
+          <label>{t('informationAllocation.saveFileModal.fileNameLabel')}</label>
           <input
             type="text"
             value={fileName}
@@ -43,11 +45,11 @@ const SaveFileModal = ({ defaultName, format, history, onClose, onSave }) => {
         </div>
 
         <div className="settingsField">
-          <label>Format:</label>
+          <label>{t('informationAllocation.saveFileModal.formatLabel')}</label>
           <input type="text" value={format.toUpperCase()} disabled />
         </div>
 
-        <p className="settingsField label-only">Saqlash usuli:</p>
+        <p className="settingsField label-only">{t('informationAllocation.saveFileModal.saveMethodLabel')}</p>
         <label className="radioRow">
           <input
             type="radio"
@@ -55,7 +57,7 @@ const SaveFileModal = ({ defaultName, format, history, onClose, onSave }) => {
             checked={mode === 'new'}
             onChange={() => setMode('new')}
           />
-          <span>Yangi fayl yaratish</span>
+          <span>{t('informationAllocation.saveFileModal.newFile')}</span>
         </label>
         <label className={`radioRow ${!canAppend ? 'disabledRow' : ''}`}>
           <input
@@ -65,24 +67,23 @@ const SaveFileModal = ({ defaultName, format, history, onClose, onSave }) => {
             disabled={!canAppend || matchingHistory.length === 0}
             onChange={() => setMode('append')}
           />
-          <span>Mavjud faylga qo'shish</span>
+          <span>{t('informationAllocation.saveFileModal.appendFile')}</span>
         </label>
 
         {!canAppend && (
           <p className="fieldHint">
-            DOCX/PDF fayllarga qo'shish backend integratsiyasi bilan qo'shiladi
-            — hozircha faqat TXT/CSV/JSON uchun ishlaydi.
+            {t('informationAllocation.saveFileModal.appendHint')}
           </p>
         )}
 
         {mode === 'append' && canAppend && (
           <div className="settingsField">
-            <label>Qaysi faylga qo'shilsin:</label>
+            <label>{t('informationAllocation.saveFileModal.appendToLabel')}</label>
             <select
               value={existingHistoryId}
               onChange={(e) => setExistingHistoryId(e.target.value)}
             >
-              <option value="">Faylni tanlang</option>
+              <option value="">{t('informationAllocation.saveFileModal.selectFileOption')}</option>
               {matchingHistory.map((h) => (
                 <option key={h.id} value={h.id}>
                   {h.fileName}
@@ -94,7 +95,7 @@ const SaveFileModal = ({ defaultName, format, history, onClose, onSave }) => {
 
         <div className="modalFooter">
           <button type="button" className="modalCancelButton" onClick={onClose}>
-            <span>Bekor qilish</span>
+            <span>{t('informationAllocation.saveFileModal.cancel')}</span>
           </button>
           <button
             type="button"
@@ -102,7 +103,7 @@ const SaveFileModal = ({ defaultName, format, history, onClose, onSave }) => {
             onClick={handleSubmit}
           >
             <FaSave />
-            <span>Saqlash</span>
+            <span>{t('informationAllocation.saveFileModal.save')}</span>
           </button>
         </div>
       </div>
