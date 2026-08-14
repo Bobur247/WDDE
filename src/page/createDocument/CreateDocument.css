@@ -1,5 +1,5 @@
 .CreateDocument {
-  background: #f4f8fd;
+  background: var(--bg-page);
   padding: 20px;
   border-radius: 16px;
 }
@@ -26,8 +26,8 @@
   width: 46px;
   height: 46px;
   border-radius: 12px;
-  background: #dbeafe;
-  color: #2563eb;
+  background: var(--accent-tint-2);
+  color: var(--accent);
   font-size: 18px;
   flex-shrink: 0;
 }
@@ -35,13 +35,13 @@
 .cdHeaderLeft h1 {
   margin: 0;
   font-size: 22px;
-  color: #0f172a;
+  color: var(--text-heading);
 }
 
 .cdHeaderLeft p {
   margin: 2px 0 0;
   font-size: 13.5px;
-  color: #64748b;
+  color: var(--text-subtitle);
 }
 
 .cdNewDocButton {
@@ -51,7 +51,7 @@
   padding: 11px 18px;
   border: none;
   border-radius: 10px;
-  background: #2563eb;
+  background: var(--accent);
   color: #fff;
   font-weight: 600;
   cursor: pointer;
@@ -112,10 +112,11 @@
 .documentSettingsPanel,
 .additionalSettingsPanel,
 .documentHistoryTable {
-  background: #fff;
-  border: 1px solid #e5e7eb;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
   border-radius: 14px;
   padding: 16px;
+  box-shadow: var(--card-shadow);
 }
 
 /* ===== HUJJATNI SOZLASH (markaz) ===== */
@@ -123,13 +124,13 @@
 .settingsPanelTitle {
   margin: 0 0 12px;
   font-size: 15px;
-  color: #0f172a;
+  color: var(--text-heading);
 }
 
 .settingsTabs {
   display: flex;
   gap: 18px;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid var(--border);
   margin-bottom: 16px;
 }
 
@@ -139,20 +140,20 @@
   padding: 0 0 10px;
   font-size: 13px;
   font-weight: 600;
-  color: #9ca3af;
+  color: var(--text-muted);
   cursor: pointer;
   border-bottom: 2px solid transparent;
 }
 
 .settingsTabs button.active {
-  color: #2563eb;
-  border-bottom-color: #2563eb;
+  color: var(--accent);
+  border-bottom-color: var(--accent);
 }
 
 .tabComingSoon {
-  color: #9ca3af;
+  color: var(--text-muted);
   font-size: 13px;
-  background: #f9fafb;
+  background: var(--bg-subtle);
   border-radius: 10px;
   padding: 16px;
   line-height: 1.5;
@@ -176,7 +177,7 @@
 .formSectionLabel {
   font-size: 11.5px;
   font-weight: 700;
-  color: #9ca3af;
+  color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.4px;
   margin: 14px 0 8px;
@@ -194,7 +195,7 @@
   display: block;
   font-size: 12.5px;
   font-weight: 600;
-  color: #374151;
+  color: var(--text-body);
   margin-bottom: 5px;
 }
 
@@ -204,8 +205,8 @@
   width: 100%;
   padding: 9px 10px;
   border-radius: 8px;
-  border: 1px solid #e5e7eb;
-  background: #f9fafb;
+  border: 1px solid var(--border);
+  background: var(--bg-subtle);
   font-family: inherit;
   font-size: 13px;
   resize: vertical;
@@ -218,7 +219,7 @@
 }
 
 .richTextField {
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
   border-radius: 8px;
   overflow: hidden;
 }
@@ -226,8 +227,8 @@
 .richTextToolbar {
   display: flex;
   gap: 4px;
-  background: #f9fafb;
-  border-bottom: 1px solid #e5e7eb;
+  background: var(--bg-subtle);
+  border-bottom: 1px solid var(--border);
   padding: 6px 8px;
 }
 
@@ -237,19 +238,19 @@
   width: 26px;
   height: 26px;
   border-radius: 5px;
-  color: #6b7280;
+  color: var(--text-secondary);
   cursor: pointer;
   font-size: 12px;
 }
 
 .richTextToolbar button:hover {
-  background: #e5e7eb;
+  background: var(--border);
 }
 
 .richTextField textarea {
   border: none;
   border-radius: 0;
-  background: #fff;
+  background: var(--bg-surface);
 }
 
 .richTextArea {
@@ -262,7 +263,7 @@
 /* ===== LIVE PREVIEW ===== */
 
 .livePreviewBox {
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
   border-radius: 12px;
   overflow: hidden;
 }
@@ -272,10 +273,10 @@
   align-items: center;
   justify-content: space-between;
   padding: 10px 12px;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid var(--border);
   font-size: 13px;
   font-weight: 600;
-  color: #0f172a;
+  color: var(--text-heading);
 }
 
 .livePreviewDeviceToggle {
@@ -284,12 +285,12 @@
 }
 
 .livePreviewDeviceToggle button {
-  border: 1px solid #e5e7eb;
-  background: #fff;
+  border: 1px solid var(--border);
+  background: var(--bg-surface);
   width: 26px;
   height: 26px;
   border-radius: 6px;
-  color: #9ca3af;
+  color: var(--text-muted);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -298,13 +299,13 @@
 }
 
 .livePreviewDeviceToggle button.active {
-  background: #2563eb;
-  border-color: #2563eb;
+  background: var(--accent);
+  border-color: var(--accent);
   color: #fff;
 }
 
 .livePreviewPaper {
-  background: #f3f4f6;
+  background: var(--bg-hover);
   padding: 24px 20px;
   min-height: 360px;
   max-height: 520px;
@@ -317,14 +318,14 @@
 }
 
 .livePreviewPaper.print {
-  background: #e5e7eb;
+  background: var(--border);
 }
 
 .prevWordIcon {
   width: 40px;
   height: 40px;
   border-radius: 10px;
-  background: #2563eb;
+  background: var(--accent);
   color: #fff;
   display: flex;
   align-items: center;
@@ -337,15 +338,15 @@
   text-align: center;
   font-size: 20px;
   margin: 0 0 18px;
-  color: #0f172a;
+  color: var(--text-heading);
 }
 
 .prevBodyWrapper {
-  background: #fff;
+  background: var(--bg-surface);
   border-radius: 8px;
   padding: 18px;
   font-size: 13.5px;
-  color: #111827;
+  color: var(--text-strong);
   line-height: 1.6;
 }
 
@@ -359,13 +360,13 @@
 }
 
 .prevSignature {
-  border-top: 1px solid #e5e7eb;
+  border-top: 1px solid var(--border);
   padding-top: 10px;
   font-size: 13px;
 }
 
 .prevEmpty {
-  color: #cbd5e1;
+  color: var(--text-faint-2);
 }
 
 /* ===== QO'SHIMCHA SOZLAMALAR (o'ng) ===== */
@@ -384,20 +385,20 @@
   width: 30px;
   height: 30px;
   border-radius: 8px;
-  background: #eef2ff;
-  color: #2563eb;
+  background: var(--accent-tint-1);
+  color: var(--accent);
 }
 
 .settingsPanelHeaderRow h3 {
   margin: 0;
   font-size: 14.5px;
-  color: #0f172a;
+  color: var(--text-heading);
 }
 
 .settingsSubLabel {
   font-size: 12px;
   font-weight: 600;
-  color: #6b7280;
+  color: var(--text-secondary);
   margin: 14px 0 6px;
 }
 
@@ -405,15 +406,15 @@
   width: 100%;
   padding: 9px 10px;
   border-radius: 8px;
-  border: 1px solid #e5e7eb;
-  background: #f9fafb;
+  border: 1px solid var(--border);
+  background: var(--bg-subtle);
   font-size: 13px;
 }
 
 .logoDropzone {
-  border: 1.5px dashed #c7d2fe;
+  border: 1.5px dashed var(--border-dropzone);
   border-radius: 12px;
-  background: #f8fafc;
+  background: var(--bg-dropzone);
   text-align: center;
   padding: 20px 14px;
   margin-bottom: 8px;
@@ -421,7 +422,7 @@
 
 .logoDropzoneIcon {
   font-size: 22px;
-  color: #2563eb;
+  color: var(--accent);
   margin-bottom: 6px;
 }
 
@@ -429,12 +430,12 @@
   margin: 0;
   font-size: 13px;
   font-weight: 600;
-  color: #0f172a;
+  color: var(--text-heading);
 }
 
 .logoDropzone span {
   font-size: 11px;
-  color: #9ca3af;
+  color: var(--text-muted);
 }
 
 .logoDropzone .chooseFileButton {
@@ -445,7 +446,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
   border-radius: 10px;
   padding: 8px;
   margin-bottom: 8px;
@@ -469,7 +470,7 @@
 .logoSelectedBox button {
   border: none;
   background: transparent;
-  color: #9ca3af;
+  color: var(--text-muted);
   cursor: pointer;
   font-size: 16px;
 }
@@ -480,8 +481,8 @@
   justify-content: space-between;
   padding: 9px 0;
   font-size: 13px;
-  color: #374151;
-  border-top: 1px solid #f0f0f0;
+  color: var(--text-body);
+  border-top: 1px solid var(--border-subtle);
 }
 
 .switch {
@@ -500,7 +501,7 @@
 .slider {
   position: absolute;
   inset: 0;
-  background: #d1d5db;
+  background: var(--border-strong);
   border-radius: 999px;
   cursor: pointer;
   transition: 0.15s;
@@ -513,13 +514,13 @@
   height: 16px;
   left: 3px;
   top: 3px;
-  background: #fff;
+  background: var(--always-light);
   border-radius: 50%;
   transition: 0.15s;
 }
 
 .switch input:checked + .slider {
-  background: #2563eb;
+  background: var(--accent);
 }
 
 .switch input:checked + .slider::before {
@@ -537,8 +538,8 @@
 .inlineSubSettings select {
   padding: 8px 10px;
   border-radius: 7px;
-  border: 1px solid #e5e7eb;
-  background: #f9fafb;
+  border: 1px solid var(--border);
+  background: var(--bg-subtle);
   font-size: 12.5px;
 }
 
@@ -551,7 +552,7 @@
   padding: 12px;
   border: none;
   border-radius: 10px;
-  background: #2563eb;
+  background: var(--accent);
   color: #fff;
   font-weight: 600;
   cursor: pointer;
@@ -565,8 +566,8 @@
 
 .generatedResultBox {
   margin-top: 14px;
-  background: #ecfdf5;
-  border: 1px solid #bbf7d0;
+  background: var(--success-bg-soft);
+  border: 1px solid var(--success-border-soft);
   border-radius: 10px;
   padding: 12px;
 }
@@ -575,7 +576,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #16a34a;
+  color: var(--success);
   font-weight: 700;
   font-size: 12.5px;
   margin-bottom: 6px;
@@ -584,7 +585,7 @@
 .generatedResultName {
   margin: 0 0 10px;
   font-size: 12.5px;
-  color: #065f46;
+  color: var(--success-strong);
   word-break: break-all;
 }
 
@@ -595,7 +596,7 @@
 
 .pdfNote {
   font-size: 11px;
-  color: #9ca3af;
+  color: var(--text-muted);
   margin-top: 8px;
   line-height: 1.4;
 }
@@ -607,12 +608,12 @@
 .docResultPreview {
   max-height: 55vh;
   overflow-y: auto;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
   border-radius: 10px;
   padding: 16px;
   font-size: 13.5px;
   line-height: 1.6;
-  color: #111827;
+  color: var(--text-strong);
 }
 
 .docResultPreview img {
@@ -632,7 +633,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #0f172a;
+  color: var(--text-heading);
 }
 
 .historyHeaderLeft h3 {
@@ -641,7 +642,7 @@
 }
 
 .historyEmpty {
-  color: #9ca3af;
+  color: var(--text-muted);
   font-size: 13px;
   text-align: center;
   padding: 20px 0;
@@ -655,29 +656,29 @@
 
 .historyTable th {
   text-align: left;
-  color: #9ca3af;
+  color: var(--text-muted);
   font-weight: 600;
   padding: 8px 10px;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid var(--border);
 }
 
 .historyTable td {
   padding: 10px;
-  border-bottom: 1px solid #f3f4f6;
-  color: #374151;
+  border-bottom: 1px solid var(--bg-hover);
+  color: var(--text-body);
 }
 
 .historyDocName {
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #111827;
+  color: var(--text-strong);
   font-weight: 600;
 }
 
 .formatBadge {
-  background: #eef2ff;
-  color: #2563eb;
+  background: var(--accent-tint-1);
+  color: var(--accent);
   font-size: 11px;
   font-weight: 700;
   padding: 3px 9px;
@@ -694,9 +695,9 @@
   display: flex;
   align-items: center;
   gap: 5px;
-  border: 1px solid #d1d5db;
-  background: #fff;
-  color: #374151;
+  border: 1px solid var(--border-strong);
+  background: var(--bg-surface);
+  color: var(--text-body);
   padding: 6px 10px;
   border-radius: 7px;
   font-size: 11.5px;
@@ -704,14 +705,14 @@
 }
 
 .historyActionButton.primary {
-  background: #2563eb;
-  border-color: #2563eb;
+  background: var(--accent);
+  border-color: var(--accent);
   color: #fff;
 }
 
 .historyActionButton.danger {
-  color: #ef4444;
-  border-color: #fecaca;
+  color: var(--danger);
+  border-color: var(--danger-border-soft);
   padding: 6px 8px;
 }
 
@@ -727,7 +728,7 @@
 }
 
 .modalBox {
-  background: #fff;
+  background: var(--bg-surface);
   border-radius: 16px;
   padding: 22px;
   width: 100%;
@@ -756,8 +757,8 @@
   width: 38px;
   height: 38px;
   border-radius: 10px;
-  background: #dbeafe;
-  color: #2563eb;
+  background: var(--accent-tint-2);
+  color: var(--accent);
   flex-shrink: 0;
 }
 
@@ -765,25 +766,25 @@
 .modalTopHeader h3 {
   margin: 0;
   font-size: 16px;
-  color: #0f172a;
+  color: var(--text-heading);
 }
 
 .modalTopHeaderLeft p {
   margin: 2px 0 0;
   font-size: 12.5px;
-  color: #6b7280;
+  color: var(--text-secondary);
 }
 
 .modalCloseIcon {
   border: none;
   background: transparent;
-  color: #9ca3af;
+  color: var(--text-muted);
   cursor: pointer;
   font-size: 16px;
 }
 
 .modalError {
-  color: #ef4444;
+  color: var(--danger);
   font-size: 13px;
   margin: 4px 0 0;
 }
@@ -794,7 +795,7 @@
   gap: 10px;
   margin-top: 18px;
   padding-top: 16px;
-  border-top: 1px solid #f0f0f0;
+  border-top: 1px solid var(--border-subtle);
 }
 
 .modalCancelButton,
@@ -810,13 +811,13 @@
 }
 
 .modalCancelButton {
-  background: #fff;
-  border: 1px solid #d1d5db;
-  color: #374151;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-strong);
+  color: var(--text-body);
 }
 
 .modalSaveButton {
-  background: #2563eb;
+  background: var(--accent);
   border: none;
   color: #fff;
 }
@@ -827,20 +828,20 @@
 }
 
 .required {
-  color: #ef4444;
+  color: var(--danger);
 }
 
 .docxDropzone {
-  border: 1.5px dashed #c7d2fe;
+  border: 1.5px dashed var(--border-dropzone);
   border-radius: 12px;
-  background: #f8fafc;
+  background: var(--bg-dropzone);
   text-align: center;
   padding: 22px 14px;
 }
 
 .docxDropzoneIcon {
   font-size: 26px;
-  color: #2563eb;
+  color: var(--accent);
   margin-bottom: 8px;
 }
 
@@ -848,13 +849,13 @@
   margin: 0;
   font-weight: 600;
   font-size: 13.5px;
-  color: #0f172a;
+  color: var(--text-heading);
 }
 
 .docxDropzoneHint {
   margin: 10px 0 0;
   font-size: 11px;
-  color: #9ca3af;
+  color: var(--text-muted);
 }
 
 .chooseFileButton {
@@ -863,7 +864,7 @@
   gap: 8px;
   padding: 9px 16px;
   border-radius: 8px;
-  background: #2563eb;
+  background: var(--accent);
   color: #fff;
   font-weight: 600;
   font-size: 13px;
@@ -872,9 +873,9 @@
 }
 
 .chooseFileButton.outline {
-  background: #fff;
-  border: 1px solid #d1d5db;
-  color: #374151;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-strong);
+  color: var(--text-body);
 }
 
 .chooseFileButton.small {
@@ -886,28 +887,28 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  border: 1px solid #bbf7d0;
-  background: #ecfdf5;
+  border: 1px solid var(--success-border-soft);
+  background: var(--success-bg-soft);
   border-radius: 10px;
   padding: 12px;
 }
 
 .docxSelectedIcon {
-  color: #2563eb;
+  color: var(--accent);
   font-size: 18px;
 }
 
 .docxSelectedName {
   flex: 1;
   font-size: 13px;
-  color: #0f172a;
+  color: var(--text-heading);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .docxSelectedCheck {
-  color: #16a34a;
+  color: var(--success);
 }
 
 /* ===== YANGI SHABLON - 2-BOSQICH ===== */
@@ -915,20 +916,20 @@
 .placeholdersFoundText {
   font-size: 13.5px;
   font-weight: 600;
-  color: #16a34a;
-  background: #ecfdf5;
+  color: var(--success);
+  background: var(--success-bg-soft);
   border-radius: 8px;
   padding: 10px 12px;
   margin-bottom: 14px;
 }
 
 .placeholdersFoundText.muted {
-  color: #9ca3af;
-  background: #f9fafb;
+  color: var(--text-muted);
+  background: var(--bg-subtle);
 }
 
 .detectedFieldsTable {
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
   border-radius: 10px;
   overflow: hidden;
 }
@@ -943,22 +944,22 @@
 }
 
 .detectedFieldsHeader {
-  background: #f9fafb;
+  background: var(--bg-subtle);
   font-size: 11.5px;
   font-weight: 700;
-  color: #9ca3af;
+  color: var(--text-muted);
   text-transform: uppercase;
 }
 
 .detectedFieldsRow {
-  border-top: 1px solid #f0f0f0;
+  border-top: 1px solid var(--border-subtle);
 }
 
 .detectedFieldKey {
   font-family: monospace;
   font-size: 12px;
-  color: #2563eb;
-  background: #eff6ff;
+  color: var(--accent);
+  background: var(--accent-tint-3);
   padding: 4px 8px;
   border-radius: 6px;
   width: fit-content;
@@ -968,7 +969,7 @@
 .detectedFieldsRow select {
   padding: 7px 9px;
   border-radius: 7px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
   font-size: 12.5px;
 }
 
@@ -976,9 +977,9 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  border: 1.5px dashed #c7d2fe;
-  background: #f8fafc;
-  color: #2563eb;
+  border: 1.5px dashed var(--border-dropzone);
+  background: var(--bg-dropzone);
+  color: var(--accent);
   padding: 9px 14px;
   border-radius: 8px;
   font-size: 12.5px;
@@ -989,7 +990,7 @@
 
 .newDocQuestion {
   font-size: 14px;
-  color: #374151;
+  color: var(--text-body);
   margin: 0 0 16px;
 }
 
@@ -1005,19 +1006,19 @@
   align-items: center;
   gap: 10px;
   padding: 26px 14px;
-  border: 1.5px solid #e5e7eb;
+  border: 1.5px solid var(--border);
   border-radius: 12px;
-  background: #fff;
+  background: var(--bg-surface);
   cursor: pointer;
   font-size: 13.5px;
   font-weight: 600;
-  color: #374151;
+  color: var(--text-body);
 }
 
 .newDocOption:hover {
-  border-color: #2563eb;
-  background: #eff6ff;
-  color: #2563eb;
+  border-color: var(--accent);
+  background: var(--accent-tint-3);
+  color: var(--accent);
 }
 
 .newDocOption svg {

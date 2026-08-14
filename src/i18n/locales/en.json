@@ -3,7 +3,9 @@
     "subtitle": "Word Document Toolkit",
     "openMenu": "Open menu",
     "closeMenu": "Close menu",
-    "languageLabel": "Select language"
+    "languageLabel": "Select language",
+    "toggleThemeToLight": "Switch to light mode",
+    "toggleThemeToDark": "Switch to dark mode"
   },
   "sidebar": {
     "home": "Home",

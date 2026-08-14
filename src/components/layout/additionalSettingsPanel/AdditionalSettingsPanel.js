@@ -10,8 +10,9 @@ import {
   FaDownload,
   FaTimes,
 } from 'react-icons/fa'
-import { Document, Packer, Paragraph, HeadingLevel, AlignmentType } from 'docx'
 import mammoth from 'mammoth'
+
+const { Document, Packer, Paragraph, HeadingLevel, AlignmentType } = require('docx')
 
 const PAGE_SIZES = ['A4', 'A5', 'A3', 'Letter', 'Legal']
 const PAGE_NUM_POSITION_KEYS = [

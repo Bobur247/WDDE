@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FaCog, FaRedo } from 'react-icons/fa'
+import { useTheme } from '../../context/ThemeContext'
 import {
   ConfirmModal,
   AdditionalCard,
@@ -22,7 +23,7 @@ const STORAGE_KEY = 'word-toolkit-settings'
 const DEFAULT_SETTINGS = {
   general: {
     language: 'uz',
-    darkMode: true,
+    darkMode: false,
     dateFormat: 'DD.MM.YYYY HH:mm',
     notifications: true,
     region: 'UZ',
@@ -59,6 +60,7 @@ const DEFAULT_SETTINGS = {
 
 const Settings = () => {
   const { t } = useTranslation()
+  const { setIsDark } = useTheme()
   const [settings, setSettings] = useState(DEFAULT_SETTINGS)
   const [savedBanner, setSavedBanner] = useState(false)
   const [showResetConfirm, setShowResetConfirm] = useState(false)
@@ -75,13 +77,10 @@ const Settings = () => {
     }
   }, [])
 
-  // Dark mode - shu komponent doirasida haqiqatan ishlaydi
+  // Dark mode - butun ilova bo'yicha ThemeContext orqali ishlaydi
   useEffect(() => {
-    document.documentElement.classList.toggle(
-      'settings-dark',
-      settings.general.darkMode,
-    )
-  }, [settings.general.darkMode])
+    setIsDark(settings.general.darkMode)
+  }, [settings.general.darkMode, setIsDark])
 
   function updateSection(section, patch) {
     setSettings((prev) => ({

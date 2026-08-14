@@ -1,5 +1,5 @@
 .TemplatesPage {
-  background: #f4f8fd;
+  background: var(--bg-page);
   padding: 20px;
   border-radius: 16px;
 }
@@ -28,8 +28,8 @@
   width: 44px;
   height: 44px;
   border-radius: 12px;
-  background: #dbeafe;
-  color: #2563eb;
+  background: var(--accent-tint-2);
+  color: var(--accent);
   font-size: 18px;
   flex-shrink: 0;
 }
@@ -37,13 +37,13 @@
 .headerLeft h1 {
   margin: 0;
   font-size: 22px;
-  color: #0f172a;
+  color: var(--text-heading);
 }
 
 .headerLeft p {
   margin: 2px 0 0;
   font-size: 13.5px;
-  color: #64748b;
+  color: var(--text-subtitle);
 }
 
 .addTemplateButton {
@@ -53,7 +53,7 @@
   padding: 11px 18px;
   border: none;
   border-radius: 10px;
-  background: #2563eb;
+  background: var(--accent);
   color: #fff;
   font-weight: 600;
   cursor: pointer;
@@ -66,12 +66,13 @@
   display: flex;
   align-items: flex-end;
   gap: 14px;
-  background: #fff;
-  border: 1px solid #e5e7eb;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
   border-radius: 14px;
   padding: 14px 16px;
   margin-bottom: 18px;
   flex-wrap: wrap;
+  box-shadow: var(--card-shadow);
 }
 
 .searchBox {
@@ -85,7 +86,7 @@
   top: 50%;
   left: 12px;
   transform: translateY(-50%);
-  color: #9ca3af;
+  color: var(--text-muted);
   font-size: 13px;
 }
 
@@ -93,8 +94,8 @@
   width: 100%;
   padding: 10px 12px 10px 34px;
   border-radius: 8px;
-  border: 1px solid #e5e7eb;
-  background: #f9fafb;
+  border: 1px solid var(--border);
+  background: var(--bg-subtle);
 }
 
 .filterField {
@@ -106,21 +107,21 @@
 
 .filterField label {
   font-size: 12.5px;
-  color: #6b7280;
+  color: var(--text-secondary);
   font-weight: 600;
 }
 
 .filterField select {
   padding: 9px 10px;
   border-radius: 8px;
-  border: 1px solid #e5e7eb;
-  background: #fff;
+  border: 1px solid var(--border);
+  background: var(--bg-surface);
 }
 
 .viewToggle {
   display: flex;
   gap: 4px;
-  background: #eef2ff;
+  background: var(--accent-tint-1);
   border-radius: 8px;
   padding: 4px;
 }
@@ -132,14 +133,14 @@
   height: 32px;
   border-radius: 6px;
   cursor: pointer;
-  color: #6b7280;
+  color: var(--text-secondary);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .viewToggle button.active {
-  background: #2563eb;
+  background: var(--accent);
   color: #fff;
 }
 
@@ -161,16 +162,17 @@
 /* ===== CATEGORIES SIDEBAR ===== */
 
 .templateCategories {
-  background: #fff;
-  border: 1px solid #e5e7eb;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
   border-radius: 14px;
   padding: 16px;
+  box-shadow: var(--card-shadow);
 }
 
 .templateCategories h3 {
   margin: 0 0 12px;
   font-size: 15px;
-  color: #0f172a;
+  color: var(--text-heading);
 }
 
 .templateCategories ul {
@@ -189,16 +191,16 @@
   padding: 9px 10px;
   border-radius: 8px;
   cursor: pointer;
-  color: #374151;
+  color: var(--text-body);
   font-size: 13.5px;
 }
 
 .templateCategories li:hover {
-  background: #f3f4f6;
+  background: var(--bg-hover);
 }
 
 .templateCategories li.active {
-  background: #2563eb;
+  background: var(--accent);
   color: #fff;
 }
 
@@ -221,12 +223,13 @@
 /* ===== CARDS: GRID & LIST ===== */
 
 .templateCardsEmpty {
-  background: #fff;
-  border: 1px solid #e5e7eb;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
   border-radius: 14px;
   padding: 40px;
   text-align: center;
-  color: #9ca3af;
+  color: var(--text-muted);
+  box-shadow: var(--card-shadow);
 }
 
 .templateCards.grid {
@@ -271,12 +274,13 @@
 
 .templateCard {
   position: relative;
-  background: #fff;
-  border: 1px solid #e5e7eb;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
   border-radius: 14px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  box-shadow: var(--card-shadow);
 }
 
 .deleteIconButton {
@@ -289,7 +293,7 @@
   border-radius: 50%;
   border: none;
   background: rgba(255, 255, 255, 0.9);
-  color: #ef4444;
+  color: var(--danger);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -299,7 +303,7 @@
 }
 
 .deleteIconButton:hover {
-  background: #ef4444;
+  background: var(--danger);
   color: #fff;
 }
 
@@ -310,12 +314,12 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  background: #eef4ff;
-  color: #2563eb;
+  background: var(--accent-tint-5);
+  color: var(--accent);
 }
 
 .templatePreview.gradient {
-  background: linear-gradient(135deg, #2563eb, #1e3a8a);
+  background: linear-gradient(135deg, var(--accent), var(--accent-deep));
   color: #fff;
 }
 
@@ -345,7 +349,7 @@
 .templateCardTitleRow h4 {
   margin: 0;
   font-size: 14.5px;
-  color: #0f172a;
+  color: var(--text-heading);
 }
 
 .categoryBadge {
@@ -357,28 +361,28 @@
 }
 
 .categoryBadge.blue {
-  background: #dbeafe;
-  color: #2563eb;
+  background: var(--accent-tint-2);
+  color: var(--accent);
 }
 
 .categoryBadge.green {
-  background: #dcfce7;
-  color: #16a34a;
+  background: var(--success-bg);
+  color: var(--success);
 }
 
 .categoryBadge.purple {
-  background: #ede9fe;
-  color: #7c3aed;
+  background: var(--info-purple-bg);
+  color: var(--info-purple);
 }
 
 .categoryBadge.orange {
-  background: #ffedd5;
-  color: #ea580c;
+  background: var(--info-orange-bg);
+  color: var(--info-orange);
 }
 
 .templateCardDescription {
   font-size: 12.5px;
-  color: #6b7280;
+  color: var(--text-secondary);
   margin: 0 0 14px;
   line-height: 1.4;
 }
@@ -403,13 +407,13 @@
 }
 
 .viewButton {
-  background: #fff;
-  border: 1px solid #d1d5db;
-  color: #374151;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-strong);
+  color: var(--text-body);
 }
 
 .downloadButton {
-  background: #2563eb;
+  background: var(--accent);
   border: none;
   color: #fff;
 }
@@ -428,7 +432,7 @@
 }
 
 .modalBox {
-  background: #fff;
+  background: var(--bg-surface);
   border-radius: 16px;
   padding: 22px;
   width: 100%;
@@ -457,33 +461,33 @@
   width: 38px;
   height: 38px;
   border-radius: 10px;
-  background: #dbeafe;
-  color: #2563eb;
+  background: var(--accent-tint-2);
+  color: var(--accent);
   flex-shrink: 0;
 }
 
 .modalTopHeaderLeft h3 {
   margin: 0;
   font-size: 16px;
-  color: #0f172a;
+  color: var(--text-heading);
 }
 
 .modalTopHeaderLeft p {
   margin: 2px 0 0;
   font-size: 12.5px;
-  color: #6b7280;
+  color: var(--text-secondary);
 }
 
 .modalCloseIcon {
   border: none;
   background: transparent;
-  color: #9ca3af;
+  color: var(--text-muted);
   cursor: pointer;
   font-size: 16px;
 }
 
 .modalError {
-  color: #ef4444;
+  color: var(--danger);
   font-size: 13px;
   margin: 4px 0 0;
 }
@@ -494,7 +498,7 @@
   gap: 10px;
   margin-top: 18px;
   padding-top: 16px;
-  border-top: 1px solid #f0f0f0;
+  border-top: 1px solid var(--border-subtle);
 }
 
 .modalCancelButton,
@@ -510,13 +514,13 @@
 }
 
 .modalCancelButton {
-  background: #fff;
-  border: 1px solid #d1d5db;
-  color: #374151;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-strong);
+  color: var(--text-body);
 }
 
 .modalSaveButton {
-  background: #2563eb;
+  background: var(--accent);
   border: none;
   color: #fff;
 }
@@ -550,11 +554,11 @@
 .formField label {
   font-size: 13px;
   font-weight: 600;
-  color: #374151;
+  color: var(--text-body);
 }
 
 .required {
-  color: #ef4444;
+  color: var(--danger);
 }
 
 .formField input,
@@ -562,23 +566,23 @@
 .formField textarea {
   padding: 10px 12px;
   border-radius: 8px;
-  border: 1px solid #e5e7eb;
-  background: #f9fafb;
+  border: 1px solid var(--border);
+  background: var(--bg-subtle);
   font-family: inherit;
   resize: vertical;
 }
 
 .docxDropzone {
-  border: 1.5px dashed #c7d2fe;
+  border: 1.5px dashed var(--border-dropzone);
   border-radius: 12px;
-  background: #f8fafc;
+  background: var(--bg-dropzone);
   text-align: center;
   padding: 22px 14px;
 }
 
 .docxDropzoneIcon {
   font-size: 26px;
-  color: #2563eb;
+  color: var(--accent);
   margin-bottom: 8px;
 }
 
@@ -586,13 +590,13 @@
   margin: 0;
   font-weight: 600;
   font-size: 13.5px;
-  color: #0f172a;
+  color: var(--text-heading);
 }
 
 .docxDropzoneSubtitle {
   margin: 2px 0 12px;
   font-size: 12px;
-  color: #9ca3af;
+  color: var(--text-muted);
 }
 
 .chooseFileButton {
@@ -601,7 +605,7 @@
   gap: 8px;
   padding: 9px 16px;
   border-radius: 8px;
-  background: #2563eb;
+  background: var(--accent);
   color: #fff;
   font-weight: 600;
   font-size: 13px;
@@ -609,43 +613,43 @@
 }
 
 .chooseFileButton.outline {
-  background: #fff;
-  border: 1px solid #d1d5db;
-  color: #374151;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-strong);
+  color: var(--text-body);
 }
 
 .docxDropzoneHint {
   margin: 10px 0 0;
   font-size: 11px;
-  color: #9ca3af;
+  color: var(--text-muted);
 }
 
 .docxSelectedBox {
   display: flex;
   align-items: center;
   gap: 10px;
-  border: 1px solid #bbf7d0;
-  background: #ecfdf5;
+  border: 1px solid var(--success-border-soft);
+  background: var(--success-bg-soft);
   border-radius: 10px;
   padding: 12px;
 }
 
 .docxSelectedIcon {
-  color: #2563eb;
+  color: var(--accent);
   font-size: 18px;
 }
 
 .docxSelectedName {
   flex: 1;
   font-size: 13px;
-  color: #0f172a;
+  color: var(--text-heading);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .docxSelectedCheck {
-  color: #16a34a;
+  color: var(--success);
 }
 
 .imagePickerRow {
@@ -658,8 +662,8 @@
   width: 46px;
   height: 46px;
   border-radius: 8px;
-  background: #f1f5f9;
-  color: #9ca3af;
+  background: var(--bg-muted);
+  color: var(--text-muted);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -683,13 +687,13 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
-  background: #eef4ff;
-  color: #2563eb;
+  background: var(--accent-tint-5);
+  color: var(--accent);
   margin-bottom: 14px;
 }
 
 .viewTemplatePreview.gradient {
-  background: linear-gradient(135deg, #2563eb, #1e3a8a);
+  background: linear-gradient(135deg, var(--accent), var(--accent-deep));
   color: #fff;
 }
 
@@ -705,7 +709,7 @@
 
 .viewTemplateDescription {
   font-size: 13.5px;
-  color: #4b5563;
+  color: var(--text-body-alt);
   line-height: 1.5;
   margin: 0;
 }
@@ -715,8 +719,8 @@
   align-items: center;
   gap: 8px;
   font-size: 12.5px;
-  color: #9ca3af;
-  background: #f9fafb;
+  color: var(--text-muted);
+  background: var(--bg-subtle);
   border-radius: 8px;
   padding: 10px 12px;
   margin: 0 0 14px;
@@ -726,18 +730,18 @@
 .fileViewerError {
   text-align: center;
   padding: 30px 10px;
-  color: #6b7280;
+  color: var(--text-secondary);
   font-size: 13.5px;
 }
 
 .fileViewerError {
-  color: #ef4444;
+  color: var(--danger);
 }
 
 .pdfViewerFrame {
   width: 100%;
   height: 60vh;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
   border-radius: 10px;
   margin-bottom: 14px;
 }
@@ -745,13 +749,13 @@
 .docxViewerContent {
   max-height: 60vh;
   overflow-y: auto;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
   border-radius: 10px;
   padding: 16px;
   margin-bottom: 14px;
   font-size: 13.5px;
   line-height: 1.6;
-  color: #111827;
+  color: var(--text-strong);
 }
 
 .docxViewerContent img {
@@ -761,7 +765,7 @@
 .excelViewerWrapper {
   max-height: 60vh;
   overflow: auto;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
   border-radius: 10px;
   margin-bottom: 14px;
 }
@@ -773,13 +777,13 @@
 }
 
 .excelViewerTable td {
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
   padding: 6px 10px;
   white-space: nowrap;
 }
 
 .excelViewerTable tr:first-child td {
-  background: #f9fafb;
+  background: var(--bg-subtle);
   font-weight: 700;
 }
 
@@ -794,8 +798,8 @@
   width: 52px;
   height: 52px;
   border-radius: 50%;
-  background: #fee2e2;
-  color: #ef4444;
+  background: var(--danger-bg);
+  color: var(--danger);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -806,13 +810,13 @@
 .deleteConfirmModal h3 {
   margin: 0 0 8px;
   font-size: 16px;
-  color: #0f172a;
+  color: var(--text-heading);
 }
 
 .deleteConfirmModal p {
   margin: 0;
   font-size: 13.5px;
-  color: #6b7280;
+  color: var(--text-secondary);
   line-height: 1.5;
 }
 
@@ -829,7 +833,7 @@
   font-weight: 600;
   cursor: pointer;
   font-size: 13.5px;
-  background: #ef4444;
+  background: var(--danger);
   border: none;
   color: #fff;
 }

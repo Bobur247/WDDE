@@ -1,14 +1,14 @@
 
 .SelectFile form {
-  border: 3px dotted #0858e150;
+  border: 3px dotted var(--dropzone-tint-border);
   width: 100%;
   border-radius: 15px;
   padding: 20px;
-  background-color: #0858e115;
+  background-color: var(--dropzone-tint-bg);
   margin-bottom: 20px;
 }
 .SelectFile form .selectFileIcon {
-  color: #0756df;
+  color: var(--brand-sidebar);
   text-align: center;
   font-size: 40px;
   margin-bottom: 10px;
@@ -16,11 +16,13 @@
 .SelectFile form h3 {
   text-align: center;
   margin-bottom: 5px;
+  color: var(--text-heading);
 }
 .SelectFile form .selectFilesubtilte {
   text-align: center;
   margin-bottom: 10px;
   font-size: 14px;
+  color: var(--text-secondary);
 }
 .SelectFile form .selectFileButtona {
   display: flex;
@@ -30,7 +32,7 @@
   padding: 10px 15px;
   border-radius: 8px;
   border: none;
-  background-color: #0756df;
+  background-color: var(--brand-sidebar);
   color: #fff;
   cursor: pointer;
 }
@@ -51,8 +53,8 @@
   display: none;
 }
 .mainFiles .item.SelectmainFileIcon {
-  background-color: #06a95940;
-  border: 2px solid #06a959 !important;
+  background-color: var(--file-valid-bg);
+  border: 2px solid var(--file-valid) !important;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -61,7 +63,7 @@
 }
 .mainFiles .item.SelectmainFileIcon .SelectmainFileIcon1 {
   font-size: 45px;
-  color: #06a959;
+  color: var(--file-valid);
   margin: 10px 0;
 }
 .mainFiles .item.SelectmainFileIcon p,
@@ -70,8 +72,8 @@
   text-align: center;
 }
 .mainFiles .item.SelectmainFileIconExit {
-  background-color: #dd5b1240;
-  border: 2px solid #dd5b12 !important;
+  background-color: var(--file-remove-bg);
+  border: 2px solid var(--file-remove) !important;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -79,7 +81,7 @@
   cursor: pointer;
 }
 .mainFiles .item.SelectmainFileIconExit .SelectmainFileIconExit1 {
-  color: #dd5b12;
+  color: var(--file-remove);
   font-size: 45px;
   margin: 10px 0;
 }
@@ -91,7 +93,7 @@
 }
 .separate form select{
   width: 100%;
-  border: 1px solid #E0E0E0;
+  border: 1px solid var(--border-neutral);
   cursor: pointer;
   padding: 12px 20px;
   border-radius: 8px;
@@ -101,7 +103,7 @@
   margin: 20px 0;
   font-size: 18px;
   color: #fff;
-  background-color: #0754D9;
+  background-color: var(--brand-selectfile-btn);
   border: none;
   display: flex;
   align-items: center;

@@ -1,5 +1,5 @@
 .HistoryReportPage {
-  background: #f4f8fd;
+  background: var(--bg-page);
   padding: 20px;
   border-radius: 16px;
 }
@@ -28,8 +28,8 @@
   width: 46px;
   height: 46px;
   border-radius: 12px;
-  background: #dbeafe;
-  color: #2563eb;
+  background: var(--accent-tint-2);
+  color: var(--accent);
   font-size: 18px;
   flex-shrink: 0;
 }
@@ -37,13 +37,13 @@
 .hrHeaderLeft h1 {
   margin: 0;
   font-size: 22px;
-  color: #0f172a;
+  color: var(--text-heading);
 }
 
 .hrHeaderLeft p {
   margin: 2px 0 0;
   font-size: 13.5px;
-  color: #64748b;
+  color: var(--text-subtitle);
 }
 
 .exportReportButton {
@@ -51,10 +51,10 @@
   align-items: center;
   gap: 8px;
   padding: 10px 16px;
-  border: 1px solid #bfdbfe;
+  border: 1px solid var(--accent-tint-4);
   border-radius: 10px;
-  background: #eff6ff;
-  color: #2563eb;
+  background: var(--accent-tint-3);
+  color: var(--accent);
   font-weight: 600;
   cursor: pointer;
   white-space: nowrap;
@@ -85,10 +85,11 @@
   display: flex;
   align-items: center;
   gap: 14px;
-  background: #fff;
-  border: 1px solid #e5e7eb;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
   border-radius: 14px;
   padding: 16px;
+  box-shadow: var(--card-shadow);
 }
 
 .statCardIcon {
@@ -103,33 +104,33 @@
 }
 
 .tone-blue .statCardIcon {
-  background: #dbeafe;
-  color: #2563eb;
+  background: var(--accent-tint-2);
+  color: var(--accent);
 }
 .tone-green .statCardIcon {
-  background: #dcfce7;
-  color: #16a34a;
+  background: var(--success-bg);
+  color: var(--success);
 }
 .tone-red .statCardIcon {
-  background: #fee2e2;
-  color: #ef4444;
+  background: var(--danger-bg);
+  color: var(--danger);
 }
 .tone-purple .statCardIcon {
-  background: #ede9fe;
-  color: #7c3aed;
+  background: var(--info-purple-bg);
+  color: var(--info-purple);
 }
 
 .statCardValue {
   margin: 0;
   font-size: 22px;
   font-weight: 700;
-  color: #0f172a;
+  color: var(--text-heading);
 }
 
 .statCardLabel {
   margin: 2px 0 0;
   font-size: 12.5px;
-  color: #6b7280;
+  color: var(--text-secondary);
 }
 
 /* ===== FILTERLAR ===== */
@@ -138,12 +139,13 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  background: #fff;
-  border: 1px solid #e5e7eb;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
   border-radius: 14px;
   padding: 12px 14px;
   margin-bottom: 18px;
   flex-wrap: wrap;
+  box-shadow: var(--card-shadow);
 }
 
 .hfSearchBox {
@@ -157,7 +159,7 @@
   top: 50%;
   left: 12px;
   transform: translateY(-50%);
-  color: #9ca3af;
+  color: var(--text-muted);
   font-size: 13px;
 }
 
@@ -165,16 +167,16 @@
   width: 100%;
   padding: 10px 12px 10px 34px;
   border-radius: 8px;
-  border: 1px solid #e5e7eb;
-  background: #f9fafb;
+  border: 1px solid var(--border);
+  background: var(--bg-subtle);
   font-size: 13px;
 }
 
 .historyFilters select {
   padding: 10px 12px;
   border-radius: 8px;
-  border: 1px solid #e5e7eb;
-  background: #fff;
+  border: 1px solid var(--border);
+  background: var(--bg-surface);
   font-size: 13px;
   min-width: 150px;
 }
@@ -189,9 +191,9 @@
   gap: 8px;
   padding: 10px 12px;
   border-radius: 8px;
-  border: 1px solid #e5e7eb;
-  background: #fff;
-  color: #374151;
+  border: 1px solid var(--border);
+  background: var(--bg-surface);
+  color: var(--text-body);
   font-size: 13px;
   cursor: pointer;
   white-space: nowrap;
@@ -201,8 +203,8 @@
   position: absolute;
   top: calc(100% + 8px);
   right: 0;
-  background: #fff;
-  border: 1px solid #e5e7eb;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
   border-radius: 12px;
   padding: 14px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
@@ -217,7 +219,7 @@
   display: block;
   font-size: 11.5px;
   font-weight: 600;
-  color: #6b7280;
+  color: var(--text-secondary);
   margin-bottom: 4px;
 }
 
@@ -225,29 +227,30 @@
   width: 100%;
   padding: 8px 9px;
   border-radius: 7px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
   font-size: 12.5px;
 }
 
 .hfDateClearButton {
-  border: 1px solid #e5e7eb;
-  background: #f9fafb;
+  border: 1px solid var(--border);
+  background: var(--bg-subtle);
   border-radius: 7px;
   padding: 7px;
   font-size: 12px;
-  color: #374151;
+  color: var(--text-body);
   cursor: pointer;
 }
 
 /* ===== JADVAL ===== */
 
 .historyTableWrapper {
-  background: #fff;
-  border: 1px solid #e5e7eb;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
   border-radius: 14px;
   padding: 8px;
   margin-bottom: 18px;
   overflow-x: auto;
+  box-shadow: var(--card-shadow);
 }
 
 .historyReportTable {
@@ -259,24 +262,24 @@
 
 .historyReportTable th {
   text-align: left;
-  color: #9ca3af;
+  color: var(--text-muted);
   font-weight: 600;
   font-size: 12px;
   padding: 12px 14px;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid var(--border);
   white-space: nowrap;
 }
 
 .historyReportTable td {
   padding: 12px 14px;
-  border-bottom: 1px solid #f3f4f6;
-  color: #374151;
+  border-bottom: 1px solid var(--bg-hover);
+  color: var(--text-body);
   vertical-align: middle;
 }
 
 .historyEmptyCell {
   text-align: center;
-  color: #9ca3af;
+  color: var(--text-muted);
   padding: 30px 0;
 }
 
@@ -299,31 +302,31 @@
 }
 
 .historyTypeIcon.tone-blue {
-  background: #dbeafe;
-  color: #2563eb;
+  background: var(--accent-tint-2);
+  color: var(--accent);
 }
 .historyTypeIcon.tone-purple {
-  background: #ede9fe;
-  color: #7c3aed;
+  background: var(--info-purple-bg);
+  color: var(--info-purple);
 }
 .historyTypeIcon.tone-orange {
-  background: #ffedd5;
-  color: #ea580c;
+  background: var(--info-orange-bg);
+  color: var(--info-orange);
 }
 
 .historyFileName {
   font-weight: 600;
-  color: #111827;
+  color: var(--text-strong);
   white-space: nowrap;
 }
 
 .historyDate {
-  color: #6b7280;
+  color: var(--text-secondary);
   white-space: nowrap;
 }
 
 .historyResult {
-  color: #6b7280;
+  color: var(--text-secondary);
   white-space: nowrap;
 }
 
@@ -339,13 +342,13 @@
 }
 
 .statusBadge.success {
-  background: #dcfce7;
-  color: #16a34a;
+  background: var(--success-bg);
+  color: var(--success);
 }
 
 .statusBadge.error {
-  background: #fee2e2;
-  color: #ef4444;
+  background: var(--danger-bg);
+  color: var(--danger);
 }
 
 .historyActionsCell {
@@ -358,9 +361,9 @@
   width: 32px;
   height: 32px;
   border-radius: 8px;
-  border: 1px solid #e5e7eb;
-  background: #fff;
-  color: #374151;
+  border: 1px solid var(--border);
+  background: var(--bg-surface);
+  color: var(--text-body);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -376,8 +379,8 @@
   position: absolute;
   top: calc(100% + 6px);
   right: 0;
-  background: #fff;
-  border: 1px solid #e5e7eb;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
   border-radius: 10px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
   z-index: 20;
@@ -389,20 +392,20 @@
 
 .historyDropdownMenu button {
   border: none;
-  background: #fff;
+  background: var(--bg-surface);
   text-align: left;
   padding: 10px 12px;
   font-size: 12.5px;
-  color: #374151;
+  color: var(--text-body);
   cursor: pointer;
 }
 
 .historyDropdownMenu button:hover {
-  background: #f3f4f6;
+  background: var(--bg-hover);
 }
 
 .historyDropdownMenu button.danger {
-  color: #ef4444;
+  color: var(--danger);
 }
 
 /* ===== PASTKI GRID: statistika + oxirgi faoliyat ===== */
@@ -421,10 +424,11 @@
 
 .activityStatsCard,
 .recentActivityCard {
-  background: #fff;
-  border: 1px solid #e5e7eb;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
   border-radius: 14px;
   padding: 16px;
+  box-shadow: var(--card-shadow);
 }
 
 .settingsCardHeaderLike {
@@ -441,15 +445,15 @@
   width: 30px;
   height: 30px;
   border-radius: 8px;
-  background: #eef2ff;
-  color: #2563eb;
+  background: var(--accent-tint-1);
+  color: var(--accent);
   font-size: 13px;
 }
 
 .settingsCardHeaderLike h3 {
   margin: 0;
   font-size: 14.5px;
-  color: #0f172a;
+  color: var(--text-heading);
 }
 
 /* ===== BAR CHART ===== */
@@ -475,7 +479,7 @@
 .barChartValue {
   font-size: 15px;
   font-weight: 700;
-  color: #0f172a;
+  color: var(--text-heading);
 }
 
 .barChartTrack {
@@ -495,7 +499,7 @@
 
 .barChartLabel {
   font-size: 11.5px;
-  color: #6b7280;
+  color: var(--text-secondary);
   text-align: center;
 }
 
@@ -508,7 +512,7 @@
 }
 
 .recentActivityEmpty {
-  color: #9ca3af;
+  color: var(--text-muted);
   font-size: 13px;
   text-align: center;
   padding: 20px 0;
@@ -519,7 +523,7 @@
   align-items: center;
   gap: 10px;
   padding: 10px 0;
-  border-top: 1px solid #f3f4f6;
+  border-top: 1px solid var(--bg-hover);
   border-left: none;
   border-right: none;
   border-bottom: none;
@@ -531,7 +535,7 @@
 }
 
 .recentActivityRow:hover {
-  background: #f9fafb;
+  background: var(--bg-subtle);
 }
 
 .recentActivityRow:first-child {
@@ -542,7 +546,7 @@
   flex: 1;
   font-size: 13px;
   font-weight: 600;
-  color: #111827;
+  color: var(--text-strong);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -550,13 +554,13 @@
 
 .recentActivityType {
   font-size: 12px;
-  color: #6b7280;
+  color: var(--text-secondary);
   white-space: nowrap;
 }
 
 .recentActivityTime {
   font-size: 12px;
-  color: #9ca3af;
+  color: var(--text-muted);
   white-space: nowrap;
 }
 
@@ -603,7 +607,7 @@
 }
 
 .modalBox {
-  background: #fff;
+  background: var(--bg-surface);
   border-radius: 16px;
   padding: 22px;
   width: 100%;
@@ -622,13 +626,13 @@
 .modalTopHeader h3 {
   margin: 0;
   font-size: 15.5px;
-  color: #0f172a;
+  color: var(--text-heading);
 }
 
 .modalCloseIcon {
   border: none;
   background: transparent;
-  color: #9ca3af;
+  color: var(--text-muted);
   cursor: pointer;
   font-size: 16px;
 }
@@ -639,7 +643,7 @@
   gap: 10px;
   margin-top: 16px;
   padding-top: 14px;
-  border-top: 1px solid #f0f0f0;
+  border-top: 1px solid var(--border-subtle);
 }
 
 .modalFooter.center {
@@ -660,13 +664,13 @@
 }
 
 .modalCancelButton {
-  background: #fff;
-  border: 1px solid #d1d5db;
-  color: #374151;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-strong);
+  color: var(--text-body);
 }
 
 .modalSaveButton {
-  background: #2563eb;
+  background: var(--accent);
   border: none;
   color: #fff;
 }
@@ -677,7 +681,7 @@
 }
 
 .modalDangerButton {
-  background: #ef4444;
+  background: var(--danger);
   border: none;
   color: #fff;
 }
@@ -691,7 +695,7 @@
 .viewFileModalSubtitle {
   margin: 2px 0 0;
   font-size: 12.5px;
-  color: #6b7280;
+  color: var(--text-secondary);
 }
 
 .viewFileDemoNote {
@@ -699,8 +703,8 @@
   align-items: center;
   gap: 8px;
   font-size: 12.5px;
-  color: #9ca3af;
-  background: #f9fafb;
+  color: var(--text-muted);
+  background: var(--bg-subtle);
   border-radius: 8px;
   padding: 10px 12px;
   margin: 0 0 14px;
@@ -710,30 +714,30 @@
 .viewFileError {
   text-align: center;
   padding: 30px 10px;
-  color: #6b7280;
+  color: var(--text-secondary);
   font-size: 13.5px;
 }
 
 .viewFileError {
-  color: #ef4444;
+  color: var(--danger);
 }
 
 .pdfViewerFrame {
   width: 100%;
   height: 55vh;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
   border-radius: 10px;
 }
 
 .docxViewerContent {
   max-height: 55vh;
   overflow-y: auto;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
   border-radius: 10px;
   padding: 16px;
   font-size: 13.5px;
   line-height: 1.6;
-  color: #111827;
+  color: var(--text-strong);
 }
 
 .docxViewerContent img {
@@ -743,7 +747,7 @@
 .excelViewerWrapper {
   max-height: 55vh;
   overflow: auto;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
   border-radius: 10px;
 }
 
@@ -754,13 +758,13 @@
 }
 
 .excelViewerTable td {
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
   padding: 6px 10px;
   white-space: nowrap;
 }
 
 .excelViewerTable tr:first-child td {
-  background: #f9fafb;
+  background: var(--bg-subtle);
   font-weight: 700;
 }
 
@@ -775,8 +779,8 @@
   width: 52px;
   height: 52px;
   border-radius: 50%;
-  background: #fee2e2;
-  color: #ef4444;
+  background: var(--danger-bg);
+  color: var(--danger);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -787,12 +791,12 @@
 .deleteRecordModal h3 {
   margin: 0 0 8px;
   font-size: 16px;
-  color: #0f172a;
+  color: var(--text-heading);
 }
 
 .deleteRecordModal p {
   margin: 0;
   font-size: 13.5px;
-  color: #6b7280;
+  color: var(--text-secondary);
   line-height: 1.5;
 }

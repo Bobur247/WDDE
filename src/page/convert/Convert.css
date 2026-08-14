@@ -14,12 +14,17 @@
   align-items: center;
   justify-content: center;
   font-size: 35px;
-  background-color: #000cfe30;
-  color: #000cfe;
+  background-color: var(--navicon-tint);
+  color: var(--brand-navicon);
   flex-shrink: 0;
 }
 .ConvertNavbar .nText h3 {
   margin-bottom: 5px;
+  color: var(--text-heading);
+}
+
+.ConvertNavbar .nText span {
+  color: var(--text-subtitle);
 }
 
 @media (max-width: 640px) {
@@ -44,11 +49,12 @@
 }
 
 .panel {
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
   border-radius: 14px;
   padding: 18px;
-  background: #fff;
+  background: var(--bg-surface);
   height: 100%;
+  box-shadow: var(--card-shadow);
 }
 
 .panelHeader {
@@ -65,11 +71,13 @@
 .panelHeader h3 {
   font-size: 16px;
   margin: 0;
+  color: var(--text-heading);
 }
 
 .panelHeader h4 {
   font-size: 14px;
   margin: 0;
+  color: var(--text-heading);
 }
 
 .panelIcon {
@@ -79,22 +87,22 @@
   width: 40px;
   height: 40px;
   border-radius: 8px;
-  background: #0756DF30;
-  color: #2563eb;
+  background: var(--sidebar-icon-tint);
+  color: var(--accent);
   font-size: 18px;
 }
 .dropzone {
   border-radius: 12px;
-  background-color: #0858e115;
+  background-color: var(--dropzone-tint-bg);
   padding: 28px 16px;
   text-align: center;
-  color: #6b7280;
-  border: 3px dotted #0858e150;
+  color: var(--text-secondary);
+  border: 3px dotted var(--dropzone-tint-border);
 }
 
 .dropzoneIcon {
   font-size: 30px;
-  color: #2563eb;
+  color: var(--accent);
   margin-bottom: 10px;
 }
 
@@ -105,7 +113,7 @@
   margin-top: 14px;
   padding: 10px 18px;
   border-radius: 8px;
-  background: #2563eb;
+  background: var(--accent);
   color: #fff;
   font-weight: 600;
   cursor: pointer;
@@ -127,12 +135,12 @@
   padding: 10px;
   gap: 10px;
   overflow: hidden;
-  background: #06A95950;
-  border: 2px solid #06A959;
+  background: var(--file-valid-bg-2);
+  border: 2px solid var(--file-valid);
 }
 
 .selectedFileName {
-  color: #111;
+  color: var(--text-strong);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -146,16 +154,16 @@
 }
 
 .fileTypeIcon.pdf {
-  color: #ef4444;
+  color: var(--danger);
 }
 
 .fileTypeIcon.txt,
 .fileTypeIcon.html {
-  color: #6b7280;
+  color: var(--text-secondary);
 }
 
 .fileTypeIcon.docx {
-  color: #2563eb;
+  color: var(--accent);
 }
 
 .removeFileAction {
@@ -166,21 +174,21 @@
   gap: 6px;
   cursor: pointer;
   flex-shrink: 0;
-  border: 2px solid #DD5B12;
+  border: 2px solid var(--file-remove);
   border-radius: 10px;
-  background-color: #DD5B1240;
+  background-color: var(--file-remove-bg);
 }
 .removeFileAction .removeFileActionIcon{
   font-size: 30px;
-  color: #DD5B12;
+  color: var(--file-remove);
 }
 .removeFileAction span{
   font-size: 14px;
-  color: #000;
+  color: var(--text-strong);
 }
 
 .errorText {
-  color: #ef4444;
+  color: var(--danger);
   margin-top: 10px;
   font-size: 13px;
 }
@@ -189,7 +197,7 @@
   margin-top: 18px;
   margin-bottom: 8px;
   font-size: 13px;
-  color: #6b7280;
+  color: var(--text-secondary);
 }
 
 .formatsRow {
@@ -200,15 +208,15 @@
 .formatPill {
   padding: 5px 14px;
   border-radius: 999px;
-  background: #f1f5f9;
-  color: #475569;
+  background: var(--bg-muted);
+  color: var(--text-tertiary);
   font-size: 13px;
   font-weight: 600;
 }
 
 .formatPill.active {
-  background: #dbeafe;
-  color: #2563eb;
+  background: var(--accent-tint-2);
+  color: var(--accent);
 }
 
 /* --- 2-USTUN: konvertatsiya yo'nalishi --- */
@@ -217,7 +225,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  border: 1.5px solid #e5e7eb;
+  border: 1.5px solid var(--border);
   border-radius: 12px;
   padding: 14px 16px;
   margin-bottom: 10px;
@@ -225,8 +233,8 @@
 }
 
 .directionCard.active {
-  border-color: #2563eb;
-  background: #eff6ff;
+  border-color: var(--accent);
+  background: var(--accent-tint-3);
 }
 
 .directionCard.disabled {
@@ -238,20 +246,20 @@
 }
 
 .directionIcon.pdf {
-  color: #ef4444;
+  color: var(--danger);
 }
 
 .directionIcon.txt,
 .directionIcon.html {
-  color: #6b7280;
+  color: var(--text-secondary);
 }
 
 .directionIcon.docx {
-  color: #2563eb;
+  color: var(--accent);
 }
 
 .directionArrow {
-  color: #9ca3af;
+  color: var(--text-muted);
   font-weight: 700;
 }
 
@@ -260,13 +268,13 @@
   margin-left: auto;
   font-weight: 600;
   font-size: 14px;
-  color: #111;
+  color: var(--text-strong);
 }
 
 .settingsBlock {
   margin-top: 18px;
   padding-top: 14px;
-  border-top: 1px solid #f0f0f0;
+  border-top: 1px solid var(--border-subtle);
 }
 
 .settingRow {
@@ -274,7 +282,7 @@
   align-items: center;
   gap: 8px;
   font-size: 13.5px;
-  color: #374151;
+  color: var(--text-body);
   padding: 6px 0;
   cursor: pointer;
 }
@@ -290,7 +298,7 @@
   padding: 12px;
   border: none;
   border-radius: 10px;
-  background: #2563eb;
+  background: var(--accent);
   color: #fff;
   font-weight: 600;
   cursor: pointer;
@@ -304,7 +312,7 @@
 /* --- 3-USTUN: natija --- */
 
 .resultPlaceholder {
-  color: #9aa0a6;
+  color: var(--text-placeholder);
   font-size: 14px;
   text-align: center;
   padding: 30px 10px;
@@ -319,8 +327,8 @@
   width: 34px;
   height: 34px;
   margin: 0 auto 14px;
-  border: 3px solid #dbeafe;
-  border-top-color: #2563eb;
+  border: 3px solid var(--accent-tint-2);
+  border-top-color: var(--accent);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
@@ -334,7 +342,7 @@
 .progressBarOuter {
   width: 100%;
   height: 8px;
-  background: #eef2ff;
+  background: var(--accent-tint-1);
   border-radius: 999px;
   overflow: hidden;
   margin-top: 14px;
@@ -342,7 +350,7 @@
 
 .progressBarInner {
   height: 100%;
-  background: #2563eb;
+  background: var(--accent);
   border-radius: 999px;
   transition: width 0.25s ease;
 }
@@ -350,22 +358,22 @@
 .progressPercent {
   margin-top: 8px;
   font-size: 13px;
-  color: #6b7280;
+  color: var(--text-secondary);
 }
 
 .successBanner {
   display: flex;
   align-items: flex-start;
   gap: 10px;
-  background: #ecfdf5;
-  border: 1px solid #bbf7d0;
+  background: var(--success-bg-soft);
+  border: 1px solid var(--success-border-soft);
   border-radius: 12px;
   padding: 14px;
   margin-bottom: 16px;
 }
 
 .successIcon {
-  color: #16a34a;
+  color: var(--success);
   font-size: 20px;
   margin-top: 2px;
   flex-shrink: 0;
@@ -374,21 +382,21 @@
 .successTitle {
   margin: 0;
   font-weight: 700;
-  color: #065f46;
+  color: var(--success-strong);
   font-size: 14px;
 }
 
 .successSubtitle {
   margin: 2px 0 0;
   font-size: 12.5px;
-  color: #047857;
+  color: var(--success-strong-alt);
 }
 
 .resultFileCard {
   display: flex;
   align-items: center;
   gap: 10px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
   border-radius: 12px;
   padding: 12px;
   margin-bottom: 14px;
@@ -411,13 +419,13 @@
 .resultFileSize {
   margin: 2px 0 0;
   font-size: 12px;
-  color: #9ca3af;
+  color: var(--text-muted);
 }
 
 .iconDownloadButton {
   border: none;
-  background: #eef2ff;
-  color: #2563eb;
+  background: var(--accent-tint-1);
+  color: var(--accent);
   width: 32px;
   height: 32px;
   border-radius: 8px;
@@ -429,7 +437,7 @@
 }
 
 .resultDetails {
-  background: #f9fafb;
+  background: var(--bg-subtle);
   border-radius: 10px;
   padding: 10px 14px;
   margin-bottom: 16px;
@@ -440,8 +448,8 @@
   justify-content: space-between;
   font-size: 13px;
   padding: 6px 0;
-  color: #374151;
-  border-bottom: 1px solid #eef0f2;
+  color: var(--text-body);
+  border-bottom: 1px solid var(--border-faint-2);
 }
 
 .resultDetailRow:last-child {
@@ -449,12 +457,12 @@
 }
 
 .resultDetailRow span:first-child {
-  color: #6b7280;
+  color: var(--text-secondary);
 }
 
 .resultDetailRow span:last-child {
   font-weight: 600;
-  color: #111;
+  color: var(--text-strong);
 }
 
 .downloadMainButton {
@@ -466,7 +474,7 @@
   padding: 12px;
   border: none;
   border-radius: 10px;
-  background: #2563eb;
+  background: var(--accent);
   color: #fff;
   font-weight: 600;
   cursor: pointer;
@@ -480,10 +488,10 @@
   justify-content: center;
   gap: 8px;
   padding: 12px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
   border-radius: 10px;
-  background: #fff;
-  color: #374151;
+  background: var(--bg-surface);
+  color: var(--text-body);
   font-weight: 600;
   cursor: pointer;
 }

@@ -1,13 +1,13 @@
 .DocxViewer, .docxContentSelected {
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--border-neutral);
   border-radius: 12px;
   padding: 16px;
-  background: #fff;
+  background: var(--bg-surface);
   margin-bottom: 10px;
   min-height: 30vh !important;
 }
 .docxViewerPlaceholder {
-  color: #9aa0a6;
+  color: var(--text-placeholder);
 }
 .SubtitleFileTopNavbar{
   margin-bottom: 15px;
@@ -15,13 +15,13 @@
 .DocxViewer {
   flex: 1;
   min-height: 200px;
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--border-neutral);
   border-radius: 12px;
   padding: 16px;
-  background: #fff;
+  background: var(--bg-surface);
 }
 .docxViewerPlaceholder {
-  color: #9aa0a6;
+  color: var(--text-placeholder);
 }
 
 .manualText,
@@ -31,29 +31,29 @@
   user-select: text;
   max-height: 300px;
   overflow-y: auto;
-  border: 1px solid #eee;
+  border: 1px solid var(--border-faint);
   border-radius: 8px;
   padding: 10px;
   font-family: inherit;
-  background-color: #FAFAFA;
+  background-color: var(--bg-faint);
 }
 
 .manualPendingPreview {
   margin-top: 10px;
   padding: 8px;
-  border: 1px solid #0B43A8;
+  border: 1px solid var(--brand-docxviewer);
   border-radius: 8px;
-  color: #0B43A8;
+  color: var(--brand-docxviewer);
 }
 
 .finalResults {
   margin-top: 20px;
   padding: 12px;
-  border: 1px solid #eee;
+  border: 1px solid var(--border-faint);
   height: 40vh;
   overflow-y: auto;
   border-radius: 8px;
-  background-color: #FAFAFA;
+  background-color: var(--bg-faint);
 }
 .finalResults ol li{
   list-style-type: none;

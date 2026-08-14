@@ -1,5 +1,5 @@
 .SettingsPage {
-  background: #f4f8fd;
+  background: var(--bg-page);
   padding: 20px;
   border-radius: 16px;
 }
@@ -28,8 +28,8 @@
   width: 46px;
   height: 46px;
   border-radius: 12px;
-  background: #dbeafe;
-  color: #2563eb;
+  background: var(--accent-tint-2);
+  color: var(--accent);
   font-size: 18px;
   flex-shrink: 0;
 }
@@ -37,13 +37,13 @@
 .settingsPageHeaderLeft h1 {
   margin: 0;
   font-size: 22px;
-  color: #0f172a;
+  color: var(--text-heading);
 }
 
 .settingsPageHeaderLeft p {
   margin: 2px 0 0;
   font-size: 13.5px;
-  color: #64748b;
+  color: var(--text-subtitle);
 }
 
 .resetDefaultsButton {
@@ -51,19 +51,19 @@
   align-items: center;
   gap: 8px;
   padding: 10px 16px;
-  border: 1px solid #d1d5db;
+  border: 1px solid var(--border-strong);
   border-radius: 10px;
-  background: #fff;
-  color: #374151;
+  background: var(--bg-surface);
+  color: var(--text-body);
   font-weight: 600;
   cursor: pointer;
   white-space: nowrap;
 }
 
 .savedBanner {
-  background: #ecfdf5;
-  border: 1px solid #bbf7d0;
-  color: #16a34a;
+  background: var(--success-bg-soft);
+  border: 1px solid var(--success-border-soft);
+  color: var(--success);
   font-weight: 600;
   font-size: 13.5px;
   padding: 10px 14px;
@@ -159,13 +159,14 @@
 
 .settingsCard,
 .appInfoCard {
-  background: #fff;
-  border: 1px solid #e5e7eb;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
   border-radius: 14px;
   padding: 16px;
   height: 100%;
   min-width: 0;
   overflow-wrap: break-word;
+  box-shadow: var(--card-shadow);
 }
 
 .settingsCardHeader {
@@ -182,8 +183,8 @@
   width: 30px;
   height: 30px;
   border-radius: 8px;
-  background: #eef2ff;
-  color: #2563eb;
+  background: var(--accent-tint-1);
+  color: var(--accent);
   font-size: 13px;
   flex-shrink: 0;
 }
@@ -191,7 +192,7 @@
 .settingsCardHeader h3 {
   margin: 0;
   font-size: 14.5px;
-  color: #0f172a;
+  color: var(--text-heading);
 }
 
 .cardTwoCol {
@@ -224,7 +225,7 @@
   display: block;
   font-size: 12.5px;
   font-weight: 600;
-  color: #374151;
+  color: var(--text-body);
   margin-bottom: 5px;
 }
 
@@ -233,8 +234,9 @@
   width: 100%;
   padding: 9px 10px;
   border-radius: 8px;
-  border: 1px solid #e5e7eb;
-  background: #f9fafb;
+  border: 1px solid var(--border);
+  background: var(--bg-subtle);
+  color: var(--text-heading);
   font-size: 13px;
   font-family: inherit;
 }
@@ -247,8 +249,8 @@
   justify-content: space-between;
   padding: 9px 0;
   font-size: 13px;
-  color: #374151;
-  border-top: 1px solid #f0f0f0;
+  color: var(--text-body);
+  border-top: 1px solid var(--border-subtle);
 }
 
 .toggleRow:first-of-type {
@@ -270,7 +272,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
   border-radius: 10px;
   padding: 10px 12px;
 }
@@ -282,8 +284,8 @@
   width: 26px;
   height: 26px;
   border-radius: 7px;
-  background: #eef2ff;
-  color: #2563eb;
+  background: var(--accent-tint-1);
+  color: var(--accent);
   font-size: 12px;
   flex-shrink: 0;
 }
@@ -293,7 +295,7 @@
   min-width: 0;
   font-size: 12.5px;
   font-weight: 600;
-  color: #374151;
+  color: var(--text-body);
 }
 
 .switch {
@@ -313,7 +315,7 @@
 .slider {
   position: absolute;
   inset: 0;
-  background: #d1d5db;
+  background: var(--border-strong);
   border-radius: 999px;
   cursor: pointer;
   transition: 0.15s;
@@ -326,13 +328,13 @@
   height: 16px;
   left: 3px;
   top: 3px;
-  background: #fff;
+  background: var(--always-light);
   border-radius: 50%;
   transition: 0.15s;
 }
 
 .switch input:checked + .slider {
-  background: #2563eb;
+  background: var(--accent);
 }
 
 .switch input:checked + .slider::before {
@@ -349,8 +351,8 @@
   gap: 8px;
   padding: 9px 0;
   font-size: 13px;
-  color: #374151;
-  border-top: 1px solid #f0f0f0;
+  color: var(--text-body);
+  border-top: 1px solid var(--border-subtle);
 }
 
 .actionRow:first-of-type {
@@ -363,9 +365,9 @@
   gap: 7px;
   padding: 7px 12px;
   border-radius: 8px;
-  border: 1px solid #bfdbfe;
-  background: #eff6ff;
-  color: #2563eb;
+  border: 1px solid var(--accent-tint-4);
+  background: var(--accent-tint-3);
+  color: var(--accent);
   font-size: 12px;
   font-weight: 600;
   cursor: pointer;
@@ -381,9 +383,9 @@
 }
 
 .cardActionButton.danger {
-  border-color: #fecaca;
-  background: #fef2f2;
-  color: #ef4444;
+  border-color: var(--danger-border-soft);
+  background: var(--danger-bg-soft);
+  color: var(--danger);
 }
 
 .cardActionButton:disabled {
@@ -393,15 +395,15 @@
 
 .fieldHint {
   font-size: 11.5px;
-  color: #9ca3af;
+  color: var(--text-muted);
   line-height: 1.5;
   margin: 6px 0 0;
 }
 
 .successNote {
-  background: #ecfdf5;
-  color: #16a34a;
-  border: 1px solid #bbf7d0;
+  background: var(--success-bg-soft);
+  color: var(--success);
+  border: 1px solid var(--success-border-soft);
   border-radius: 8px;
   padding: 8px 10px;
   font-size: 12.5px;
@@ -430,11 +432,11 @@
 }
 
 .pathPickButton {
-  border: 1px solid #e5e7eb;
-  background: #f9fafb;
+  border: 1px solid var(--border);
+  background: var(--bg-subtle);
   border-radius: 8px;
   width: 36px;
-  color: #2563eb;
+  color: var(--accent);
   cursor: pointer;
   flex-shrink: 0;
 }
@@ -454,7 +456,7 @@
 }
 
 .emptyListText {
-  color: #9ca3af;
+  color: var(--text-muted);
   font-size: 12.5px;
   text-align: center;
   padding: 10px 0;
@@ -465,7 +467,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
   border-radius: 8px;
   padding: 10px;
 }
@@ -474,20 +476,20 @@
   margin: 0;
   font-family: monospace;
   font-size: 11.5px;
-  color: #0f172a;
+  color: var(--text-heading);
   word-break: break-all;
 }
 
 .tokenDate {
   margin: 3px 0 0;
   font-size: 11px;
-  color: #9ca3af;
+  color: var(--text-muted);
 }
 
 .tokenRevokeButton {
   border: none;
-  background: #fef2f2;
-  color: #ef4444;
+  background: var(--danger-bg-soft);
+  color: var(--danger);
   width: 30px;
   height: 30px;
   border-radius: 7px;
@@ -501,37 +503,37 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
   border-radius: 10px;
   padding: 12px;
   margin-bottom: 10px;
   font-size: 18px;
-  color: #2563eb;
+  color: var(--accent);
 }
 
 .sessionRow.current {
-  border-color: #bbf7d0;
-  background: #ecfdf5;
-  color: #16a34a;
+  border-color: var(--success-border-soft);
+  background: var(--success-bg-soft);
+  color: var(--success);
 }
 
 .sessionDevice {
   margin: 0;
   font-size: 13px;
   font-weight: 600;
-  color: #0f172a;
+  color: var(--text-heading);
 }
 
 .sessionMeta {
   margin: 2px 0 0;
   font-size: 11.5px;
-  color: #6b7280;
+  color: var(--text-secondary);
   word-break: break-all;
 }
 
 .aboutText {
   font-size: 13px;
-  color: #374151;
+  color: var(--text-body);
   line-height: 1.6;
   margin: 0 0 10px;
 }
@@ -548,7 +550,7 @@
   width: 56px;
   height: 56px;
   border-radius: 14px;
-  background: #2563eb;
+  background: var(--accent);
   color: #fff;
   font-weight: 800;
   font-size: 22px;
@@ -561,7 +563,7 @@
 .appInfoName {
   margin: 0 0 10px;
   font-size: 15px;
-  color: #0f172a;
+  color: var(--text-heading);
 }
 
 .appInfoVersionRow {
@@ -570,18 +572,18 @@
   justify-content: center;
   gap: 6px;
   font-size: 12.5px;
-  color: #6b7280;
+  color: var(--text-secondary);
   margin-bottom: 14px;
 }
 
 .appInfoVersion {
   font-weight: 700;
-  color: #0f172a;
+  color: var(--text-heading);
 }
 
 .appInfoBadge {
-  background: #dcfce7;
-  color: #16a34a;
+  background: var(--success-bg);
+  color: var(--success);
   font-size: 11px;
   font-weight: 700;
   padding: 2px 8px;
@@ -589,7 +591,7 @@
 }
 
 .appInfoDivider {
-  border-top: 1px solid #f0f0f0;
+  border-top: 1px solid var(--border-subtle);
   margin: 6px 0 14px;
 }
 
@@ -597,7 +599,7 @@
   text-align: left;
   font-size: 12px;
   font-weight: 700;
-  color: #9ca3af;
+  color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.4px;
   margin: 0 0 12px;
@@ -609,21 +611,21 @@
   gap: 10px;
   text-align: left;
   margin-bottom: 14px;
-  color: #2563eb;
+  color: var(--accent);
   font-size: 14px;
 }
 
 .appInfoRowLabel {
   margin: 0;
   font-size: 11.5px;
-  color: #9ca3af;
+  color: var(--text-muted);
 }
 
 .appInfoRowValue {
   margin: 2px 0 0;
   font-size: 12.5px;
   font-weight: 600;
-  color: #0f172a;
+  color: var(--text-heading);
   word-break: break-word;
 }
 
@@ -637,7 +639,7 @@
   padding: 12px;
   border: none;
   border-radius: 10px;
-  background: #2563eb;
+  background: var(--accent);
   color: #fff;
   font-weight: 600;
   cursor: pointer;
@@ -657,7 +659,7 @@
 }
 
 .modalBox {
-  background: #fff;
+  background: var(--bg-surface);
   border-radius: 16px;
   padding: 22px;
   width: 100%;
@@ -676,19 +678,19 @@
 .modalTopHeader h3 {
   margin: 0;
   font-size: 15.5px;
-  color: #0f172a;
+  color: var(--text-heading);
 }
 
 .modalCloseIcon {
   border: none;
   background: transparent;
-  color: #9ca3af;
+  color: var(--text-muted);
   cursor: pointer;
   font-size: 16px;
 }
 
 .modalError {
-  color: #ef4444;
+  color: var(--danger);
   font-size: 12.5px;
   margin: 4px 0 0;
 }
@@ -699,7 +701,7 @@
   gap: 10px;
   margin-top: 16px;
   padding-top: 14px;
-  border-top: 1px solid #f0f0f0;
+  border-top: 1px solid var(--border-subtle);
 }
 
 .modalFooter.center {
@@ -720,19 +722,19 @@
 }
 
 .modalCancelButton {
-  background: #fff;
-  border: 1px solid #d1d5db;
-  color: #374151;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-strong);
+  color: var(--text-body);
 }
 
 .modalSaveButton {
-  background: #2563eb;
+  background: var(--accent);
   border: none;
   color: #fff;
 }
 
 .modalDangerButton {
-  background: #ef4444;
+  background: var(--danger);
   border: none;
   color: #fff;
 }
@@ -745,8 +747,8 @@
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: #fef3c7;
-  color: #d97706;
+  background: var(--warning-bg);
+  color: var(--warning);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -757,42 +759,12 @@
 .confirmModal h3 {
   margin: 0 0 8px;
   font-size: 15px;
-  color: #0f172a;
+  color: var(--text-heading);
 }
 
 .confirmModal p {
   margin: 0;
   font-size: 13px;
-  color: #6b7280;
+  color: var(--text-secondary);
   line-height: 1.5;
-}
-
-/* ===== DARK MODE (demo - shu sahifa doirasida) ===== */
-
-.settings-dark .SettingsPage {
-  background: #0f172a;
-}
-
-.settings-dark .settingsCard,
-.settings-dark .appInfoCard,
-.settings-dark .modalBox {
-  background: #1e293b;
-  border-color: #334155;
-}
-
-.settings-dark .settingsCardHeader h3,
-.settings-dark .settingsPageHeaderLeft h1,
-.settings-dark .appInfoName,
-.settings-dark .appInfoRowValue,
-.settings-dark .modalTopHeader h3,
-.settings-dark .toggleBoxLabel {
-  color: #f1f5f9;
-}
-
-.settings-dark .settingsField input,
-.settings-dark .settingsField select,
-.settings-dark .pathInputRow input {
-  background: #0f172a;
-  border-color: #334155;
-  color: #f1f5f9;
 }

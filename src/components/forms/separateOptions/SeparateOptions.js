@@ -3,8 +3,9 @@ import { useTranslation } from 'react-i18next'
 import { GrLinkPrevious } from 'react-icons/gr'
 import { MdSwitchAccessShortcut } from 'react-icons/md'
 import './SeparateOptions.css'
-import { Document, Packer, Paragraph } from 'docx'
 import { saveAs } from 'file-saver'
+
+const { Document, Packer, Paragraph } = require('docx')
 
 const METHOD_VALUES = [
   'block',

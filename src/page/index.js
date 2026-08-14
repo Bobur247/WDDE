@@ -5,6 +5,7 @@ import CreateDocument  from './createDocument/CreateDocument'
 import Templates  from './templates/Templates'
 import Settings  from './settings/Settings'
 import History  from './history/History'
+import Login  from './login/login'
 
 export {
   Home,
@@ -14,4 +15,5 @@ export {
   Templates,
   Settings,
   History,
+  Login,
 }

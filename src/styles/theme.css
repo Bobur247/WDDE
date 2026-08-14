@@ -1,0 +1,192 @@
+/* ===== THEME TOKENS =====
+   Light values below are the project's original hardcoded colors — kept
+   identical so switching to variables does not change light mode at all.
+   Dark values are a cohesive "midnight navy" palette (see :root[data-theme='dark']). */
+
+:root {
+  /* surfaces */
+  --bg-page: #f4f8fd;
+  --bg-app: #F4F6FA;
+  --bg-surface: #ffffff;
+  --bg-subtle: #f9fafb;
+  --bg-muted: #f1f5f9;
+
+  /* text */
+  --text-heading: #0f172a;
+  --text-body: #374151;
+  --text-secondary: #6b7280;
+  --text-muted: #9ca3af;
+  --text-subtitle: #64748b;
+
+  /* borders */
+  --border: #e5e7eb;
+  --border-subtle: #f0f0f0;
+  --border-strong: #d1d5db;
+
+  /* brand accent + tints */
+  --accent: #2563eb;
+  --accent-tint-1: #eef2ff;
+  --accent-tint-2: #dbeafe;
+  --accent-tint-3: #eff6ff;
+  --accent-tint-4: #bfdbfe;
+
+  /* drifted brand blues, kept distinct in light mode */
+  --brand-sidebar: #0756DF;
+  --brand-sidebar-hover: #121F41;
+  --brand-navbar: #0136A7;
+  --brand-navicon: #000cfe;
+  --brand-dropzone: #0858e1;
+
+  /* semantic */
+  --success: #16a34a;
+  --success-bg: #dcfce7;
+  --success-bg-soft: #ecfdf5;
+  --success-border-soft: #bbf7d0;
+  --danger: #ef4444;
+  --danger-bg: #fee2e2;
+  --danger-bg-soft: #fef2f2;
+  --danger-border-soft: #fecaca;
+  --warning: #d97706;
+  --warning-bg: #fef3c7;
+  --info-purple: #7c3aed;
+  --info-purple-bg: #ede9fe;
+  --info-orange: #ea580c;
+  --info-orange-bg: #ffedd5;
+
+  /* always-dark sidebar */
+  --sidebar-bg: #0c1a38;
+  --sidebar-border: #25355A;
+
+  /* stays light in both themes (contrast elements, e.g. toggle-switch knob) */
+  --always-light: #ffffff;
+
+  /* one-off decorative accents */
+  --home-icon-accent: #691CD6;
+
+  /* small one-off tokens (kept separate so light-mode stays pixel-exact) */
+  --navbar-select-bg: #0C1938;
+  --navbar-select-border: #999;
+  --file-valid: #06a959;
+  --file-valid-bg: #06a95940;
+  --file-remove: #dd5b12;
+  --file-remove-bg: #dd5b1240;
+  --bg-hover: #f3f4f6;
+  --bg-dropzone: #f8fafc;
+  --border-dropzone: #c7d2fe;
+  --border-dropzone-alt: #93c5fd;
+  --text-strong: #111827;
+  --text-faint: #94a3b8;
+  --text-faint-2: #cbd5e1;
+  --text-body-alt: #4b5563;
+  --success-strong: #065f46;
+  --success-strong-alt: #047857;
+  --brand-selectfile-btn: #0754D9;
+  --border-neutral: #e0e0e0;
+  --border-faint: #eee;
+  --text-placeholder: #9aa0a6;
+  --brand-docxviewer: #0B43A8;
+  --bg-faint: #FAFAFA;
+  --border-generic: #ccc;
+  --accent-deep: #1e3a8a;
+  --file-valid-bg-2: #06A95950;
+  --dropzone-tint-bg: #0858e115;
+  --dropzone-tint-border: #0858e150;
+  --navicon-tint: #000cfe30;
+  --sidebar-icon-tint: #0756DF30;
+  --home-icon-tint: #691CD640;
+  --accent-tint-5: #eef4ff;
+  --text-tertiary: #475569;
+  --border-faint-2: #eef0f2;
+  --border-home: #cacbcf;
+
+  /* card elevation shadow — same shape as the Home page cards, everywhere */
+  --card-shadow: 3px 3px 5px rgb(205, 224, 239);
+}
+
+:root[data-theme='dark'] {
+  --bg-page: #0a0f1c;
+  --bg-app: #0a0f1c;
+  --bg-surface: #131b2e;
+  --bg-subtle: #1a2338;
+  --bg-muted: #1e2841;
+
+  --text-heading: #eef2f9;
+  --text-body: #c3cbdd;
+  --text-secondary: #9aa5c1;
+  --text-muted: #78849e;
+  --text-subtitle: #8b96b3;
+
+  --border: #263252;
+  --border-subtle: #1c2540;
+  --border-strong: #34406b;
+
+  --accent: #5b8def;
+  --accent-tint-1: #16223f;
+  --accent-tint-2: #182a4d;
+  --accent-tint-3: #14203a;
+  --accent-tint-4: #1d3a63;
+
+  --brand-sidebar: #5b8def;
+  --brand-sidebar-hover: #1e2841;
+  --brand-navbar: #5b8def;
+  --brand-navicon: #5b8def;
+  --brand-dropzone: #5b8def;
+
+  --success: #34d399;
+  --success-bg: #0f2e24;
+  --success-bg-soft: #0f2e24;
+  --success-border-soft: #1d4d3c;
+  --danger: #f87171;
+  --danger-bg: #3a1620;
+  --danger-bg-soft: #3a1620;
+  --danger-border-soft: #5c2230;
+  --warning: #fbbf24;
+  --warning-bg: #3a2b0d;
+  --info-purple: #a78bfa;
+  --info-purple-bg: #241b45;
+  --info-orange: #fb923c;
+  --info-orange-bg: #3a2412;
+
+  --sidebar-bg: #0a1226;
+  --sidebar-border: #263252;
+
+  --home-icon-accent: #a78bfa;
+
+  --navbar-select-bg: #1a2340;
+  --navbar-select-border: #34406b;
+  --file-valid: #34d399;
+  --file-valid-bg: #0f2e2460;
+  --file-remove: #fb923c;
+  --file-remove-bg: #3a241260;
+  --bg-hover: #1c2540;
+  --bg-dropzone: #161f34;
+  --border-dropzone: #34406b;
+  --border-dropzone-alt: #3b4d7a;
+  --text-strong: #f4f7fc;
+  --text-faint: #6d7996;
+  --text-faint-2: #4a5570;
+  --text-body-alt: #a8b3cc;
+  --success-strong: #6ee7b7;
+  --success-strong-alt: #86efac;
+  --brand-selectfile-btn: #5b8def;
+  --border-neutral: #2a3555;
+  --border-faint: #1c2540;
+  --text-placeholder: #6d7996;
+  --brand-docxviewer: #5b8def;
+  --bg-faint: #161f34;
+  --border-generic: #34406b;
+  --accent-deep: #14265c;
+  --file-valid-bg-2: #0f2e2478;
+  --dropzone-tint-bg: #5b8def1a;
+  --dropzone-tint-border: #5b8def66;
+  --navicon-tint: #5b8def33;
+  --sidebar-icon-tint: #5b8def33;
+  --home-icon-tint: #a78bfa40;
+  --accent-tint-5: #182a4d;
+  --text-tertiary: #9aa5c1;
+  --border-faint-2: #1c2540;
+  --border-home: #34406b;
+
+  /* dark elevation: soft black lift with a faint cool-blue rim, not a light-colored shadow */
+  --card-shadow: 0 4px 18px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(91, 141, 239, 0.06);
+}

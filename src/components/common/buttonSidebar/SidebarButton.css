@@ -13,13 +13,13 @@
     transition: all 0.3s ease;
 }
 .sidebarButton.active{
-    background-color: #0756DF;
-    border: 1px solid #0756DF;
+    background-color: var(--brand-sidebar);
+    border: 1px solid var(--brand-sidebar);
 
 }
 .sidebarButton:hover{
-    background-color: #121F41;
-    border: 1px solid #25355A;
+    background-color: var(--brand-sidebar-hover);
+    border: 1px solid var(--sidebar-border);
 }
 .sidebarButton span{
     width: 20px;

@@ -1,5 +1,5 @@
 .InformationAllocationPage {
-  background: #f4f8fd;
+  background: var(--bg-page);
   padding: 20px;
   border-radius: 16px;
 }
@@ -28,8 +28,8 @@
   width: 46px;
   height: 46px;
   border-radius: 12px;
-  background: #dbeafe;
-  color: #2563eb;
+  background: var(--accent-tint-2);
+  color: var(--accent);
   font-size: 18px;
   flex-shrink: 0;
 }
@@ -37,13 +37,13 @@
 .iaHeaderLeft h1 {
   margin: 0;
   font-size: 22px;
-  color: #0f172a;
+  color: var(--text-heading);
 }
 
 .iaHeaderLeft p {
   margin: 2px 0 0;
   font-size: 13.5px;
-  color: #64748b;
+  color: var(--text-subtitle);
 }
 
 .newProjectButton {
@@ -51,10 +51,10 @@
   align-items: center;
   gap: 8px;
   padding: 10px 16px;
-  border: 1px solid #bfdbfe;
+  border: 1px solid var(--accent-tint-4);
   border-radius: 10px;
-  background: #eff6ff;
-  color: #2563eb;
+  background: var(--accent-tint-3);
+  color: var(--accent);
   font-weight: 600;
   cursor: pointer;
   white-space: nowrap;
@@ -65,12 +65,13 @@
 .stepperBar {
   display: flex;
   align-items: center;
-  background: #fff;
-  border: 1px solid #e5e7eb;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
   border-radius: 14px;
   padding: 16px 20px;
   margin-bottom: 18px;
   overflow-x: auto;
+  box-shadow: var(--card-shadow);
 }
 
 .stepperItem {
@@ -84,8 +85,8 @@
   width: 34px;
   height: 34px;
   border-radius: 50%;
-  background: #f1f5f9;
-  color: #94a3b8;
+  background: var(--bg-muted);
+  color: var(--text-faint);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -95,12 +96,12 @@
 }
 
 .stepperCircle.done {
-  background: #16a34a;
+  background: var(--success);
   color: #fff;
 }
 
 .stepperCircle.active {
-  background: #2563eb;
+  background: var(--accent);
   color: #fff;
 }
 
@@ -108,19 +109,19 @@
   margin: 0;
   font-size: 13px;
   font-weight: 700;
-  color: #0f172a;
+  color: var(--text-heading);
   white-space: nowrap;
 }
 
 .stepperSubtitle {
   margin: 2px 0 0;
   font-size: 11.5px;
-  color: #9ca3af;
+  color: var(--text-muted);
   white-space: nowrap;
 }
 
 .stepperArrow {
-  color: #d1d5db;
+  color: var(--border-strong);
   margin: 0 18px;
   font-size: 18px;
 }
@@ -167,10 +168,11 @@
 /* ===== KARTA UMUMIY ===== */
 
 .settingsCard {
-  background: #fff;
-  border: 1px solid #e5e7eb;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
   border-radius: 14px;
   padding: 16px;
+  box-shadow: var(--card-shadow);
 }
 
 .settingsCard.cardDisabled {
@@ -192,8 +194,8 @@
   width: 30px;
   height: 30px;
   border-radius: 8px;
-  background: #eef2ff;
-  color: #2563eb;
+  background: var(--accent-tint-1);
+  color: var(--accent);
   font-size: 13px;
   flex-shrink: 0;
 }
@@ -201,7 +203,7 @@
 .settingsCardHeader h3 {
   margin: 0;
   font-size: 14.5px;
-  color: #0f172a;
+  color: var(--text-heading);
   flex: 1;
 }
 
@@ -213,14 +215,14 @@
   margin-bottom: 8px;
   font-size: 12.5px;
   font-weight: 600;
-  color: #374151;
+  color: var(--text-body);
 }
 
 .settingsField label {
   display: block;
   font-size: 12.5px;
   font-weight: 600;
-  color: #374151;
+  color: var(--text-body);
   margin-bottom: 5px;
 }
 
@@ -229,15 +231,15 @@
   width: 100%;
   padding: 9px 10px;
   border-radius: 8px;
-  border: 1px solid #e5e7eb;
-  background: #f9fafb;
+  border: 1px solid var(--border);
+  background: var(--bg-subtle);
   font-size: 13px;
   font-family: inherit;
 }
 
 .fieldHint {
   font-size: 11.5px;
-  color: #9ca3af;
+  color: var(--text-muted);
   line-height: 1.5;
   margin: 4px 0 10px;
 }
@@ -248,7 +250,7 @@
   gap: 8px;
   padding: 9px 16px;
   border-radius: 8px;
-  background: #2563eb;
+  background: var(--accent);
   color: #fff;
   font-weight: 600;
   font-size: 13px;
@@ -259,23 +261,23 @@
 /* ===== HUJJAT MA'LUMOTLARI ===== */
 
 .docInfoDropzone {
-  border: 1.5px dashed #c7d2fe;
+  border: 1.5px dashed var(--border-dropzone);
   border-radius: 12px;
-  background: #f8fafc;
+  background: var(--bg-dropzone);
   text-align: center;
   padding: 24px 14px;
 }
 
 .docInfoDropzoneIcon {
   font-size: 26px;
-  color: #2563eb;
+  color: var(--accent);
   margin-bottom: 8px;
 }
 
 .docInfoDropzone p {
   margin: 0 0 12px;
   font-size: 13px;
-  color: #374151;
+  color: var(--text-body);
 }
 
 .docInfoFileRow {
@@ -292,8 +294,8 @@
   width: 34px;
   height: 34px;
   border-radius: 8px;
-  background: #dbeafe;
-  color: #2563eb;
+  background: var(--accent-tint-2);
+  color: var(--accent);
   font-size: 16px;
   flex-shrink: 0;
 }
@@ -307,7 +309,7 @@
   margin: 0;
   font-size: 13px;
   font-weight: 600;
-  color: #111827;
+  color: var(--text-strong);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -316,7 +318,7 @@
 .docInfoFileSize {
   margin: 2px 0 0;
   font-size: 11.5px;
-  color: #9ca3af;
+  color: var(--text-muted);
 }
 
 .docInfoMenuWrapper {
@@ -326,7 +328,7 @@
 .docInfoMenuButton {
   border: none;
   background: transparent;
-  color: #9ca3af;
+  color: var(--text-muted);
   cursor: pointer;
   font-size: 16px;
   padding: 4px 8px;
@@ -336,8 +338,8 @@
   position: absolute;
   top: calc(100% + 6px);
   right: 0;
-  background: #fff;
-  border: 1px solid #e5e7eb;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
   border-radius: 10px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
   z-index: 30;
@@ -350,33 +352,33 @@
 .docInfoDropdownMenu button,
 .docInfoDropdownMenu label {
   border: none;
-  background: #fff;
+  background: var(--bg-surface);
   text-align: left;
   padding: 10px 12px;
   font-size: 12.5px;
-  color: #374151;
+  color: var(--text-body);
   cursor: pointer;
   display: block;
 }
 
 .docInfoDropdownMenu button:hover,
 .docInfoDropdownMenu label:hover {
-  background: #f3f4f6;
+  background: var(--bg-hover);
 }
 
 .docInfoDropdownMenu button.danger {
-  color: #ef4444;
+  color: var(--danger);
 }
 
 .docInfoAnalyzing {
   font-size: 12.5px;
-  color: #9ca3af;
+  color: var(--text-muted);
   text-align: center;
   padding: 10px 0;
 }
 
 .docInfoStats {
-  border-top: 1px solid #f0f0f0;
+  border-top: 1px solid var(--border-subtle);
   padding-top: 10px;
 }
 
@@ -385,12 +387,12 @@
   justify-content: space-between;
   font-size: 13px;
   padding: 5px 0;
-  color: #374151;
+  color: var(--text-body);
 }
 
 .docInfoStatRow span:last-child {
   font-weight: 700;
-  color: #0f172a;
+  color: var(--text-heading);
 }
 
 /* ===== AJRATISH USULI ===== */
@@ -408,15 +410,15 @@
   gap: 9px;
   padding: 7px 4px;
   font-size: 13px;
-  color: #374151;
+  color: var(--text-body);
   cursor: pointer;
 }
 
 .methodSoonBadge {
   margin-left: auto;
   font-size: 10px;
-  background: #f1f5f9;
-  color: #94a3b8;
+  background: var(--bg-muted);
+  color: var(--text-faint);
   padding: 2px 7px;
   border-radius: 999px;
   font-weight: 600;
@@ -435,7 +437,7 @@
   top: 50%;
   right: 10px;
   transform: translateY(-50%);
-  color: #9ca3af;
+  color: var(--text-muted);
   font-size: 12px;
 }
 
@@ -444,7 +446,7 @@
   align-items: center;
   gap: 8px;
   font-size: 12.5px;
-  color: #374151;
+  color: var(--text-body);
   margin-bottom: 8px;
   cursor: pointer;
 }
@@ -454,7 +456,7 @@
   align-items: center;
   gap: 8px;
   font-size: 13px;
-  color: #374151;
+  color: var(--text-body);
   padding: 6px 0;
   cursor: pointer;
 }
@@ -472,18 +474,18 @@
   display: block;
   font-size: 12.5px;
   font-weight: 600;
-  color: #374151;
+  color: var(--text-body);
   margin-bottom: 6px;
 }
 
 .selectedTextPreview {
   min-height: 44px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
   border-radius: 8px;
-  background: #f9fafb;
+  background: var(--bg-subtle);
   padding: 10px;
   font-size: 12.5px;
-  color: #374151;
+  color: var(--text-body);
   margin-bottom: 10px;
 }
 
@@ -491,9 +493,9 @@
   width: 100%;
   padding: 9px;
   border-radius: 8px;
-  border: 1px dashed #93c5fd;
-  background: #eff6ff;
-  color: #2563eb;
+  border: 1px dashed var(--border-dropzone-alt);
+  background: var(--accent-tint-3);
+  color: var(--accent);
   font-weight: 600;
   font-size: 12.5px;
   cursor: pointer;
@@ -506,8 +508,8 @@
 
 .methodComingSoon {
   font-size: 12px;
-  color: #9ca3af;
-  background: #f9fafb;
+  color: var(--text-muted);
+  background: var(--bg-subtle);
   border-radius: 8px;
   padding: 12px;
   line-height: 1.5;
@@ -523,7 +525,7 @@
   padding: 12px;
   border: none;
   border-radius: 10px;
-  background: #2563eb;
+  background: var(--accent);
   color: #fff;
   font-weight: 600;
   cursor: pointer;
@@ -538,13 +540,14 @@
 /* ===== HUJJAT PREVIEW ===== */
 
 .documentPreviewCard {
-  background: #fff;
-  border: 1px solid #e5e7eb;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
   border-radius: 14px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   min-height: 480px;
+  box-shadow: var(--card-shadow);
 }
 
 .documentPreviewCard.fullscreenPreview {
@@ -559,7 +562,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 12px 14px;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid var(--border);
 }
 
 .previewTopBarTitle {
@@ -568,7 +571,7 @@
   gap: 8px;
   font-size: 13px;
   font-weight: 700;
-  color: #0f172a;
+  color: var(--text-heading);
 }
 
 .previewTopBarControls {
@@ -578,12 +581,12 @@
 }
 
 .previewTopBarControls button {
-  border: 1px solid #e5e7eb;
-  background: #fff;
+  border: 1px solid var(--border);
+  background: var(--bg-surface);
   width: 28px;
   height: 28px;
   border-radius: 6px;
-  color: #6b7280;
+  color: var(--text-secondary);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -593,7 +596,7 @@
 
 .previewZoomValue {
   font-size: 12px;
-  color: #6b7280;
+  color: var(--text-secondary);
   width: 40px;
   text-align: center;
 }
@@ -601,29 +604,29 @@
 .previewBody {
   flex: 1;
   overflow-y: auto;
-  background: #f3f4f6;
+  background: var(--bg-hover);
   padding: 24px;
 }
 
 .previewEmptyState {
-  color: #9ca3af;
+  color: var(--text-muted);
   font-size: 13px;
   text-align: center;
   padding: 60px 10px;
 }
 
 .previewContent {
-  background: #fff;
+  background: var(--bg-surface);
   border-radius: 8px;
   padding: 30px;
   max-width: 640px;
   margin: 0 auto;
   line-height: 1.7;
-  color: #111827;
+  color: var(--text-strong);
 }
 
 .extractedHighlight {
-  background: #bfdbfe;
+  background: var(--accent-tint-4);
   border-radius: 3px;
   padding: 1px 3px;
 }
@@ -638,8 +641,8 @@
   margin-left: auto;
   font-size: 11px;
   font-weight: 700;
-  background: #dbeafe;
-  color: #2563eb;
+  background: var(--accent-tint-2);
+  color: var(--accent);
   padding: 3px 9px;
   border-radius: 999px;
 }
@@ -652,14 +655,14 @@
 }
 
 .blocksEmpty {
-  color: #9ca3af;
+  color: var(--text-muted);
   font-size: 12.5px;
   text-align: center;
   padding: 14px 0;
 }
 
 .blockCard {
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
   border-radius: 10px;
   padding: 12px;
 }
@@ -683,7 +686,7 @@
   background: transparent;
   font-weight: 700;
   font-size: 13px;
-  color: #0f172a;
+  color: var(--text-heading);
   padding: 2px 4px;
   width: 100%;
 }
@@ -695,7 +698,7 @@
 .blockMenuButton {
   border: none;
   background: transparent;
-  color: #9ca3af;
+  color: var(--text-muted);
   cursor: pointer;
   font-size: 16px;
 }
@@ -704,8 +707,8 @@
   position: absolute;
   top: calc(100% + 4px);
   right: 0;
-  background: #fff;
-  border: 1px solid #e5e7eb;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
   border-radius: 8px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
   z-index: 20;
@@ -714,7 +717,7 @@
 
 .blockDropdownMenu button {
   border: none;
-  background: #fff;
+  background: var(--bg-surface);
   padding: 8px 12px;
   font-size: 12px;
   cursor: pointer;
@@ -722,28 +725,28 @@
 }
 
 .blockDropdownMenu button.danger {
-  color: #ef4444;
+  color: var(--danger);
 }
 
 .blockFieldRow {
   margin: 0 0 3px 24px;
   font-size: 12.5px;
-  color: #374151;
+  color: var(--text-body);
 }
 
 .blockFieldCount {
   margin: 6px 0 0 24px;
   font-size: 11px;
-  color: #9ca3af;
+  color: var(--text-muted);
 }
 
 .newBlockButton {
   width: 100%;
   padding: 9px;
   border-radius: 8px;
-  border: 1px dashed #c7d2fe;
-  background: #f8fafc;
-  color: #2563eb;
+  border: 1px dashed var(--border-dropzone);
+  background: var(--bg-dropzone);
+  color: var(--accent);
   font-weight: 600;
   font-size: 12.5px;
   cursor: pointer;
@@ -751,7 +754,7 @@
 }
 
 .previewMiniCard {
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
   border-radius: 10px;
   padding: 12px;
   margin-bottom: 14px;
@@ -761,7 +764,7 @@
   margin: 0 0 8px;
   font-size: 12.5px;
   font-weight: 700;
-  color: #0f172a;
+  color: var(--text-heading);
 }
 
 .previewMiniRow {
@@ -769,19 +772,19 @@
   justify-content: space-between;
   gap: 10px;
   font-size: 12.5px;
-  color: #374151;
+  color: var(--text-body);
   padding: 3px 0;
 }
 
 .previewMiniRow span:first-child {
-  color: #6b7280;
+  color: var(--text-secondary);
   flex-shrink: 0;
 }
 
 .statsMiniCard {
   display: flex;
   gap: 10px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
   border-radius: 10px;
   padding: 12px;
   margin-bottom: 16px;
@@ -794,8 +797,8 @@
   width: 32px;
   height: 32px;
   border-radius: 8px;
-  background: #eef2ff;
-  color: #2563eb;
+  background: var(--accent-tint-1);
+  color: var(--accent);
   flex-shrink: 0;
 }
 
@@ -807,20 +810,20 @@
   display: flex;
   justify-content: space-between;
   font-size: 12px;
-  color: #6b7280;
+  color: var(--text-secondary);
   padding: 2px 0;
 }
 
 .statsMiniRow span:last-child {
   font-weight: 700;
-  color: #0f172a;
+  color: var(--text-heading);
 }
 
 .formatSectionTitle {
   margin: 0 0 8px;
   font-size: 12.5px;
   font-weight: 700;
-  color: #374151;
+  color: var(--text-body);
 }
 
 .formatPillsGrid {
@@ -834,9 +837,9 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  border: 1px solid #e5e7eb;
-  background: #fff;
-  color: #374151;
+  border: 1px solid var(--border);
+  background: var(--bg-surface);
+  color: var(--text-body);
   padding: 8px 10px;
   border-radius: 8px;
   font-size: 12px;
@@ -844,9 +847,9 @@
 }
 
 .formatPillButton.active {
-  border-color: #2563eb;
-  background: #eff6ff;
-  color: #2563eb;
+  border-color: var(--accent);
+  background: var(--accent-tint-3);
+  color: var(--accent);
 }
 
 .saveToFileButton {
@@ -858,7 +861,7 @@
   padding: 12px;
   border: none;
   border-radius: 10px;
-  background: #2563eb;
+  background: var(--accent);
   color: #fff;
   font-weight: 600;
   cursor: pointer;
@@ -876,7 +879,7 @@
 }
 
 .historyBarEmpty {
-  color: #9ca3af;
+  color: var(--text-muted);
   font-size: 13px;
   text-align: center;
   padding: 14px 0;
@@ -892,39 +895,39 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
   border-radius: 10px;
   padding: 10px 12px;
-  background: #fff;
+  background: var(--bg-surface);
   cursor: pointer;
   font-size: 12.5px;
-  color: #374151;
+  color: var(--text-body);
   width: 100%;
   text-align: left;
   font-family: inherit;
 }
 
 .historyBarRow:hover {
-  background: #f9fafb;
+  background: var(--bg-subtle);
 }
 
 .historyBarName {
   flex: 1;
   font-weight: 600;
-  color: #111827;
+  color: var(--text-strong);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .historyBarMeta {
-  color: #9ca3af;
+  color: var(--text-muted);
   white-space: nowrap;
 }
 
 .formatBadge {
-  background: #dbeafe;
-  color: #2563eb;
+  background: var(--accent-tint-2);
+  color: var(--accent);
   font-size: 10.5px;
   font-weight: 700;
   padding: 3px 8px;
@@ -932,7 +935,7 @@
 }
 
 .historyBarDetail {
-  color: #2563eb;
+  color: var(--accent);
   font-weight: 600;
   white-space: nowrap;
 }
@@ -951,7 +954,7 @@
 }
 
 .modalBox {
-  background: #fff;
+  background: var(--bg-surface);
   border-radius: 16px;
   padding: 22px;
   width: 100%;
@@ -970,13 +973,13 @@
 .modalTopHeader h3 {
   margin: 0;
   font-size: 15.5px;
-  color: #0f172a;
+  color: var(--text-heading);
 }
 
 .modalCloseIcon {
   border: none;
   background: transparent;
-  color: #9ca3af;
+  color: var(--text-muted);
   cursor: pointer;
   font-size: 16px;
 }
@@ -987,7 +990,7 @@
   gap: 10px;
   margin-top: 16px;
   padding-top: 14px;
-  border-top: 1px solid #f0f0f0;
+  border-top: 1px solid var(--border-subtle);
 }
 
 .modalCancelButton,
@@ -1003,13 +1006,13 @@
 }
 
 .modalCancelButton {
-  background: #fff;
-  border: 1px solid #d1d5db;
-  color: #374151;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-strong);
+  color: var(--text-body);
 }
 
 .modalSaveButton {
-  background: #2563eb;
+  background: var(--accent);
   border: none;
   color: #fff;
 }
@@ -1024,17 +1027,17 @@
   display: flex;
   gap: 8px;
   font-size: 13px;
-  color: #374151;
+  color: var(--text-body);
 }
 
 .timelineTime {
   font-weight: 700;
-  color: #0f172a;
+  color: var(--text-heading);
   flex-shrink: 0;
 }
 
 .timelineDash {
-  color: #cbd5e1;
+  color: var(--text-faint-2);
 }
 
 /* ===== MOBIL MOSLASHUV ===== */

@@ -1,8 +1,9 @@
 import React from 'react'
 import './Navbar.css'
-import { IoMenuOutline } from 'react-icons/io5'
+import { IoMenuOutline, IoMoonOutline, IoSunnyOutline } from 'react-icons/io5'
 import { useTranslation } from 'react-i18next'
 import { logoImg, avatarImg } from '../../../assets/index'
+import { useTheme } from '../../../context/ThemeContext'
 
 const LANGUAGES = [
   { code: 'uz', label: "O'zbekcha" },
@@ -12,6 +13,7 @@ const LANGUAGES = [
 
 export const Navbar = ({ onMenuClick }) => {
   const { t, i18n } = useTranslation()
+  const { isDark, toggleTheme } = useTheme()
 
   const handleLanguageChange = (event) => {
     i18n.changeLanguage(event.target.value)
@@ -37,6 +39,14 @@ export const Navbar = ({ onMenuClick }) => {
         </div>
       </div>
       <div className="user">
+        <button
+          type="button"
+          className="themeToggleButton"
+          onClick={toggleTheme}
+          aria-label={isDark ? t('navbar.toggleThemeToLight') : t('navbar.toggleThemeToDark')}
+        >
+          {isDark ? <IoSunnyOutline /> : <IoMoonOutline />}
+        </button>
         <form action="" className="language" onSubmit={(event) => event.preventDefault()}>
           <select
             value={i18n.language}

@@ -3,7 +3,9 @@
     "subtitle": "Word hujjatlari vositasi",
     "openMenu": "Menyuni ochish",
     "closeMenu": "Menyuni yopish",
-    "languageLabel": "Tilni tanlang"
+    "languageLabel": "Tilni tanlang",
+    "toggleThemeToLight": "Kunduzgi rejimga o'tish",
+    "toggleThemeToDark": "Tungi rejimga o'tish"
   },
   "sidebar": {
     "home": "Bosh sahifa",

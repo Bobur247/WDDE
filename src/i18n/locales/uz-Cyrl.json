@@ -3,7 +3,9 @@
     "subtitle": "Ворд ҳужжатлари воситаси",
     "openMenu": "Менюни очиш",
     "closeMenu": "Менюни ёпиш",
-    "languageLabel": "Тилни танланг"
+    "languageLabel": "Тилни танланг",
+    "toggleThemeToLight": "Кундузги режимга ўтиш",
+    "toggleThemeToDark": "Тунги режимга ўтиш"
   },
   "sidebar": {
     "home": "Бош саҳифа",

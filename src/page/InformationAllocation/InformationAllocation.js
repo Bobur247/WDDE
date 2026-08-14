@@ -1,7 +1,6 @@
 import { useState, useMemo } from 'react'
 import { FaFileAlt, FaPlus } from 'react-icons/fa'
 import mammoth from 'mammoth'
-import { Document, Packer, Paragraph } from 'docx'
 import { useTranslation } from 'react-i18next'
 import {
   SaveFileModal,
@@ -14,6 +13,8 @@ import {
   DocumentInfoCard,
 } from '../../components/components'
 import './InformationAllocation.css'
+
+const { Document, Packer, Paragraph } = require('docx')
 
 let nextFieldId = 1
 let nextBlockId = 1

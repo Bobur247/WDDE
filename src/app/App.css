@@ -22,7 +22,7 @@ ul {
 .App {
   width: 100%;
   min-height: 100vh;
-  background-color: #F4F6FA;
+  background-color: var(--bg-app);
   display: grid;
   grid-template-columns: 260px 1fr;
   grid-template-rows: auto 1fr;
@@ -34,7 +34,7 @@ ul {
 .sidebar {
   grid-column: 1 / 2;
   grid-row: 2 / 3;
-  background-color: #0c1a38;
+  background-color: var(--sidebar-bg);
   padding: 30px 20px;
   overflow-y: auto;
 }

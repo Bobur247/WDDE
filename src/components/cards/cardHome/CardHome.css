@@ -1,6 +1,6 @@
 .CardHome {
-  background-color: #fff;
-  box-shadow: 3px 3px 5px rgb(205, 224, 239);
+  background-color: var(--bg-surface);
+  box-shadow: var(--card-shadow);
   border-radius: 15px;
   padding: 15px 20px;
   cursor: pointer;
@@ -36,7 +36,7 @@
   align-items: start;
   justify-content: center;
   flex-direction: column;
-  color: #0C1A38;
+  color: var(--text-heading);
   position: relative;
   z-index: 100;
   flex: 1;

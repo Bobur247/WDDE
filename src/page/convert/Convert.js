@@ -35,23 +35,30 @@ const Convert = () => {
         <UniversalTabs
           tabs={tabs}
           tabButtonSx={{
-            backgroundColor: '#fff',
+            backgroundColor: 'var(--bg-surface)',
+            color: 'var(--text-secondary)',
             flex: '1',
+            '&.Mui-selected': {
+              color: 'var(--accent)',
+            },
           }}
           tabSx={{
-            backgroundColor: '#fff',
+            backgroundColor: 'var(--bg-surface)',
             padding: '8px',
             borderRadius: '8px',
             overflow: 'hidden',
             marginBottom: '10px',
-            boxShadow: '3px 3px 5px rgb(205, 224, 239)',
+            boxShadow: 'var(--card-shadow)',
             width: '100% !important',
+            '& .MuiTabs-indicator': {
+              backgroundColor: 'var(--accent)',
+            },
           }}
           contentSx={{
-            backgroundColor: "#fff",
-            padding: "10px",
-            borderRadius: "10px",
-            boxShadow: "3px 3px 5px rgb(205, 224, 239)"
+            backgroundColor: 'var(--bg-surface)',
+            padding: '10px',
+            borderRadius: '10px',
+            boxShadow: 'var(--card-shadow)',
           }}
           defaultValue={0}
         />
