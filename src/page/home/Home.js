@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import './Home.css'
@@ -7,14 +7,19 @@ import {
   SelectFile,
   DocxViewer,
   SeparateOptions,
+  RecentActivity,
 } from '../../components/components'
 import { IoDocumentsOutline } from 'react-icons/io5'
 import { SiGoogledataproc } from 'react-icons/si'
 import { HiOutlineDocumentAdd } from 'react-icons/hi'
 import { LuLayoutTemplate } from 'react-icons/lu'
+import { getActivityLogs } from '../../api/activityLogs'
+import { setToken } from '../../api/client'
+import { useNavigate } from 'react-router-dom'
 
 const Home = () => {
   const { t } = useTranslation()
+  const navigate = useNavigate()
   const [file, setFile] = useState(null)
   const [error, setError] = useState('')
   const [isBox, setBox] = useState(false)
@@ -29,6 +34,62 @@ const Home = () => {
   const [manualPending, setManualPending] = useState('')
   const [extractedItems, setExtractedItems] = useState([])
   const nextId = useRef(1)
+
+  // Activity logs state
+  const [activityLogs, setActivityLogs] = useState([])
+  const [activityLoading, setActivityLoading] = useState(true)
+  const [viewingActivity, setViewingActivity] = useState(null)
+
+  // Fetch activity logs on mount
+  useEffect(() => {
+    let cancelled = false
+
+    getActivityLogs(1, 5)
+      .then((data) => {
+        if (cancelled) return
+        console.log('[Home] Activity logs response:', data)
+
+        // Handle different response formats
+        let items = []
+        if (Array.isArray(data)) {
+          items = data
+        } else if (data?.data && Array.isArray(data.data)) {
+          items = data.data
+        } else if (data?.recent && Array.isArray(data.recent)) {
+          items = data.recent
+        }
+
+        // Normalize items
+        const normalized = items.map((item) => ({
+          id: item.id,
+          fileName: item.file_name || item.fileName,
+          type: item.type || 'other',
+          typeLabel: item.typeLabel || t(`history.types.${item.type}`, item.type),
+          status: item.status,
+          date: new Date(item.created_at || item.date),
+        }))
+
+        console.log('[Home] Normalized activity logs:', normalized)
+        setActivityLogs(normalized)
+      })
+      .catch((err) => {
+        if (cancelled) return
+        if (err.status === 401) {
+          setToken(null)
+          navigate('/login', { replace: true })
+          return
+        }
+        console.error('[Home] Activity logs error:', err)
+        setActivityLogs([])
+      })
+      .finally(() => {
+        if (!cancelled) setActivityLoading(false)
+      })
+
+    return () => {
+      cancelled = true
+    }
+  }, [navigate, t])
 
   function toggleSelect(line) {
     setSelectedItems((prev) =>
@@ -172,6 +233,16 @@ const Home = () => {
             />
           </div>
         </div>
+
+        {/* Activity Logs Section */}
+        {!activityLoading && activityLogs.length > 0 && (
+          <div className="homeActivitySection" style={{ marginTop: '2rem' }}>
+            <RecentActivity
+              records={activityLogs}
+              onView={(item) => setViewingActivity(item)}
+            />
+          </div>
+        )}
       </div>
     </div>
   )
