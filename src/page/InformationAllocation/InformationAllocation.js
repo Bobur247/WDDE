@@ -13,8 +13,7 @@ import {
   DocumentInfoCard,
 } from '../../components/components'
 import './InformationAllocation.css'
-
-const { Document, Packer, Paragraph } = require('docx')
+import { Document, Packer, Paragraph } from 'docx'
 
 let nextFieldId = 1
 let nextBlockId = 1

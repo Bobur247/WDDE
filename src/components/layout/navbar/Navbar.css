@@ -1,113 +1,112 @@
-.navbar{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 20px;
-    box-shadow: var(--card-shadow);
-    background-color: var(--bg-surface);
-    min-height: 100%;
-    gap: 12px;
-    flex-wrap: wrap;
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  box-shadow: var(--card-shadow);
+  background-color: var(--bg-surface);
+  min-height: 100%;
+  gap: 12px;
+  flex-wrap: wrap;
 }
-.navbarLeft{
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    min-width: 0;
+.navbarLeft {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
 }
-.hamburgerButton{
-    display: none;
-    align-items: center;
-    justify-content: center;
-    width: 38px;
-    height: 38px;
-    flex-shrink: 0;
-    border: none;
-    border-radius: 8px;
-    background-color: transparent;
-    color: var(--brand-navbar);
-    font-size: 26px;
-    cursor: pointer;
+.hamburgerButton {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  border: none;
+  border-radius: 8px;
+  background-color: transparent;
+  color: var(--brand-navbar);
+  font-size: 26px;
+  cursor: pointer;
 }
-.hamburgerButton:hover{
-    background-color: var(--bg-app);
+.hamburgerButton:hover {
+  background-color: var(--bg-app);
 }
-.navbarText{
-    color: var(--brand-navbar);
-    min-width: 0;
+.navbarText {
+  color: var(--brand-navbar);
+  min-width: 0;
 }
-.navbar .logo{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    min-width: 0;
+.navbar .logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-width: 0;
 }
-.navbar .logoImg{
-    width: 45px;
-    flex-shrink: 0;
+.navbar .logoImg {
+  width: 45px;
+  flex-shrink: 0;
 }
-.navbar .user{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
+.navbar .user {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
 }
-.navbar .user .userAvatar{
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    flex-shrink: 0;
+.navbar .user .userAvatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  flex-shrink: 0;
 }
-.navbar .user form select{
-    background-color: var(--bg-surface);
-    color: var(--text-heading);
-    padding: 8px 25px;
-    border: 1px solid var(--navbar-select-border);
-    border-radius: 5px;
-    cursor: pointer;
+.navbar .user form select {
+  background-color: var(--bg-surface);
+  color: var(--text-heading);
+  padding: 8px 25px;
+  border: 1px solid var(--navbar-select-border);
+  border-radius: 5px;
+  cursor: pointer;
 }
-.navbar .user form select option{
-    background-color: var(--navbar-select-bg);
-    color: #fff;
-    cursor: pointer;
+.navbar .user form select option {
+  background-color: var(--navbar-select-bg);
+  color: #fff;
+  cursor: pointer;
 }
-.themeToggleButton{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 38px;
-    height: 38px;
-    flex-shrink: 0;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    background-color: var(--bg-subtle);
-    color: var(--brand-navbar);
-    font-size: 18px;
-    cursor: pointer;
+.themeToggleButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background-color: var(--bg-subtle);
+  color: var(--brand-navbar);
+  font-size: 18px;
+  cursor: pointer;
 }
-.themeToggleButton:hover{
-    background-color: var(--bg-app);
+.themeToggleButton:hover {
+  background-color: var(--bg-app);
 }
-
 @media (max-width: 768px) {
-    .hamburgerButton{
-        display: flex;
-    }
+  .hamburgerButton {
+    display: flex;
+  }
 }
 
 @media (max-width: 480px) {
-    .navbar{
-        padding: 10px 12px;
-        gap: 8px;
-    }
-    .navbarText p{
-        display: none;
-    }
-    .navbar .user{
-        gap: 10px;
-    }
-    .navbar .user form select{
-        padding: 8px 12px;
-    }
+  .navbar {
+    padding: 10px 12px;
+    gap: 8px;
+  }
+  .navbarText p {
+    display: none;
+  }
+  .navbar .user {
+    gap: 10px;
+  }
+  .navbar .user form select {
+    padding: 8px 12px;
+  }
 }

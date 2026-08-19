@@ -5,7 +5,9 @@
     "closeMenu": "Close menu",
     "languageLabel": "Select language",
     "toggleThemeToLight": "Switch to light mode",
-    "toggleThemeToDark": "Switch to dark mode"
+    "toggleThemeToDark": "Switch to dark mode",
+    "logout": "Log out",
+    "loggingOut": "Logging out..."
   },
   "sidebar": {
     "home": "Home",

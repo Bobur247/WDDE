@@ -5,7 +5,9 @@
     "closeMenu": "Menyuni yopish",
     "languageLabel": "Tilni tanlang",
     "toggleThemeToLight": "Kunduzgi rejimga o'tish",
-    "toggleThemeToDark": "Tungi rejimga o'tish"
+    "toggleThemeToDark": "Tungi rejimga o'tish",
+    "logout": "Chiqish",
+    "loggingOut": "Chiqilmoqda..."
   },
   "sidebar": {
     "home": "Bosh sahifa",

@@ -3,22 +3,25 @@ import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import './App.css'
 import { Home,Convert,CreateDocument,History,InformationAllocation,Settings,Templates,Login } from '../page/index'
 import { Navbar, Sidebar } from '../components/components';
-
-const isAuthenticated = () => localStorage.getItem('isAuthenticated') === 'true'
+import { useAuth } from '../context/AuthContext'
 
 const ProtectedRoute = ({ children }) => {
-  return isAuthenticated() ? children : <Navigate to="/login" replace />
+  const { isAuthenticated, loading } = useAuth()
+  if (loading) return null
+  return isAuthenticated ? children : <Navigate to="/login" replace />
 }
 
 export const App = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false)
   const closeSidebar = () => setSidebarOpen(false)
   const location = useLocation()
+  const { isAuthenticated, loading } = useAuth()
 
   if (location.pathname === '/login') {
+    if (loading) return null
     return (
       <Routes>
-        <Route path="/login" element={isAuthenticated() ? <Navigate to="/" replace /> : <Login />} />
+        <Route path="/login" element={isAuthenticated ? <Navigate to="/" replace /> : <Login />} />
       </Routes>
     )
   }
@@ -44,7 +47,7 @@ export const App = () => {
           <Route path="/templates" element={<ProtectedRoute><Templates /></ProtectedRoute>} />
           <Route path="/history" element={<ProtectedRoute><History /></ProtectedRoute>} />
           <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
-          <Route path="*" element={<Navigate to={isAuthenticated() ? '/' : '/login'} replace />} />
+          <Route path="*" element={<Navigate to={isAuthenticated ? '/' : '/login'} replace />} />
         </Routes>
       </div>
     </div>

@@ -5,7 +5,9 @@
     "closeMenu": "Менюни ёпиш",
     "languageLabel": "Тилни танланг",
     "toggleThemeToLight": "Кундузги режимга ўтиш",
-    "toggleThemeToDark": "Тунги режимга ўтиш"
+    "toggleThemeToDark": "Тунги режимга ўтиш",
+    "logout": "Чиқиш",
+    "loggingOut": "Чиқилмоқда..."
   },
   "sidebar": {
     "home": "Бош саҳифа",

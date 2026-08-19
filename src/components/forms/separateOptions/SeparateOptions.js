@@ -4,8 +4,7 @@ import { GrLinkPrevious } from 'react-icons/gr'
 import { MdSwitchAccessShortcut } from 'react-icons/md'
 import './SeparateOptions.css'
 import { saveAs } from 'file-saver'
-
-const { Document, Packer, Paragraph } = require('docx')
+import { Document, Packer, Paragraph } from 'docx'
 
 const METHOD_VALUES = [
   'block',

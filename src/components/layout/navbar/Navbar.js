@@ -43,11 +43,19 @@ export const Navbar = ({ onMenuClick }) => {
           type="button"
           className="themeToggleButton"
           onClick={toggleTheme}
-          aria-label={isDark ? t('navbar.toggleThemeToLight') : t('navbar.toggleThemeToDark')}
+          aria-label={
+            isDark
+              ? t('navbar.toggleThemeToLight')
+              : t('navbar.toggleThemeToDark')
+          }
         >
           {isDark ? <IoSunnyOutline /> : <IoMoonOutline />}
         </button>
-        <form action="" className="language" onSubmit={(event) => event.preventDefault()}>
+        <form
+          action=""
+          className="language"
+          onSubmit={(event) => event.preventDefault()}
+        >
           <select
             value={i18n.language}
             onChange={handleLanguageChange}

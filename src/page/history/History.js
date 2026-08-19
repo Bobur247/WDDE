@@ -1,4 +1,5 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import JSZip from 'jszip'
 import { useTranslation } from 'react-i18next'
 import { FaClock, FaFileArchive } from 'react-icons/fa'
@@ -11,108 +12,10 @@ import {
   DeleteRecordModal,
   ViewFileModal,
 } from '../../components/components'
+import { getDashboard } from '../../api/dashboard'
+import { getHistory, deleteHistoryItem } from '../../api/history'
+import { setToken } from '../../api/client'
 import './History.css'
-
-function daysAgo(n, hour, minute) {
-  const d = new Date()
-  d.setDate(d.getDate() - n)
-  d.setHours(hour, minute, 0, 0)
-  return d
-}
-
-// Demo yozuvlar: typeLabel/result matnlari render vaqtida t() bilan
-// tarjima qilinadi (pastda useMemo ichida), shuning uchun bu yerda faqat
-// tarjima kaliti (resultKey) va parametrlar (resultCount) saqlanadi.
-const MOCK_RECORDS = [
-  {
-    id: 1,
-    type: 'extraction',
-    fileName: "Talabalar_ro'yxati.docx",
-    date: daysAgo(0, 10, 24),
-    status: 'success',
-    resultKey: 'resultRecords',
-    resultCount: 3,
-  },
-  {
-    id: 2,
-    type: 'conversion',
-    fileName: 'Hisobot.pdf',
-    date: daysAgo(1, 16, 45),
-    status: 'success',
-    resultKey: 'resultFiles',
-    resultCount: 5,
-  },
-  {
-    id: 3,
-    type: 'document',
-    fileName: 'Darslik.docx',
-    date: daysAgo(2, 14, 32),
-    status: 'success',
-    resultKey: 'resultDocuments',
-    resultCount: 1,
-  },
-  {
-    id: 4,
-    type: 'extraction',
-    fileName: 'Maqola.docx',
-    date: daysAgo(2, 9, 18),
-    status: 'error',
-    resultKey: 'keywordNotFound',
-  },
-  {
-    id: 5,
-    type: 'conversion',
-    fileName: 'Foto.png',
-    date: daysAgo(3, 18, 20),
-    status: 'success',
-    resultKey: 'resultFiles',
-    resultCount: 1,
-  },
-  {
-    id: 6,
-    type: 'document',
-    fileName: 'Taklif_noma.docx',
-    date: daysAgo(3, 11, 5),
-    status: 'success',
-    resultKey: 'resultPages',
-    resultCount: 2,
-  },
-  {
-    id: 7,
-    type: 'extraction',
-    fileName: 'Xodimlar.xlsx',
-    date: daysAgo(0, 8, 2),
-    status: 'success',
-    resultKey: 'resultRecords',
-    resultCount: 12,
-  },
-  {
-    id: 8,
-    type: 'other',
-    fileName: 'Skan.pdf',
-    date: daysAgo(4, 12, 0),
-    status: 'error',
-    resultKey: 'fileCorrupted',
-  },
-  {
-    id: 9,
-    type: 'document',
-    fileName: 'Ariza.docx',
-    date: daysAgo(0, 9, 40),
-    status: 'success',
-    resultKey: 'resultDocuments',
-    resultCount: 1,
-  },
-  {
-    id: 10,
-    type: 'conversion',
-    fileName: 'Shartnoma.docx',
-    date: daysAgo(5, 15, 10),
-    status: 'success',
-    resultKey: 'resultFiles',
-    resultCount: 1,
-  },
-]
 
 const TYPE_ORDER = ['extraction', 'conversion', 'document', 'other']
 const TYPE_CHART_COLORS = {
@@ -140,7 +43,9 @@ function formatDateForFileName(date) {
 
 const HistoryReport = () => {
   const { t, i18n } = useTranslation()
-  const [records, setRecords] = useState(MOCK_RECORDS)
+  const navigate = useNavigate()
+  const [records, setRecords] = useState([])
+  const [historyLoading, setHistoryLoading] = useState(true)
 
   const [search, setSearch] = useState('')
   const [typeFilter, setTypeFilter] = useState('all')
@@ -152,16 +57,71 @@ const HistoryReport = () => {
   const [deletingRecord, setDeletingRecord] = useState(null)
   const [exporting, setExporting] = useState(false)
 
-  // MOCK_RECORDS'dagi type/resultKey kalitlari asosida joriy tilga
-  // mos typeLabel/result matnlarini quradi (filtrlash mantig'iga tegmaydi).
+  const [dashboardStats, setDashboardStats] = useState(null)
+  const [dashboardRecent, setDashboardRecent] = useState(null)
+  const [dashboardLoading, setDashboardLoading] = useState(true)
+
+  useEffect(() => {
+    let cancelled = false
+
+    getDashboard()
+      .then((data) => {
+        if (cancelled) return
+        setDashboardStats(data?.stats ?? null)
+        setDashboardRecent(Array.isArray(data?.recent) ? data.recent : [])
+      })
+      .catch((err) => {
+        if (cancelled) return
+        if (err.status === 401) {
+          setToken(null)
+          navigate('/login', { replace: true })
+          return
+        }
+        console.error('Dashboard maʼlumotlarini olishda xatolik:', err)
+      })
+      .finally(() => {
+        if (!cancelled) setDashboardLoading(false)
+      })
+
+    return () => {
+      cancelled = true
+    }
+  }, [navigate])
+
+  useEffect(() => {
+    let cancelled = false
+
+    getHistory()
+      .then((data) => {
+        if (cancelled) return
+        const items = Array.isArray(data) ? data : []
+        setRecords(items.map((item) => ({ ...item, date: new Date(item.date) })))
+      })
+      .catch((err) => {
+        if (cancelled) return
+        if (err.status === 401) {
+          setToken(null)
+          navigate('/login', { replace: true })
+          return
+        }
+        console.error('Tarixni olishda xatolik:', err)
+      })
+      .finally(() => {
+        if (!cancelled) setHistoryLoading(false)
+      })
+
+    return () => {
+      cancelled = true
+    }
+  }, [navigate])
+
+  // Backend typeLabel/result'ni allaqachon o'zbek tilida qaytaradi;
+  // typeLabel yo'q bo'lgan holat uchun joriy tilga mos fallback beriladi.
   const translatedRecords = useMemo(() => {
     return records.map((r) => ({
       ...r,
-      typeLabel: t(`history.types.${r.type}`),
-      result:
-        r.resultCount !== undefined
-          ? t(`history.mock.${r.resultKey}`, { count: r.resultCount })
-          : t(`history.mock.${r.resultKey}`),
+      typeLabel: r.typeLabel || t(`history.types.${r.type}`),
+      result: r.result ?? '',
     }))
   }, [records, t, i18n.language])
 
@@ -229,9 +189,33 @@ const HistoryReport = () => {
     return [...translatedRecords].sort((a, b) => b.date - a.date).slice(0, 5)
   }, [translatedRecords])
 
-  function handleDeleteRecord() {
-    setRecords((prev) => prev.filter((r) => r.id !== deletingRecord.id))
-    setDeletingRecord(null)
+  // Backend /api/dashboard'dan kelgan `recent` massivini RecentActivity
+  // komponenti kutgan shaklga (fileName/typeLabel/date) o'giradi.
+  const remoteRecentActivity = useMemo(() => {
+    if (!dashboardRecent) return null
+    return dashboardRecent.map((r, i) => ({
+      id: r.id ?? i,
+      type: r.type,
+      typeLabel: t(`history.types.${r.type}`, r.type),
+      fileName: r.file_name,
+      status: r.status,
+      date: new Date(r.created_at),
+    }))
+  }, [dashboardRecent, t])
+
+  const displayStats = dashboardStats ?? stats
+  const displayRecentActivity = remoteRecentActivity ?? recentActivity
+
+  async function handleDeleteRecord() {
+    const id = deletingRecord.id
+    try {
+      await deleteHistoryItem(id)
+      setRecords((prev) => prev.filter((r) => r.id !== id))
+    } catch (err) {
+      console.error("Yozuvni o'chirishda xatolik:", err)
+    } finally {
+      setDeletingRecord(null)
+    }
   }
 
   // Hamma (filtrlangan) hisobotni ZIP qilib, bugungi sana bilan yuklab beradi:
@@ -314,28 +298,32 @@ const HistoryReport = () => {
         </button>
       </div>
 
+      {(dashboardLoading || historyLoading) && (
+        <p className="dashboardLoadingNote">{t('history.dashboardLoading', 'Yuklanmoqda...')}</p>
+      )}
+
       <div className="statCardsRow">
         <StatCard
           icon="file"
-          value={stats.total}
+          value={displayStats.total}
           label={t('history.stats.total')}
           tone="blue"
         />
         <StatCard
           icon="check"
-          value={stats.success}
+          value={displayStats.success}
           label={t('history.stats.success')}
           tone="green"
         />
         <StatCard
           icon="warning"
-          value={stats.errors}
+          value={displayStats.errors}
           label={t('history.stats.errors')}
           tone="red"
         />
         <StatCard
           icon="clock"
-          value={stats.today}
+          value={displayStats.today}
           label={t('history.stats.today')}
           tone="purple"
         />
@@ -365,7 +353,7 @@ const HistoryReport = () => {
       <div className="hrBottomGrid">
         <ActivityStatsChart data={typeStats} />
         <RecentActivity
-          records={recentActivity}
+          records={displayRecentActivity}
           onView={(r) => setViewingRecord(r)}
         />
       </div>
