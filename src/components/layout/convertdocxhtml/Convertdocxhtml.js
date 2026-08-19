@@ -12,6 +12,7 @@ import {
 import '../../../page/convert/Convert.css'
 import { CiCircleRemove } from 'react-icons/ci'
 import { useTranslation } from 'react-i18next'
+import { convertFile, downloadConversionFile } from '../../../api/convert'
 
 const ConvertDocxHtml = () => {
   const { t } = useTranslation()
@@ -30,7 +31,6 @@ const ConvertDocxHtml = () => {
   const [result, setResult] = useState(null)
 
   const inputRef = useRef(null)
-  const progressTimer = useRef(null)
 
   function detectType(selected) {
     if (
@@ -79,66 +79,58 @@ const ConvertDocxHtml = () => {
     if (inputRef.current) inputRef.current.value = ''
   }
 
-  // MUHIM: bu yerda haqiqiy konvertatsiya albatta backend (server) orqali
-  // bajarilishi kerak (masalan mammoth/LibreOffice kabi xizmat bilan).
-  // Hozircha jarayon va natija DEMO sifatida simulyatsiya qilingan —
-  // haqiqiy loyihada startConversion ichini o'z API chaqiruvingiz bilan
-  // almashtiring.
-  function startConversion() {
+  async function startConversion() {
     if (!file || !direction) return
 
     setConverting(true)
     setResult(null)
     setProgress(0)
 
-    const startedAt = Date.now()
-
-    progressTimer.current = setInterval(() => {
-      setProgress((prev) => {
-        const next = prev + Math.random() * 18
-        return next >= 96 ? 96 : next
+    try {
+      setProgress(30)
+      const response = await convertFile(file, direction, {
+        keep_styling: keepStyling,
+        keep_images: keepImages,
+        keep_search_index: keepSearchIndex,
+        ocr: useOcr,
       })
-    }, 220)
-
-    setTimeout(() => {
-      clearInterval(progressTimer.current)
+      const data = response?.data || {}
       setProgress(100)
-
-      const seconds = ((Date.now() - startedAt) / 1000).toFixed(2)
-      const outputFormat = direction === 'docx-to-html' ? 'HTML' : 'DOCX'
-      const outputExt = direction === 'docx-to-html' ? 'html' : 'docx'
-      const baseName = file.name.replace(/\.[^/.]+$/, '')
-      const originalSizeKb = (file.size / 1024).toFixed(1)
-      const newSizeKb = (
-        (file.size * (0.85 + Math.random() * 0.3)) /
-        1024
-      ).toFixed(1)
-
       setResult({
-        name: `${baseName}.${outputExt}`,
-        outputFormat,
+        name: data.file_name || data.fileName || `${file.name}.converted`,
+        outputFormat: (data.format || '').toUpperCase(),
         originalFormat: fileType.toUpperCase(),
-        pages: Math.floor(Math.random() * 20) + 1,
-        time: `${seconds}s`,
-        originalSizeKb,
-        newSizeKb,
-        blob: file, // DEMO: haqiqiy loyihada bu yerga konvertatsiya qilingan fayl keladi
+        newSizeKb: data.size ? (Number(data.size) / 1024).toFixed(1) : '-',
+        conversionId: data.id,
+        warning: data.warning,
       })
-
+    } catch (error) {
+      const message =
+        error.response?.data?.errors?.detail ||
+        error.response?.data?.message ||
+        error.message ||
+        'Konvertatsiya amalga oshmadi.'
+      setError(message)
+    } finally {
       setConverting(false)
-    }, 1800)
+    }
   }
 
-  function handleDownload() {
+  async function handleDownload() {
     if (!result) return
-    const url = URL.createObjectURL(result.blob)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = result.name
-    document.body.appendChild(a)
-    a.click()
-    a.remove()
-    URL.revokeObjectURL(url)
+    try {
+      const blob = await downloadConversionFile(result.conversionId)
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = result.name
+      document.body.appendChild(a)
+      a.click()
+      a.remove()
+      URL.revokeObjectURL(url)
+    } catch (err) {
+      setError(err.message)
+    }
   }
 
   function handleConvertAnother() {
@@ -290,7 +282,9 @@ const ConvertDocxHtml = () => {
           disabled={!file || converting}
           onClick={startConversion}
         >
-          {converting ? t('convert.shared.converting') : t('convert.shared.convertButton')}
+          {converting
+            ? t('convert.shared.converting')
+            : t('convert.shared.convertButton')}
         </button>
       </div>
 
@@ -334,10 +328,15 @@ const ConvertDocxHtml = () => {
             <div className="successBanner">
               <FaCheckCircle className="successIcon" />
               <div>
-                <p className="successTitle">{t('convert.shared.successTitle')}</p>
+                <p className="successTitle">
+                  {t('convert.shared.successTitle')}
+                </p>
                 <p className="successSubtitle">
                   {t('convert.shared.successSubtitle')}
                 </p>
+                {result.warning && (
+                  <p className="errorText">{result.warning}</p>
+                )}
               </div>
             </div>
 

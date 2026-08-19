@@ -38,7 +38,7 @@ const Home = () => {
   // Activity logs state
   const [activityLogs, setActivityLogs] = useState([])
   const [activityLoading, setActivityLoading] = useState(true)
-  const [viewingActivity, setViewingActivity] = useState(null)
+  const [activityError, setActivityError] = useState('')
 
   // Fetch activity logs on mount
   useEffect(() => {
@@ -47,29 +47,41 @@ const Home = () => {
     getActivityLogs(1, 5)
       .then((data) => {
         if (cancelled) return
-        console.log('[Home] Activity logs response:', data)
+        const items = Array.isArray(data)
+          ? data
+          : Array.isArray(data?.data)
+            ? data.data
+            : data?.data?.id != null
+              ? [data.data]
+              : Array.isArray(data?.results)
+                ? data.results
+                : Array.isArray(data?.recent)
+                  ? data.recent
+                  : data?.id != null
+                    ? [data]
+                    : []
 
-        // Handle different response formats
-        let items = []
-        if (Array.isArray(data)) {
-          items = data
-        } else if (data?.data && Array.isArray(data.data)) {
-          items = data.data
-        } else if (data?.recent && Array.isArray(data.recent)) {
-          items = data.recent
-        }
+        const normalized = items
+          .map((item) => ({
+            id: item.id,
+            fileName: item.fileName || item.file_name || 'Nomsiz fayl',
+            type: item.type || 'other',
+            typeLabel:
+              item.typeLabel ||
+              item.type_label ||
+              t(
+                `history.types.${item.type || 'other'}`,
+                item.type || 'Boshqalar',
+              ),
+            status: item.status || 'success',
+            result: item.result ?? item.result_text ?? '',
+            date: new Date(item.date || item.created_at),
+          }))
+          .filter(
+            (item) => item.id != null && !Number.isNaN(item.date.getTime()),
+          )
 
-        // Normalize items
-        const normalized = items.map((item) => ({
-          id: item.id,
-          fileName: item.file_name || item.fileName,
-          type: item.type || 'other',
-          typeLabel: item.typeLabel || t(`history.types.${item.type}`, item.type),
-          status: item.status,
-          date: new Date(item.created_at || item.date),
-        }))
-
-        console.log('[Home] Normalized activity logs:', normalized)
+        setActivityError('')
         setActivityLogs(normalized)
       })
       .catch((err) => {
@@ -79,7 +91,7 @@ const Home = () => {
           navigate('/login', { replace: true })
           return
         }
-        console.error('[Home] Activity logs error:', err)
+        setActivityError(err.message || 'Faoliyat tarixini yuklab bo‘lmadi')
         setActivityLogs([])
       })
       .finally(() => {
@@ -235,14 +247,19 @@ const Home = () => {
         </div>
 
         {/* Activity Logs Section */}
-        {!activityLoading && activityLogs.length > 0 && (
-          <div className="homeActivitySection" style={{ marginTop: '2rem' }}>
-            <RecentActivity
-              records={activityLogs}
-              onView={(item) => setViewingActivity(item)}
-            />
-          </div>
-        )}
+        <div className="homeActivitySection" style={{ marginTop: '2rem' }}>
+          {activityLoading && (
+            <p className="dashboardLoadingNote">
+              {t('history.dashboardLoading', 'Yuklanmoqda...')}
+            </p>
+          )}
+          {!activityLoading && activityError && (
+            <p className="recentActivityEmpty">{activityError}</p>
+          )}
+          {!activityLoading && !activityError && (
+            <RecentActivity records={activityLogs} onView={() => {}} />
+          )}
+        </div>
       </div>
     </div>
   )

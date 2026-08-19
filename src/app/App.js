@@ -1,13 +1,26 @@
 import React, { useState } from 'react'
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import './App.css'
-import { Home,Convert,CreateDocument,History,InformationAllocation,Settings,Templates,Login } from '../page/index'
-import { Navbar, Sidebar } from '../components/components';
+import {
+  Home,
+  Convert,
+  CreateDocument,
+  History,
+  InformationAllocation,
+  Settings,
+  Templates,
+  Login,
+} from '../page/index'
+import { Navbar, Sidebar } from '../components/components'
 import { useAuth } from '../context/AuthContext'
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, loading } = useAuth()
-  if (loading) return null
+  if (loading) {
+    return (
+      <div style={{ padding: '32px', textAlign: 'center' }}>Yuklanmoqda...</div>
+    )
+  }
   return isAuthenticated ? children : <Navigate to="/login" replace />
 }
 
@@ -18,10 +31,18 @@ export const App = () => {
   const { isAuthenticated, loading } = useAuth()
 
   if (location.pathname === '/login') {
-    if (loading) return null
+    if (loading)
+      return (
+        <div style={{ padding: '32px', textAlign: 'center' }}>
+          Yuklanmoqda...
+        </div>
+      )
     return (
       <Routes>
-        <Route path="/login" element={isAuthenticated ? <Navigate to="/" replace /> : <Login />} />
+        <Route
+          path="/login"
+          element={isAuthenticated ? <Navigate to="/" replace /> : <Login />}
+        />
       </Routes>
     )
   }
@@ -40,14 +61,66 @@ export const App = () => {
       />
       <div className="main">
         <Routes>
-          <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
-          <Route path="/information-allocation" element={<ProtectedRoute><InformationAllocation /></ProtectedRoute>} />
-          <Route path="/convert" element={<ProtectedRoute><Convert /></ProtectedRoute>} />
-          <Route path="/create-document" element={<ProtectedRoute><CreateDocument /></ProtectedRoute>} />
-          <Route path="/templates" element={<ProtectedRoute><Templates /></ProtectedRoute>} />
-          <Route path="/history" element={<ProtectedRoute><History /></ProtectedRoute>} />
-          <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
-          <Route path="*" element={<Navigate to={isAuthenticated ? '/' : '/login'} replace />} />
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/information-allocation"
+            element={
+              <ProtectedRoute>
+                <InformationAllocation />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/convert"
+            element={
+              <ProtectedRoute>
+                <Convert />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/create-document"
+            element={
+              <ProtectedRoute>
+                <CreateDocument />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/templates"
+            element={
+              <ProtectedRoute>
+                <Templates />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/history"
+            element={
+              <ProtectedRoute>
+                <History />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/settings"
+            element={
+              <ProtectedRoute>
+                <Settings />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="*"
+            element={<Navigate to={isAuthenticated ? '/' : '/login'} replace />}
+          />
         </Routes>
       </div>
     </div>

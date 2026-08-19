@@ -28,6 +28,10 @@ export async function login(email, password, remember = true) {
   return data
 }
 
+export function getCurrentUser() {
+  return client.get('/auth/me')
+}
+
 export async function logout() {
   try {
     await client.post('/auth/logout')

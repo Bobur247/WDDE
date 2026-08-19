@@ -46,6 +46,7 @@ const HistoryReport = () => {
   const navigate = useNavigate()
   const [records, setRecords] = useState([])
   const [historyLoading, setHistoryLoading] = useState(true)
+  const [historyError, setHistoryError] = useState('')
 
   const [search, setSearch] = useState('')
   const [typeFilter, setTypeFilter] = useState('all')
@@ -60,6 +61,7 @@ const HistoryReport = () => {
   const [dashboardStats, setDashboardStats] = useState(null)
   const [dashboardRecent, setDashboardRecent] = useState(null)
   const [dashboardLoading, setDashboardLoading] = useState(true)
+  const [dashboardError, setDashboardError] = useState('')
 
   useEffect(() => {
     let cancelled = false
@@ -77,7 +79,9 @@ const HistoryReport = () => {
           navigate('/login', { replace: true })
           return
         }
-        console.error('Dashboard maʼlumotlarini olishda xatolik:', err)
+        setDashboardError(
+          err.message || 'Dashboard maʼlumotlarini olishda xatolik yuz berdi',
+        )
       })
       .finally(() => {
         if (!cancelled) setDashboardLoading(false)
@@ -114,7 +118,7 @@ const HistoryReport = () => {
             navigate('/login', { replace: true })
             return
           }
-          console.error('[History] API xatosi:', err)
+          setHistoryError(err.message || 'Tarixni olishda xatolik yuz berdi')
         })
         .finally(() => {
           if (!cancelled) setHistoryLoading(false)

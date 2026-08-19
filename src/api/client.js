@@ -14,42 +14,64 @@ export function setToken(token, remember = true) {
   }
 }
 
+function clearAuthAndRedirect() {
+  setToken(null)
+  window.dispatchEvent(new Event('auth:expired'))
+  if (window.location.pathname !== '/login') {
+    window.location.assign('/login')
+  }
+}
+
+function createApiError(response, data) {
+  const validationErrors = data?.errors
+    ? Object.values(data.errors).flat().join(' ')
+    : ''
+  const error = new Error(
+    data?.message ||
+      validationErrors ||
+      `So'rovda xatolik yuz berdi (${response.status})`,
+  )
+  error.status = response.status
+  error.errors = data?.errors || {}
+  error.response = { status: response.status, data }
+  return error
+}
+
+async function parseResponse(response) {
+  const contentType = response.headers.get('content-type') || ''
+  return contentType.includes('application/json') ? response.json() : null
+}
+
 async function request(path, { method = 'GET', body, headers } = {}) {
   const token = getToken()
 
+  const isFormData = typeof FormData !== 'undefined' && body instanceof FormData
   const response = await fetch(`${API_URL}${path}`, {
     method,
-    body: body !== undefined ? JSON.stringify(body) : undefined,
+    body:
+      body !== undefined
+        ? isFormData
+          ? body
+          : JSON.stringify(body)
+        : undefined,
     headers: {
       Accept: 'application/json',
-      ...(body !== undefined ? { 'Content-Type': 'application/json' } : {}),
+      ...(!isFormData && body !== undefined
+        ? { 'Content-Type': 'application/json' }
+        : {}),
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
       ...headers,
     },
   })
 
-  const contentType = response.headers.get('content-type') || ''
-  const data = contentType.includes('application/json')
-    ? await response.json()
-    : null
+  const data = await parseResponse(response)
 
-  if (path.includes('/history')) {
-    console.log(`[API] ${method} ${path} status:`, response.status)
-    console.log(`[API] ${method} ${path} response:`, data)
+  if (response.status === 401) {
+    clearAuthAndRedirect()
   }
 
   if (!response.ok) {
-    const validationErrors = data?.errors
-      ? Object.values(data.errors).flat().join(' ')
-      : ''
-    const message =
-      data?.message ||
-      validationErrors ||
-      `So'rovda xatolik yuz berdi (${response.status})`
-    const error = new Error(message)
-    error.status = response.status
-    error.errors = data?.errors
-    throw error
+    throw createApiError(response, data)
   }
 
   return data
@@ -66,26 +88,10 @@ async function requestForm(path, formData) {
     },
   })
 
-  const contentType = response.headers.get('content-type') || ''
-  const data = contentType.includes('application/json')
-    ? await response.json()
-    : null
-  if (path === '/history') {
-    console.log('[API] POST /history status:', response.status)
-    console.log('[API] POST /history response:', data)
-  }
+  const data = await parseResponse(response)
+  if (response.status === 401) clearAuthAndRedirect()
   if (!response.ok) {
-    const validationErrors = data?.errors
-      ? Object.values(data.errors).flat().join(' ')
-      : ''
-    const error = new Error(
-      data?.message ||
-        validationErrors ||
-        `So'rovda xatolik yuz berdi (${response.status})`,
-    )
-    error.status = response.status
-    error.errors = data?.errors
-    throw error
+    throw createApiError(response, data)
   }
   return data
 }
@@ -99,6 +105,7 @@ async function requestBlob(path) {
     },
   })
   if (!response.ok) {
+    if (response.status === 401) clearAuthAndRedirect()
     let message = `So'rovda xatolik yuz berdi (${response.status})`
     try {
       const data = await response.json()
@@ -120,6 +127,7 @@ const client = {
   delete: (path) => request(path, { method: 'DELETE' }),
   postForm: requestForm,
   getBlob: requestBlob,
+  request,
   getToken,
   setToken,
 }
