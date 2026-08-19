@@ -91,27 +91,50 @@ const HistoryReport = () => {
   useEffect(() => {
     let cancelled = false
 
-    getHistory()
-      .then((data) => {
-        if (cancelled) return
-        const items = Array.isArray(data) ? data : []
-        setRecords(items.map((item) => ({ ...item, date: new Date(item.date) })))
-      })
-      .catch((err) => {
-        if (cancelled) return
-        if (err.status === 401) {
-          setToken(null)
-          navigate('/login', { replace: true })
-          return
-        }
-        console.error('Tarixni olishda xatolik:', err)
-      })
-      .finally(() => {
-        if (!cancelled) setHistoryLoading(false)
-      })
+    function refreshHistory() {
+      getHistory()
+        .then((data) => {
+          if (cancelled) return
+          console.log('[History] Raw API response:', data)
+          const items = Array.isArray(data) ? data : data?.data || []
+          console.log('[History] Processed items:', items)
+          const normalized = items.map((item) => ({
+            ...item,
+            fileName: item.fileName || item.file_name,
+            blocksCount: item.blocksCount || item.blocks_count,
+            date: new Date(item.date || item.created_at),
+          }))
+          console.log('[History] Normalized records:', normalized)
+          setRecords(normalized)
+        })
+        .catch((err) => {
+          if (cancelled) return
+          if (err.status === 401) {
+            setToken(null)
+            navigate('/login', { replace: true })
+            return
+          }
+          console.error('[History] API xatosi:', err)
+        })
+        .finally(() => {
+          if (!cancelled) setHistoryLoading(false)
+        })
+    }
 
+    refreshHistory()
+
+    function handleStorageChange() {
+      console.log('[History] history-updated event received, refreshing...')
+      setHistoryLoading(true)
+      refreshHistory()
+    }
+
+    window.addEventListener('history-updated', handleStorageChange)
+    console.log('[History] Event listener attached')
     return () => {
       cancelled = true
+      window.removeEventListener('history-updated', handleStorageChange)
+      console.log('[History] Event listener removed')
     }
   }, [navigate])
 
@@ -133,7 +156,7 @@ const HistoryReport = () => {
         label: t(`history.types.${type}`),
       })),
     ],
-    [t, i18n.language]
+    [t, i18n.language],
   )
 
   const STATUS_FILTERS = useMemo(
@@ -142,7 +165,7 @@ const HistoryReport = () => {
       { value: 'success', label: t('history.status.success') },
       { value: 'error', label: t('history.status.error') },
     ],
-    [t, i18n.language]
+    [t, i18n.language],
   )
 
   const stats = useMemo(() => {
@@ -299,7 +322,9 @@ const HistoryReport = () => {
       </div>
 
       {(dashboardLoading || historyLoading) && (
-        <p className="dashboardLoadingNote">{t('history.dashboardLoading', 'Yuklanmoqda...')}</p>
+        <p className="dashboardLoadingNote">
+          {t('history.dashboardLoading', 'Yuklanmoqda...')}
+        </p>
       )}
 
       <div className="statCardsRow">

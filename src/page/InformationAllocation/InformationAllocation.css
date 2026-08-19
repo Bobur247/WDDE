@@ -60,6 +60,16 @@
   white-space: nowrap;
 }
 
+.iaSaveError {
+  margin: 0 0 16px;
+  padding: 10px 12px;
+  border: 1px solid #f0b7b7;
+  border-radius: 8px;
+  background: #fff1f1;
+  color: #b42318;
+  font-size: 13px;
+}
+
 /* ===== STEPPER ===== */
 
 .stepperBar {

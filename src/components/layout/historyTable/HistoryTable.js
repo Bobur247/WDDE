@@ -9,6 +9,7 @@ import {
   FaExclamationCircle,
   FaDownload,
 } from 'react-icons/fa'
+import { downloadHistoryFile } from '../../../api/history'
 
 const TYPE_ICONS = {
   extraction: { icon: FaFileAlt, tone: 'blue' },
@@ -24,19 +25,20 @@ const HistoryTable = ({ records, onView, onDeleteRequest }) => {
   // Fayl qanday formatda (word/excel/pdf) yaratilgan/ishlangan bo'lsa,
   // aynan o'sha formatda (record.fileName kengaytmasi + record.blob turi
   // bilan) yuklab beradi — konvertatsiya qilmaydi.
-  function handleDownload(record) {
-    if (!record.blob) {
-      console.warn("Bu yozuv uchun fayl mavjud emas (demo ma'lumot)")
-      return
+  async function handleDownload(record) {
+    try {
+      const blob = record.blob || (await downloadHistoryFile(record.id))
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = record.fileName
+      document.body.appendChild(a)
+      a.click()
+      a.remove()
+      URL.revokeObjectURL(url)
+    } catch (err) {
+      console.error('Faylni yuklab olishda xatolik:', err)
     }
-    const url = URL.createObjectURL(record.blob)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = record.fileName
-    document.body.appendChild(a)
-    a.click()
-    a.remove()
-    URL.revokeObjectURL(url)
   }
 
   return (

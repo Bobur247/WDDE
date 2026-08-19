@@ -50,11 +50,67 @@ async function request(path, { method = 'GET', body, headers } = {}) {
   return data
 }
 
+async function requestForm(path, formData) {
+  const token = getToken()
+  const response = await fetch(`${API_URL}${path}`, {
+    method: 'POST',
+    body: formData,
+    headers: {
+      Accept: 'application/json',
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+  })
+
+  const contentType = response.headers.get('content-type') || ''
+  const data = contentType.includes('application/json')
+    ? await response.json()
+    : null
+  if (!response.ok) {
+    const validationErrors = data?.errors
+      ? Object.values(data.errors).flat().join(' ')
+      : ''
+    const error = new Error(
+      data?.message ||
+        validationErrors ||
+        `So'rovda xatolik yuz berdi (${response.status})`,
+    )
+    error.status = response.status
+    error.errors = data?.errors
+    throw error
+  }
+  return data
+}
+
+async function requestBlob(path) {
+  const token = getToken()
+  const response = await fetch(`${API_URL}${path}`, {
+    headers: {
+      Accept: '*/*',
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+  })
+  if (!response.ok) {
+    let message = `So'rovda xatolik yuz berdi (${response.status})`
+    try {
+      const data = await response.json()
+      message = data?.message || message
+    } catch {
+      // The response may be a non-JSON error body.
+    }
+    const error = new Error(message)
+    error.status = response.status
+    throw error
+  }
+  return response.blob()
+}
+
 const client = {
   get: (path) => request(path, { method: 'GET' }),
   post: (path, body) => request(path, { method: 'POST', body }),
   put: (path, body) => request(path, { method: 'PUT', body }),
   delete: (path) => request(path, { method: 'DELETE' }),
+  postForm: requestForm,
+  getBlob: requestBlob,
   getToken,
   setToken,
 }

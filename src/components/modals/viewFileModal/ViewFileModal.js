@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { FaTimes, FaDownload, FaFileAlt } from 'react-icons/fa'
 import mammoth from 'mammoth'
 import * as XLSX from 'xlsx'
+import { downloadHistoryFile } from '../../../api/history'
 
 function getFileKind(fileName) {
   const name = fileName.toLowerCase()
@@ -23,23 +24,22 @@ const ViewFileModal = ({ record, onClose }) => {
   const [excelRows, setExcelRows] = useState(null)
 
   useEffect(() => {
-    if (!record.blob) return // demo yozuv - haqiqiy fayl yo'q
-
     let objectUrl = ''
 
     async function loadFile() {
       setLoading(true)
       setError('')
       try {
+        const fileBlob = record.blob || (await downloadHistoryFile(record.id))
         if (fileKind === 'pdf') {
-          objectUrl = URL.createObjectURL(record.blob)
+          objectUrl = URL.createObjectURL(fileBlob)
           setPdfUrl(objectUrl)
         } else if (fileKind === 'docx') {
-          const arrayBuffer = await record.blob.arrayBuffer()
+          const arrayBuffer = await fileBlob.arrayBuffer()
           const result = await mammoth.convertToHtml({ arrayBuffer })
           setDocHtml(result.value)
         } else if (fileKind === 'excel') {
-          const arrayBuffer = await record.blob.arrayBuffer()
+          const arrayBuffer = await fileBlob.arrayBuffer()
           const workbook = XLSX.read(arrayBuffer, { type: 'array' })
           const sheet = workbook.Sheets[workbook.SheetNames[0]]
           setExcelRows(XLSX.utils.sheet_to_json(sheet, { header: 1 }))
@@ -59,15 +59,18 @@ const ViewFileModal = ({ record, onClose }) => {
   }, [record, fileKind, t])
 
   function handleDownload() {
-    if (!record.blob) return
-    const url = URL.createObjectURL(record.blob)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = record.fileName
-    document.body.appendChild(a)
-    a.click()
-    a.remove()
-    URL.revokeObjectURL(url)
+    downloadHistoryFile(record.id)
+      .then((blob) => {
+        const url = URL.createObjectURL(record.blob || blob)
+        const a = document.createElement('a')
+        a.href = url
+        a.download = record.fileName
+        document.body.appendChild(a)
+        a.click()
+        a.remove()
+        URL.revokeObjectURL(url)
+      })
+      .catch((err) => setError(err.message))
   }
 
   return (
@@ -88,49 +91,43 @@ const ViewFileModal = ({ record, onClose }) => {
           </button>
         </div>
 
-        {!record.blob && (
+        {!record.blob && !loading && !error && (
           <p className="viewFileDemoNote">
-            <FaFileAlt /> {t('history.viewModal.demoNote')}
+            <FaFileAlt /> Arxivdagi fayl serverdan yuklanmoqda.
           </p>
         )}
 
-        {record.blob && loading && (
+        {loading && (
           <p className="viewFileLoading">{t('history.viewModal.loading')}</p>
         )}
-        {record.blob && !loading && error && (
-          <p className="viewFileError">{error}</p>
-        )}
+        {!loading && error && <p className="viewFileError">{error}</p>}
 
-        {record.blob && !loading && !error && fileKind === 'pdf' && pdfUrl && (
+        {!loading && !error && fileKind === 'pdf' && pdfUrl && (
           <iframe title="pdf-preview" src={pdfUrl} className="pdfViewerFrame" />
         )}
 
-        {record.blob && !loading && !error && fileKind === 'docx' && (
+        {!loading && !error && fileKind === 'docx' && (
           <div
             className="docxViewerContent"
             dangerouslySetInnerHTML={{ __html: docHtml }}
           />
         )}
 
-        {record.blob &&
-          !loading &&
-          !error &&
-          fileKind === 'excel' &&
-          excelRows && (
-            <div className="excelViewerWrapper">
-              <table className="excelViewerTable">
-                <tbody>
-                  {excelRows.map((row, rIdx) => (
-                    <tr key={rIdx}>
-                      {row.map((cell, cIdx) => (
-                        <td key={cIdx}>{cell}</td>
-                      ))}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
+        {!loading && !error && fileKind === 'excel' && excelRows && (
+          <div className="excelViewerWrapper">
+            <table className="excelViewerTable">
+              <tbody>
+                {excelRows.map((row, rIdx) => (
+                  <tr key={rIdx}>
+                    {row.map((cell, cIdx) => (
+                      <td key={cIdx}>{cell}</td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
 
         <div className="modalFooter">
           <button type="button" className="modalCancelButton" onClick={onClose}>
@@ -140,7 +137,7 @@ const ViewFileModal = ({ record, onClose }) => {
             type="button"
             className="modalSaveButton"
             onClick={handleDownload}
-            disabled={!record.blob}
+            disabled={loading}
           >
             <FaDownload />
             <span>{t('history.viewModal.download')}</span>

@@ -14,6 +14,7 @@ import {
 } from '../../components/components'
 import './InformationAllocation.css'
 import { Document, Packer, Paragraph } from 'docx'
+import { uploadHistoryFile } from '../../api/history'
 
 let nextFieldId = 1
 let nextBlockId = 1
@@ -46,6 +47,8 @@ const InformationAllocation = () => {
   // ===== Tarix =====
   const [history, setHistory] = useState([])
   const [viewingHistoryItem, setViewingHistoryItem] = useState(null)
+  const [saveError, setSaveError] = useState('')
+  const [archiveSaving, setArchiveSaving] = useState(false)
 
   // ===== Bosqich (stepper) — state'dan avtomatik hisoblanadi =====
   const step = useMemo(() => {
@@ -167,7 +170,8 @@ const InformationAllocation = () => {
         extracted +
         (includeEnd ? rangeEnd : '')
       addFieldToCurrentBlock(
-        rangeStart.replace(':', '').trim() || t('informationAllocation.extractedData.defaultFieldLabel'),
+        rangeStart.replace(':', '').trim() ||
+          t('informationAllocation.extractedData.defaultFieldLabel'),
         finalValue,
       )
       return
@@ -178,7 +182,14 @@ const InformationAllocation = () => {
       try {
         const re = new RegExp(regexPattern, 'g')
         const matches = [...rawText.matchAll(re)].map((m) => m[0])
-        matches.forEach((m, i) => addFieldToCurrentBlock(t('informationAllocation.extractedData.regexResultLabel', { index: i + 1 }), m))
+        matches.forEach((m, i) =>
+          addFieldToCurrentBlock(
+            t('informationAllocation.extractedData.regexResultLabel', {
+              index: i + 1,
+            }),
+            m,
+          ),
+        )
       } catch (err) {
         console.error('Regex xato:', err)
       }
@@ -189,7 +200,10 @@ const InformationAllocation = () => {
 
   function handleAddSelectedText() {
     if (!pendingSelectedText) return
-    addFieldToCurrentBlock(t('informationAllocation.extractedData.selectedTextValueLabel'), pendingSelectedText)
+    addFieldToCurrentBlock(
+      t('informationAllocation.extractedData.selectedTextValueLabel'),
+      pendingSelectedText,
+    )
     setPendingSelectedText('')
   }
 
@@ -208,6 +222,8 @@ const InformationAllocation = () => {
 
   // ===== Saqlash — haqiqiy fayl generatsiya qilinadi (format bo'yicha) =====
   async function handleSaveFile({ fileName, mode, existingHistoryId }) {
+    setSaveError('')
+    setArchiveSaving(true)
     const safeName = fileName.trim().replace(/\s+/g, '_') || 'malumot'
     let blob
     let ext = saveFormat
@@ -228,11 +244,13 @@ const InformationAllocation = () => {
           2,
         )
       } else if (saveFormat === 'csv') {
-        const rows = [[
-          t('informationAllocation.extractedData.csv.block'),
-          t('informationAllocation.extractedData.csv.field'),
-          t('informationAllocation.extractedData.csv.value'),
-        ]]
+        const rows = [
+          [
+            t('informationAllocation.extractedData.csv.block'),
+            t('informationAllocation.extractedData.csv.field'),
+            t('informationAllocation.extractedData.csv.value'),
+          ],
+        ]
         blocks
           .filter((b) => b.selected)
           .forEach((b) =>
@@ -288,28 +306,45 @@ const InformationAllocation = () => {
       ext = 'txt'
     }
 
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = `${safeName}.${ext}`
-    document.body.appendChild(a)
-    a.click()
-    a.remove()
-    URL.revokeObjectURL(url)
-
-    setHistory((prev) => [
-      {
-        id: Date.now(),
-        fileName: `${safeName}.${ext}`,
+    const outputName = `${safeName}.${ext}`
+    try {
+      const outputFile = new File([blob], outputName, { type: blob.type })
+      console.log('[InformationAllocation] Uploading file:', outputName)
+      await uploadHistoryFile(outputFile, outputName, {
         blocksCount: blocks.filter((b) => b.selected).length,
-        time: new Date(),
-        format: ext.toUpperCase(),
-        blob,
-      },
-      ...prev,
-    ])
+        result: "Ma'lumot muvaffaqiyatli saqlandi",
+      })
+      console.log('[InformationAllocation] File uploaded successfully')
 
-    setShowSaveModal(false)
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = outputName
+      document.body.appendChild(a)
+      a.click()
+      a.remove()
+      URL.revokeObjectURL(url)
+
+      setHistory((prev) => [
+        {
+          id: Date.now(),
+          fileName: outputName,
+          blocksCount: blocks.filter((b) => b.selected).length,
+          time: new Date(),
+          format: ext.toUpperCase(),
+          blob,
+        },
+        ...prev,
+      ])
+      setShowSaveModal(false)
+      console.log('[InformationAllocation] Dispatching history-updated event')
+      window.dispatchEvent(new Event('history-updated'))
+    } catch (err) {
+      console.error('[InformationAllocation] Upload error:', err)
+      setSaveError(err.message || 'Faylni arxivga saqlashda xatolik yuz berdi')
+    } finally {
+      setArchiveSaving(false)
+    }
   }
 
   return (
@@ -321,9 +356,7 @@ const InformationAllocation = () => {
           </span>
           <div>
             <h1>{t('informationAllocation.header.title')}</h1>
-            <p>
-              {t('informationAllocation.header.subtitle')}
-            </p>
+            <p>{t('informationAllocation.header.subtitle')}</p>
           </div>
         </div>
         <button
@@ -337,6 +370,8 @@ const InformationAllocation = () => {
       </div>
 
       <StepperBar currentStep={step} />
+
+      {saveError && <p className="iaSaveError">{saveError}</p>}
 
       <div className="iaGrid">
         <div className="iaLeftCol">
@@ -405,6 +440,7 @@ const InformationAllocation = () => {
           history={history}
           onClose={() => setShowSaveModal(false)}
           onSave={handleSaveFile}
+          saving={archiveSaving}
         />
       )}
 

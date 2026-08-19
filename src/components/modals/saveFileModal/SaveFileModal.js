@@ -2,7 +2,14 @@ import { useState } from 'react'
 import { FaTimes, FaSave } from 'react-icons/fa'
 import { useTranslation } from 'react-i18next'
 
-const SaveFileModal = ({ defaultName, format, history, onClose, onSave }) => {
+const SaveFileModal = ({
+  defaultName,
+  format,
+  history,
+  onClose,
+  onSave,
+  saving = false,
+}) => {
   const { t } = useTranslation()
   const [fileName, setFileName] = useState(defaultName)
   const [mode, setMode] = useState('new')
@@ -36,7 +43,9 @@ const SaveFileModal = ({ defaultName, format, history, onClose, onSave }) => {
         </div>
 
         <div className="settingsField">
-          <label>{t('informationAllocation.saveFileModal.fileNameLabel')}</label>
+          <label>
+            {t('informationAllocation.saveFileModal.fileNameLabel')}
+          </label>
           <input
             type="text"
             value={fileName}
@@ -49,7 +58,9 @@ const SaveFileModal = ({ defaultName, format, history, onClose, onSave }) => {
           <input type="text" value={format.toUpperCase()} disabled />
         </div>
 
-        <p className="settingsField label-only">{t('informationAllocation.saveFileModal.saveMethodLabel')}</p>
+        <p className="settingsField label-only">
+          {t('informationAllocation.saveFileModal.saveMethodLabel')}
+        </p>
         <label className="radioRow">
           <input
             type="radio"
@@ -78,12 +89,16 @@ const SaveFileModal = ({ defaultName, format, history, onClose, onSave }) => {
 
         {mode === 'append' && canAppend && (
           <div className="settingsField">
-            <label>{t('informationAllocation.saveFileModal.appendToLabel')}</label>
+            <label>
+              {t('informationAllocation.saveFileModal.appendToLabel')}
+            </label>
             <select
               value={existingHistoryId}
               onChange={(e) => setExistingHistoryId(e.target.value)}
             >
-              <option value="">{t('informationAllocation.saveFileModal.selectFileOption')}</option>
+              <option value="">
+                {t('informationAllocation.saveFileModal.selectFileOption')}
+              </option>
               {matchingHistory.map((h) => (
                 <option key={h.id} value={h.id}>
                   {h.fileName}
@@ -101,9 +116,14 @@ const SaveFileModal = ({ defaultName, format, history, onClose, onSave }) => {
             type="button"
             className="modalSaveButton"
             onClick={handleSubmit}
+            disabled={saving}
           >
             <FaSave />
-            <span>{t('informationAllocation.saveFileModal.save')}</span>
+            <span>
+              {saving
+                ? 'Saqlanmoqda...'
+                : t('informationAllocation.saveFileModal.save')}
+            </span>
           </button>
         </div>
       </div>
