@@ -33,6 +33,11 @@ async function request(path, { method = 'GET', body, headers } = {}) {
     ? await response.json()
     : null
 
+  if (path.includes('/history')) {
+    console.log(`[API] ${method} ${path} status:`, response.status)
+    console.log(`[API] ${method} ${path} response:`, data)
+  }
+
   if (!response.ok) {
     const validationErrors = data?.errors
       ? Object.values(data.errors).flat().join(' ')
@@ -65,6 +70,10 @@ async function requestForm(path, formData) {
   const data = contentType.includes('application/json')
     ? await response.json()
     : null
+  if (path === '/history') {
+    console.log('[API] POST /history status:', response.status)
+    console.log('[API] POST /history response:', data)
+  }
   if (!response.ok) {
     const validationErrors = data?.errors
       ? Object.values(data.errors).flat().join(' ')

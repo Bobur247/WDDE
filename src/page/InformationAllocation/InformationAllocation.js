@@ -310,10 +310,11 @@ const InformationAllocation = () => {
     try {
       const outputFile = new File([blob], outputName, { type: blob.type })
       console.log('[InformationAllocation] Uploading file:', outputName)
-      await uploadHistoryFile(outputFile, outputName, {
+      const uploadResponse = await uploadHistoryFile(outputFile, outputName, {
         blocksCount: blocks.filter((b) => b.selected).length,
         result: "Ma'lumot muvaffaqiyatli saqlandi",
       })
+      console.log('[InformationAllocation] Upload response:', uploadResponse)
       console.log('[InformationAllocation] File uploaded successfully')
 
       const url = URL.createObjectURL(blob)
