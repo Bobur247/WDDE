@@ -9,7 +9,7 @@ import {
   FaSave,
 } from 'react-icons/fa'
 
-const AddTemplateModal = ({ categories, onClose, onSave }) => {
+const AddTemplateModal = ({ categories, onClose, onSave, saving = false }) => {
   const { t } = useTranslation()
   const [name, setName] = useState('')
   const [categoryId, setCategoryId] = useState('')
@@ -42,7 +42,7 @@ const AddTemplateModal = ({ categories, onClose, onSave }) => {
     if (selected) setImageFile(selected)
   }
 
-  function handleSubmit() {
+  async function handleSubmit() {
     if (!name.trim() || !categoryId || !language || !docxFile) {
       setError(t('templates.addModal.requiredFields'))
       return
@@ -50,19 +50,26 @@ const AddTemplateModal = ({ categories, onClose, onSave }) => {
 
     const category = categories.find((c) => c.id === categoryId)
 
-    onSave({
-      name: name.trim(),
-      categoryId,
-      categoryLabel: category?.name ?? '',
-      badgeColor: 'blue',
-      language,
-      description,
-      previewTitle: name.trim().toUpperCase(),
-      previewIcon: FaFileWord,
-      previewTheme: 'light',
-      docxFile,
-      imageFile,
-    })
+    try {
+      await onSave({
+        name: name.trim(),
+        categoryId,
+        categoryLabel: category?.name ?? '',
+        badgeColor: 'blue',
+        language,
+        description,
+        previewTitle: name.trim().toUpperCase(),
+        previewIcon: FaFileWord,
+        previewTheme: 'light',
+        docxFile,
+        imageFile,
+      })
+    } catch (err) {
+      const message = err.response?.data?.errors
+        ? Object.values(err.response.data.errors).flat().join(' ')
+        : err.response?.data?.message || err.message
+      setError(message || "Shablonni saqlab bo'lmadi")
+    }
   }
 
   return (
@@ -236,9 +243,12 @@ const AddTemplateModal = ({ categories, onClose, onSave }) => {
             type="button"
             className="modalSaveButton"
             onClick={handleSubmit}
+            disabled={saving}
           >
             <FaSave />
-            <span>{t('templates.addModal.save')}</span>
+            <span>
+              {saving ? 'Saqlanmoqda...' : t('templates.addModal.save')}
+            </span>
           </button>
         </div>
       </div>

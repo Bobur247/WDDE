@@ -257,7 +257,18 @@
       "title": "Completed Actions (History)",
       "empty": "No files saved yet",
       "blocksCount": "{{count}} blocks",
-      "detail": "Details →"
+      "detail": "Details →",
+      "download": "Download",
+      "delete": "Delete",
+      "confirmDelete": "Delete record",
+      "confirmDeleteMessage": "Delete <b>{{fileName}}</b> from history? This action cannot be undone.",
+      "statusNotDownloaded": "Not downloaded",
+      "statusDownloaded": "Downloaded",
+      "page": "Page",
+      "prevPage": "Previous",
+      "nextPage": "Next",
+      "templateName": "Source template",
+      "deleted": "Record deleted"
     },
     "extractionMethod": {
       "methods": {
@@ -280,7 +291,18 @@
       "addSelectedText": "+ Add to extraction",
       "regexPatternLabel": "Regex pattern:",
       "regexPatternPlaceholder": "e.g. \\+998\\d{9}",
-      "comingSoon": "The \"{{label}}\" method will be added in a later stage — it requires deeper analysis of the docx file's internal structure (table/heading/bookmark).",
+      "tableIndexLabel": "Table number:",
+      "tableIndexPlaceholder": "e.g. 1",
+      "headingLevelLabel": "Heading level:",
+      "headingLevelPlaceholder": "H1, H2, H3",
+      "bookmarkLabel": "Bookmark:",
+      "bookmarkPlaceholder": "Select a bookmark",
+      "bookmarkSelectLabel": "Bookmark list:",
+      "noBookmarksFound": "No bookmarks found in this document",
+      "noTablesFound": "No tables found in this document",
+      "noHeadingsFound": "No headings found in this document",
+      "regexNoMatch": "No matching results found",
+      "regexInvalid": "Invalid regex pattern",
       "extract": "Extract"
     },
     "extractedData": {
@@ -335,10 +357,14 @@
       "newFile": "Create new file",
       "appendFile": "Append to existing file",
       "appendHint": "Appending to DOCX/PDF files will be added with backend integration — currently only works for TXT/CSV/JSON.",
+      "appendNotSupportedDocxPdf": "Append is not supported yet for DOCX/PDF — backend integration is pending.",
       "appendToLabel": "Which file to append to:",
       "selectFileOption": "Select a file",
       "cancel": "Cancel",
-      "save": "Save"
+      "save": "Save",
+      "saving": "Saving...",
+      "saved": "File saved successfully",
+      "saveError": "Error saving file"
     },
     "historyDetailModal": {
       "close": "Close",
@@ -476,14 +502,19 @@
       "pdfNote": "PDF export is not performed in the browser — it is added via a backend (e.g. LibreOffice).",
       "fallbackFileName": "document",
       "viewModal": {
-        "loading": "Opening document...",
+        "loading": "Opening file...",
         "error": "An error occurred while displaying the document",
         "close": "Close",
         "download": "Download"
-      }
+      },
+      "generateError": "An error occurred while creating the document.",
+      "generateError422": "Invalid data sent. Please check the fields.",
+      "generateError403": "Permission denied.",
+      "generateError404": "Document not found."
     },
     "history": {
       "title": "Document Generation History",
+      "loadError": "An error occurred while loading documents.",
       "empty": "No documents have been generated yet. Select a template on the left and click \"Generate Document\".",
       "columns": {
         "number": "No.",

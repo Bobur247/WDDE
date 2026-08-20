@@ -1,7 +1,47 @@
+import { useEffect, useState } from 'react'
 import { FaEye, FaDownload, FaTrash } from 'react-icons/fa'
 import { useTranslation } from 'react-i18next'
+import {
+  fetchTemplateImageBlob,
+  fetchTemplateFileBlob,
+} from '../../../api/templates'
 
-const TemplateCards = ({ templates, viewMode, onView, onDeleteRequest }) => {
+function TemplatePreview({ template, PreviewIcon }) {
+  const [imageUrl, setImageUrl] = useState('')
+
+  useEffect(() => {
+    let url = ''
+    if (template.has_preview_image) {
+      fetchTemplateImageBlob(template.id)
+        .then((blob) => {
+          url = URL.createObjectURL(blob)
+          setImageUrl(url)
+        })
+        .catch(() => setImageUrl(''))
+    }
+    return () => {
+      if (url) URL.revokeObjectURL(url)
+    }
+  }, [template.id, template.has_preview_image])
+
+  if (imageUrl)
+    return (
+      <img
+        src={imageUrl}
+        alt={template.name}
+        className="templatePreviewImage"
+      />
+    )
+  return <PreviewIcon className="templatePreviewIcon" />
+}
+
+const TemplateCards = ({
+  templates,
+  viewMode,
+  onView,
+  onDeleteRequest,
+  onError,
+}) => {
   const { t } = useTranslation()
 
   if (templates.length === 0) {
@@ -28,7 +68,7 @@ const TemplateCards = ({ templates, viewMode, onView, onDeleteRequest }) => {
             </button>
 
             <div className={`templatePreview ${tpl.previewTheme}`}>
-              <PreviewIcon className="templatePreviewIcon" />
+              <TemplatePreview template={tpl} PreviewIcon={PreviewIcon} />
               <span className="templatePreviewTitle">{tpl.previewTitle}</span>
             </div>
 
@@ -50,7 +90,23 @@ const TemplateCards = ({ templates, viewMode, onView, onDeleteRequest }) => {
                   <FaEye />
                   <span>{t('templates.cards.view')}</span>
                 </button>
-                <button type="button" className="downloadButton">
+                <button
+                  type="button"
+                  className="downloadButton"
+                  onClick={async () => {
+                    try {
+                      const blob = await fetchTemplateFileBlob(tpl.id)
+                      const url = URL.createObjectURL(blob)
+                      const link = document.createElement('a')
+                      link.href = url
+                      link.download = tpl.fileName
+                      link.click()
+                      URL.revokeObjectURL(url)
+                    } catch (error) {
+                      onError(error.message || "Faylni yuklab bo'lmaydi")
+                    }
+                  }}
+                >
                   <FaDownload />
                   <span>{t('templates.cards.download')}</span>
                 </button>

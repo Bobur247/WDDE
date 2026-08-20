@@ -1,5 +1,11 @@
-import { FaBars, FaPlay } from 'react-icons/fa'
+import { FaBars, FaPlay, FaTable } from 'react-icons/fa'
 import { useTranslation } from 'react-i18next'
+
+const HEADING_LEVELS = [
+  { value: 'H1', label: 'H1' },
+  { value: 'H2', label: 'H2' },
+  { value: 'H3', label: 'H3' },
+]
 
 const ExtractionMethodCard = ({
   disabled,
@@ -18,17 +24,25 @@ const ExtractionMethodCard = ({
   pendingSelectedText,
   onAddSelectedText,
   onExtract,
+  tableIndex,
+  setTableIndex,
+  headingLevel,
+  setHeadingLevel,
+  selectedBookmark,
+  setSelectedBookmark,
+  bookmarks,
+  tablesCount,
+  headingsList,
 }) => {
   const { t } = useTranslation()
   const METHODS = [
-    { value: 'range', label: t('informationAllocation.extractionMethod.methods.range'), ready: true },
-    { value: 'select', label: t('informationAllocation.extractionMethod.methods.select'), ready: true },
-    { value: 'regex', label: t('informationAllocation.extractionMethod.methods.regex'), ready: true },
-    { value: 'table', label: t('informationAllocation.extractionMethod.methods.table'), ready: false },
-    { value: 'heading', label: t('informationAllocation.extractionMethod.methods.heading'), ready: false },
-    { value: 'bookmark', label: t('informationAllocation.extractionMethod.methods.bookmark'), ready: false },
+    { value: 'range', label: t('informationAllocation.extractionMethod.methods.range') },
+    { value: 'select', label: t('informationAllocation.extractionMethod.methods.select') },
+    { value: 'regex', label: t('informationAllocation.extractionMethod.methods.regex') },
+    { value: 'table', label: t('informationAllocation.extractionMethod.methods.table') },
+    { value: 'heading', label: t('informationAllocation.extractionMethod.methods.heading') },
+    { value: 'bookmark', label: t('informationAllocation.extractionMethod.methods.bookmark') },
   ]
-  const activeMethod = METHODS.find((m) => m.value === method)
 
   return (
     <div className={`settingsCard ${disabled ? 'cardDisabled' : ''}`}>
@@ -43,7 +57,6 @@ const ExtractionMethodCard = ({
               onChange={() => setMethod(m.value)}
             />
             <span>{m.label}</span>
-            {!m.ready && <span className="methodSoonBadge">{t('informationAllocation.extractionMethod.soonBadge')}</span>}
           </label>
         ))}
       </div>
@@ -127,12 +140,71 @@ const ExtractionMethodCard = ({
         </div>
       )}
 
-      {(method === 'table' ||
-        method === 'heading' ||
-        method === 'bookmark') && (
-        <p className="methodComingSoon">
-          {t('informationAllocation.extractionMethod.comingSoon', { label: activeMethod?.label })}
-        </p>
+      {method === 'table' && (
+        <div className="settingsField">
+          <label>{t('informationAllocation.extractionMethod.tableIndexLabel')}</label>
+          <div className="inputWithIcon">
+            <input
+              type="number"
+              min="1"
+              placeholder={t('informationAllocation.extractionMethod.tableIndexPlaceholder')}
+              value={tableIndex}
+              onChange={(e) => setTableIndex(e.target.value)}
+              disabled={disabled || tablesCount === 0}
+            />
+            <FaTable />
+          </div>
+          {tablesCount === 0 && (
+            <p className="fieldHint">{t('informationAllocation.extractionMethod.noTablesFound')}</p>
+          )}
+          {tablesCount > 0 && (
+            <p className="fieldHint">
+              {t('informationAllocation.extractionMethod.tableIndexPlaceholder', { count: tablesCount })}
+            </p>
+          )}
+        </div>
+      )}
+
+      {method === 'heading' && (
+        <div className="settingsField">
+          <label>{t('informationAllocation.extractionMethod.headingLevelLabel')}</label>
+          <select
+            value={headingLevel}
+            onChange={(e) => setHeadingLevel(e.target.value)}
+            disabled={disabled || headingsList.length === 0}
+          >
+            <option value="">{t('informationAllocation.extractionMethod.headingLevelPlaceholder')}</option>
+            {HEADING_LEVELS.map((h) => (
+              <option key={h.value} value={h.value}>
+                {h.label}
+              </option>
+            ))}
+          </select>
+          {headingsList.length === 0 && (
+            <p className="fieldHint">{t('informationAllocation.extractionMethod.noHeadingsFound')}</p>
+          )}
+        </div>
+      )}
+
+      {method === 'bookmark' && (
+        <div className="settingsField">
+          <label>{t('informationAllocation.extractionMethod.bookmarkSelectLabel')}</label>
+          <select
+            value={selectedBookmark}
+            onChange={(e) => setSelectedBookmark(e.target.value)}
+            disabled={disabled || bookmarks.length === 0}
+          >
+            <option value="">{t('informationAllocation.extractionMethod.bookmarkPlaceholder')}</option>
+            {bookmarks.map((b, i) => (
+              <option key={i} value={b}>
+                {b}
+              </option>
+            ))}
+          </select>
+          {bookmarks.length === 0 && (
+            <p className="fieldHint">{t('informationAllocation.extractionMethod.noBookmarksFound')}</p>
+          )}
+        </div>
       )}
 
       {method !== 'select' && (
@@ -140,12 +212,7 @@ const ExtractionMethodCard = ({
           type="button"
           className="extractButton"
           onClick={onExtract}
-          disabled={
-            disabled ||
-            method === 'table' ||
-            method === 'heading' ||
-            method === 'bookmark'
-          }
+          disabled={disabled}
         >
           <FaPlay />
           <span>{t('informationAllocation.extractionMethod.extract')}</span>

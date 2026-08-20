@@ -48,6 +48,7 @@ import ExtractionMethodCard from './cards/extractionMethodCard/ExtractionMethodC
 import ExtractedDataCard from './cards/extractedDataCard/ExtractedDataCard'
 import DocumentPreviewCard from './cards/documentPreviewCard/DocumentPreviewCard'
 import DocumentInfoCard from './cards/documentInfoCard/DocumentInfoCard'
+import Pagination from './ui/pagination/Pagination'
 
 export {
   Sidebar,
@@ -97,4 +98,5 @@ export {
   ExtractedDataCard,
   DocumentPreviewCard,
   DocumentInfoCard,
+  Pagination,
 }

@@ -8,10 +8,15 @@ import {
   FaListOl,
   FaAlignLeft,
   FaLink,
+  FaFileAlt,
+  FaEye,
+  FaDownload,
+  FaTrash,
 } from 'react-icons/fa'
-import {LivePreview} from '../../components'
+import { LivePreview, ViewFileModal, DeleteRecordModal } from '../../components'
+import { downloadDocumentFile } from '../../../api/documents'
 
-const TAB_IDS = ['asosiy', 'headerFooter', 'qoshimcha', 'uslub']
+const TAB_IDS = ['asosiy', 'yaratilganHujjatlar']
 
 const DocumentSettingsPanel = ({
   templates,
@@ -21,6 +26,8 @@ const DocumentSettingsPanel = ({
   setDocumentName,
   fieldValues,
   setFieldValues,
+  history,
+  onDelete,
 }) => {
   const { t } = useTranslation()
   const [activeTab, setActiveTab] = useState('asosiy')
@@ -29,8 +36,6 @@ const DocumentSettingsPanel = ({
     id,
     label: t(`createDocument.settingsPanel.tabs.${id}`),
   }))
-  const activeTabLabel =
-    tabs.find((tab) => tab.id === activeTab)?.label || ''
 
   function updateField(key, value) {
     setFieldValues((prev) => ({ ...prev, [key]: value }))
@@ -71,14 +76,6 @@ const DocumentSettingsPanel = ({
           </button>
         ))}
       </div>
-
-      {activeTab !== 'asosiy' && (
-        <p className="tabComingSoon">
-          {t('createDocument.settingsPanel.tabComingSoon', {
-            tab: activeTabLabel,
-          })}
-        </p>
-      )}
 
       {activeTab === 'asosiy' && (
         <div className="settingsPanelBody">
@@ -196,6 +193,134 @@ const DocumentSettingsPanel = ({
             />
           </div>
         </div>
+      )}
+
+      {activeTab === 'yaratilganHujjatlar' && (
+        <CreatedDocumentsTab history={history} onDelete={onDelete} />
+      )}
+    </div>
+  )
+}
+
+function CreatedDocumentsTab({ history, onDelete }) {
+  const { t } = useTranslation()
+  const [viewingDoc, setViewingDoc] = useState(null)
+  const [deletingDoc, setDeletingDoc] = useState(null)
+
+  async function handleDownload(doc) {
+    try {
+      const blob = await downloadDocumentFile(doc.id)
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = doc.fileName || doc.name
+      document.body.appendChild(a)
+      a.click()
+      a.remove()
+      URL.revokeObjectURL(url)
+    } catch (err) {
+      console.error('Yuklab olishda xatolik:', err)
+    }
+  }
+
+  async function handleView(doc) {
+    try {
+      const blob = await downloadDocumentFile(doc.id)
+      setViewingDoc({ ...doc, blob })
+    } catch (err) {
+      console.error('Ko\'rishda xatolik:', err)
+    }
+  }
+
+  async function handleDelete() {
+    if (!deletingDoc) return
+    try {
+      await onDelete(deletingDoc.id)
+      setDeletingDoc(null)
+    } catch (err) {
+      console.error("O'chirishda xatolik:", err)
+    }
+  }
+
+  if (!history || history.length === 0) {
+    return (
+      <div className="createdDocsEmpty">
+        <div className="createdDocsEmptyIcon">
+          <FaFileAlt />
+        </div>
+        <p className="createdDocsEmptyTitle">
+          {t('createDocument.settingsPanel.yaratilganHujjatlar.empty')}
+        </p>
+        <p className="createdDocsEmptySubtitle">
+          {t('createDocument.settingsPanel.yaratilganHujjatlar.emptySubtitle')}
+        </p>
+      </div>
+    )
+  }
+
+  return (
+    <div className="createdDocumentCards">
+      {history.map((doc) => (
+        <div key={doc.id} className="createdDocumentCard">
+          <div className="createdDocumentPreview">
+            <FaFileAlt className="createdDocumentPreviewIcon" />
+          </div>
+          <div className="createdDocumentCardBody">
+            <div className="createdDocumentCardTitleRow">
+              <h4>{doc.fileName}</h4>
+            </div>
+            <p className="createdDocumentCardMeta">
+              {doc.result || doc.typeLabel}
+            </p>
+            <p className="createdDocumentCardDate">
+              Yaratilgan: {doc.date}
+            </p>
+            <p className="createdDocumentCardFormat">
+              Format: <span className="formatBadge">{doc.format}</span>
+            </p>
+            <div className="createdDocumentCardActions">
+              <button
+                type="button"
+                className="createdDocActionButton"
+                onClick={() => handleView(doc)}
+              >
+                <FaEye />
+                <span>{t('createDocument.history.actions.view')}</span>
+              </button>
+              <button
+                type="button"
+                className="createdDocActionButton primary"
+                onClick={() => handleDownload(doc)}
+              >
+                <FaDownload />
+                <span>{t('createDocument.history.actions.download')}</span>
+              </button>
+              <button
+                type="button"
+                className="createdDocActionButton danger"
+                onClick={() => setDeletingDoc(doc)}
+              >
+                <FaTrash />
+              </button>
+            </div>
+          </div>
+        </div>
+      ))}
+
+      {viewingDoc && (
+        <ViewFileModal
+          record={viewingDoc}
+          onClose={() => setViewingDoc(null)}
+          fullScreen
+        />
+      )}
+
+      {deletingDoc && (
+        <DeleteRecordModal
+          record={deletingDoc}
+          onCancel={() => setDeletingDoc(null)}
+          onConfirm={handleDelete}
+        />
       )}
     </div>
   )

@@ -1,6 +1,14 @@
 import { useState } from 'react'
-import { FaTimes, FaSave } from 'react-icons/fa'
+import { FaTimes, FaSave, FaFileWord, FaFilePdf, FaFileAlt, FaFileCode, FaFileCsv } from 'react-icons/fa'
 import { useTranslation } from 'react-i18next'
+
+const FORMAT_ICONS = {
+  docx: FaFileWord,
+  pdf: FaFilePdf,
+  txt: FaFileAlt,
+  json: FaFileCode,
+  csv: FaFileCsv,
+}
 
 const SaveFileModal = ({
   defaultName,
@@ -14,10 +22,8 @@ const SaveFileModal = ({
   const [fileName, setFileName] = useState(defaultName)
   const [mode, setMode] = useState('new')
   const [existingHistoryId, setExistingHistoryId] = useState('')
+  const [hoveredDisabled, setHoveredDisabled] = useState(false)
 
-  // "Mavjud faylga qo'shish" faqat matn asosli formatlar uchun haqiqatan
-  // ishlaydi (txt/csv/json) — docx/pdf uchun ichki strukturaga yozish
-  // backend (docxtemplater) talab qiladi.
   const canAppend = format === 'txt' || format === 'csv' || format === 'json'
   const matchingHistory = history.filter(
     (h) => h.format.toLowerCase() === format,
@@ -43,9 +49,7 @@ const SaveFileModal = ({
         </div>
 
         <div className="settingsField">
-          <label>
-            {t('informationAllocation.saveFileModal.fileNameLabel')}
-          </label>
+          <label>{t('informationAllocation.saveFileModal.fileNameLabel')}</label>
           <input
             type="text"
             value={fileName}
@@ -55,43 +59,83 @@ const SaveFileModal = ({
 
         <div className="settingsField">
           <label>{t('informationAllocation.saveFileModal.formatLabel')}</label>
-          <input type="text" value={format.toUpperCase()} disabled />
+          <div className="formatIconsGrid">
+            {Object.entries(FORMAT_ICONS).map(([key, Icon]) => (
+              <div
+                key={key}
+                className={`formatIconItem ${format === key ? 'active' : ''}`}
+              >
+                <Icon />
+                <span>{key.toUpperCase()}</span>
+              </div>
+            ))}
+          </div>
         </div>
 
         <p className="settingsField label-only">
           {t('informationAllocation.saveFileModal.saveMethodLabel')}
         </p>
-        <label className="radioRow">
-          <input
-            type="radio"
-            name="saveMode"
-            checked={mode === 'new'}
-            onChange={() => setMode('new')}
-          />
-          <span>{t('informationAllocation.saveFileModal.newFile')}</span>
-        </label>
-        <label className={`radioRow ${!canAppend ? 'disabledRow' : ''}`}>
-          <input
-            type="radio"
-            name="saveMode"
-            checked={mode === 'append'}
-            disabled={!canAppend || matchingHistory.length === 0}
-            onChange={() => setMode('append')}
-          />
-          <span>{t('informationAllocation.saveFileModal.appendFile')}</span>
-        </label>
+
+        <div className="saveMethodCards">
+          <div
+            className={`saveMethodCard ${mode === 'new' ? 'active' : ''}`}
+            onClick={() => setMode('new')}
+          >
+            <span className="saveMethodCardIcon">
+              <FaSave />
+            </span>
+            <span className="saveMethodCardLabel">
+              {t('informationAllocation.saveFileModal.newFile')}
+            </span>
+          </div>
+
+          {canAppend ? (
+            <div
+              className={`saveMethodCard ${mode === 'append' ? 'active' : ''}`}
+              onClick={() => setMode('append')}
+            >
+              <span className="saveMethodCardIcon">
+                <FaFileAlt />
+              </span>
+              <span className="saveMethodCardLabel">
+                {t('informationAllocation.saveFileModal.appendFile')}
+              </span>
+            </div>
+          ) : (
+            <div
+              className="disabledCardWrapper"
+              onMouseEnter={() => setHoveredDisabled(true)}
+              onMouseLeave={() => setHoveredDisabled(false)}
+            >
+              <div className={`saveMethodCard disabled`}>
+                <span className="saveMethodCardIcon">
+                  <FaFileAlt />
+                </span>
+                <span className="saveMethodCardLabel">
+                  {t('informationAllocation.saveFileModal.appendFile')}
+                </span>
+                <span className="saveMethodCardHint">
+                  {t('informationAllocation.saveFileModal.appendNotSupportedDocxPdf')}
+                </span>
+              </div>
+              {hoveredDisabled && (
+                <div className="tooltip">
+                  {t('informationAllocation.saveFileModal.appendNotSupportedDocxPdf')}
+                </div>
+              )}
+            </div>
+          )}
+        </div>
 
         {!canAppend && (
-          <p className="fieldHint">
+          <p className="fieldHint" style={{ marginTop: -8, marginBottom: 12 }}>
             {t('informationAllocation.saveFileModal.appendHint')}
           </p>
         )}
 
         {mode === 'append' && canAppend && (
           <div className="settingsField">
-            <label>
-              {t('informationAllocation.saveFileModal.appendToLabel')}
-            </label>
+            <label>{t('informationAllocation.saveFileModal.appendToLabel')}</label>
             <select
               value={existingHistoryId}
               onChange={(e) => setExistingHistoryId(e.target.value)}
@@ -118,10 +162,10 @@ const SaveFileModal = ({
             onClick={handleSubmit}
             disabled={saving}
           >
-            <FaSave />
+            {saving && <span className="inlineSpinner" />}
             <span>
               {saving
-                ? 'Saqlanmoqda...'
+                ? t('informationAllocation.saveFileModal.saving')
                 : t('informationAllocation.saveFileModal.save')}
             </span>
           </button>

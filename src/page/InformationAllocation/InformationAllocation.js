@@ -1,7 +1,7 @@
-import { useState, useMemo } from 'react'
-import { FaFileAlt, FaPlus } from 'react-icons/fa'
+import { useState, useMemo, useCallback, useEffect } from 'react'
+import { FaFileAlt, FaPlus, FaCheckCircle, FaClock } from 'react-icons/fa'
 import mammoth from 'mammoth'
-import { useTranslation } from 'react-i18next'
+import { useTranslation, Trans } from 'react-i18next'
 import {
   SaveFileModal,
   HistoryDetailModal,
@@ -11,10 +11,11 @@ import {
   ExtractedDataCard,
   DocumentPreviewCard,
   DocumentInfoCard,
+  ConfirmModal,
 } from '../../components/components'
 import './InformationAllocation.css'
 import { Document, Packer, Paragraph } from 'docx'
-import { uploadHistoryFile } from '../../api/history'
+import { uploadHistoryFile, downloadHistoryFile, deleteHistoryItem } from '../../api/history'
 
 let nextFieldId = 1
 let nextBlockId = 1
@@ -36,6 +37,9 @@ const InformationAllocation = () => {
   const [includeEnd, setIncludeEnd] = useState(false)
   const [regexPattern, setRegexPattern] = useState('')
   const [pendingSelectedText, setPendingSelectedText] = useState('')
+  const [tableIndex, setTableIndex] = useState('')
+  const [headingLevel, setHeadingLevel] = useState('')
+  const [selectedBookmark, setSelectedBookmark] = useState('')
 
   // ===== Bloklar (ajratilgan ma'lumotlar) =====
   const [blocks, setBlocks] = useState([])
@@ -47,8 +51,14 @@ const InformationAllocation = () => {
   // ===== Tarix =====
   const [history, setHistory] = useState([])
   const [viewingHistoryItem, setViewingHistoryItem] = useState(null)
+  const [deletingHistoryItem, setDeletingHistoryItem] = useState(null)
   const [saveError, setSaveError] = useState('')
   const [archiveSaving, setArchiveSaving] = useState(false)
+  const [historyPage, setHistoryPage] = useState(1)
+  const historyPerPage = 5
+
+  // ===== Toast =====
+  const [toasts, setToasts] = useState([])
 
   // ===== Bosqich (stepper) — state'dan avtomatik hisoblanadi =====
   const step = useMemo(() => {
@@ -57,6 +67,44 @@ const InformationAllocation = () => {
     if (!showSaveModal && blocks.some((b) => b.selected)) return 3
     return 4
   }, [file, blocks, showSaveModal])
+
+  const addToast = useCallback((message, type = 'success') => {
+    const id = Date.now() + Math.random()
+    setToasts((prev) => [...prev, { id, message, type }])
+    setTimeout(() => {
+      setToasts((prev) => prev.filter((t) => t.id !== id))
+    }, 3500)
+  }, [])
+
+  // ===== Hujjat tuzilishini tahlil qilish =====
+  const bookmarks = useMemo(() => {
+    if (!htmlContent) return []
+    const headingRegex = /<h[1-6][^>]*>(.*?)<\/h[1-6]>/gi
+    const found = []
+    let match
+    while ((match = headingRegex.exec(htmlContent)) !== null) {
+      const text = match[1].replace(/<[^>]+>/g, '').trim()
+      if (text) found.push(text)
+    }
+    return found
+  }, [htmlContent])
+
+  const tablesCount = useMemo(() => {
+    if (!htmlContent) return 0
+    return (htmlContent.match(/<table/gi) || []).length
+  }, [htmlContent])
+
+  const headingsList = useMemo(() => {
+    if (!htmlContent) return []
+    const headingRegex = /<h[1-6][^>]*>(.*?)<\/h[1-6]>/gi
+    const found = []
+    let match
+    while ((match = headingRegex.exec(htmlContent)) !== null) {
+      const text = match[1].replace(/<[^>]+>/g, '').trim()
+      if (text) found.push(text)
+    }
+    return found
+  }, [htmlContent])
 
   async function analyzeFile(selectedFile) {
     setAnalyzing(true)
@@ -69,10 +117,8 @@ const InformationAllocation = () => {
       const paragraphs = text
         .split('\n')
         .filter((l) => l.trim().length > 0).length
-      const tables = (htmlResult.value.match(/<table/g) || []).length
-      const images = (htmlResult.value.match(/<img/g) || []).length
-      // DIQQAT: sahifalar soni docx'dan aniq olinmaydi (render qilinmaguncha).
-      // Bu — belgilar soniga asoslangan TAXMINIY hisob.
+      const tables = (htmlResult.value.match(/<table/gi) || []).length
+      const images = (htmlResult.value.match(/<img/gi) || []).length
       const pages = Math.max(1, Math.ceil(text.length / 1800))
 
       setRawText(text)
@@ -94,6 +140,9 @@ const InformationAllocation = () => {
   function handleFileSelected(selectedFile) {
     setFile(selectedFile)
     setBlocks([])
+    setTableIndex('')
+    setHeadingLevel('')
+    setSelectedBookmark('')
     analyzeFile(selectedFile)
   }
 
@@ -103,9 +152,11 @@ const InformationAllocation = () => {
     setHtmlContent('')
     setDocInfo(null)
     setBlocks([])
+    setTableIndex('')
+    setHeadingLevel('')
+    setSelectedBookmark('')
   }
 
-  // Joriy (oxirgi) blokka yangi maydon qo'shadi; blok bo'lmasa yangisini yaratadi
   function addFieldToCurrentBlock(label, value) {
     setBlocks((prev) => {
       if (prev.length === 0) {
@@ -154,6 +205,59 @@ const InformationAllocation = () => {
     )
   }
 
+  function extractTableText(html, index) {
+    const parser = new DOMParser()
+    const doc = parser.parseFromString(html, 'text/html')
+    const tables = doc.querySelectorAll('table')
+    if (!tables[index]) return ''
+    const rows = tables[index].querySelectorAll('tr')
+    const lines = []
+    rows.forEach((row) => {
+      const cells = row.querySelectorAll('td, th')
+      const cellTexts = Array.from(cells).map((c) => c.textContent.trim())
+      if (cellTexts.length > 0) lines.push(cellTexts.join(' | '))
+    })
+    return lines.join('\n')
+  }
+
+  function extractHeadingText(html, level) {
+    const parser = new DOMParser()
+    const doc = parser.parseFromString(html, 'text/html')
+    const headings = doc.querySelectorAll(level)
+    const lines = []
+    headings.forEach((h) => {
+      let text = h.textContent.trim()
+      let sibling = h.nextElementSibling
+      while (sibling && !/^H[1-6]$/i.test(sibling.tagName)) {
+        const siblingText = sibling.textContent.trim()
+        if (siblingText) text += '\n' + siblingText
+        sibling = sibling.nextElementSibling
+      }
+      lines.push(text)
+    })
+    return lines.join('\n\n---\n\n')
+  }
+
+  function extractBookmarkText(html, bookmarkName) {
+    const parser = new DOMParser()
+    const doc = parser.parseFromString(html, 'text/html')
+    const headings = doc.querySelectorAll('h1, h2, h3, h4, h5, h6')
+    let startIdx = -1
+    headings.forEach((h, i) => {
+      if (h.textContent.trim() === bookmarkName) startIdx = i
+    })
+    if (startIdx === -1) return ''
+    let text = headings[startIdx].textContent.trim()
+    let sibling = headings[startIdx].nextElementSibling
+    const endHeading = headings[startIdx + 1]
+    while (sibling && sibling !== endHeading) {
+      const siblingText = sibling.textContent.trim()
+      if (siblingText) text += '\n' + siblingText
+      sibling = sibling.nextElementSibling
+    }
+    return text
+  }
+
   // ===== Ajratish usullari bo'yicha haqiqiy logika =====
   function handleExtract() {
     if (method === 'range') {
@@ -170,10 +274,20 @@ const InformationAllocation = () => {
         extracted +
         (includeEnd ? rangeEnd : '')
       addFieldToCurrentBlock(
-        rangeStart.replace(':', '').trim() ||
+        rangeStart.replace(/[:\s]+/g, '').trim() ||
           t('informationAllocation.extractedData.defaultFieldLabel'),
         finalValue,
       )
+      return
+    }
+
+    if (method === 'select') {
+      if (!pendingSelectedText) return
+      addFieldToCurrentBlock(
+        t('informationAllocation.extractedData.selectedTextValueLabel'),
+        pendingSelectedText,
+      )
+      setPendingSelectedText('')
       return
     }
 
@@ -182,6 +296,10 @@ const InformationAllocation = () => {
       try {
         const re = new RegExp(regexPattern, 'g')
         const matches = [...rawText.matchAll(re)].map((m) => m[0])
+        if (matches.length === 0) {
+          addToast(t('informationAllocation.extractionMethod.regexNoMatch', 'Mos keluvchi natija topilmadi'), 'error')
+          return
+        }
         matches.forEach((m, i) =>
           addFieldToCurrentBlock(
             t('informationAllocation.extractedData.regexResultLabel', {
@@ -191,11 +309,45 @@ const InformationAllocation = () => {
           ),
         )
       } catch (err) {
+        addToast(t('informationAllocation.extractionMethod.regexInvalid', 'Regex noto\'g\'ri kiritildi'), 'error')
         console.error('Regex xato:', err)
       }
       return
     }
-    // 'select' usulida asosiy tugma emas, alohida "+ Ajratishga qo'shish" ishlaydi
+
+    if (method === 'table') {
+      const idx = parseInt(tableIndex, 10) - 1
+      if (isNaN(idx) || idx < 0 || idx >= tablesCount) return
+      const tableText = extractTableText(htmlContent, idx)
+      if (!tableText) return
+      addFieldToCurrentBlock(
+        t('informationAllocation.extractedData.defaultFieldLabel') + ` ${t('informationAllocation.extractionMethod.methods.table')} ${idx + 1}`,
+        tableText,
+      )
+      return
+    }
+
+    if (method === 'heading') {
+      if (!headingLevel) return
+      const headingText = extractHeadingText(htmlContent, headingLevel)
+      if (!headingText) return
+      addFieldToCurrentBlock(
+        `${t('informationAllocation.extractionMethod.methods.heading')} ${headingLevel}`,
+        headingText,
+      )
+      return
+    }
+
+    if (method === 'bookmark') {
+      if (!selectedBookmark) return
+      const bookmarkText = extractBookmarkText(htmlContent, selectedBookmark)
+      if (!bookmarkText) return
+      addFieldToCurrentBlock(
+        `${t('informationAllocation.extractionMethod.methods.bookmark')}: ${selectedBookmark}`,
+        bookmarkText,
+      )
+      return
+    }
   }
 
   function handleAddSelectedText() {
@@ -268,8 +420,6 @@ const InformationAllocation = () => {
           .join('\n\n')
       }
 
-      // "Mavjud faylga qo'shish" — matn asosli formatlar uchun haqiqatan
-      // ishlaydi (eski kontentni topib, oxiriga qo'shadi)
       if (mode === 'append' && existingHistoryId) {
         const existing = history.find((h) => h.id === existingHistoryId)
         if (existing?.blob) {
@@ -280,8 +430,6 @@ const InformationAllocation = () => {
 
       blob = new Blob([content], { type: 'text/plain;charset=utf-8' })
     } else if (saveFormat === 'docx') {
-      // DIQQAT: bu oddiy struktura quradi, "mavjud faylga qo'shish" uchun
-      // haqiqiy docx ichiga yozish backend (docxtemplater) talab qiladi.
       const doc = new Document({
         sections: [
           {
@@ -298,7 +446,6 @@ const InformationAllocation = () => {
       })
       blob = await Packer.toBlob(doc)
     } else {
-      // PDF — brauzerda haqiqiy generatsiya qilinmaydi, backend kerak
       console.warn('PDF eksporti backend orqali amalga oshiriladi (demo)')
       blob = new Blob(['PDF eksporti backend ulanganda ishlaydi (demo)'], {
         type: 'text/plain',
@@ -309,13 +456,10 @@ const InformationAllocation = () => {
     const outputName = `${safeName}.${ext}`
     try {
       const outputFile = new File([blob], outputName, { type: blob.type })
-      console.log('[InformationAllocation] Uploading file:', outputName)
-      const uploadResponse = await uploadHistoryFile(outputFile, outputName, {
+      await uploadHistoryFile(outputFile, outputName, {
         blocksCount: blocks.filter((b) => b.selected).length,
-        result: "Ma'lumot muvaffaqiyatli saqlandi",
+        result: t('informationAllocation.saveFileModal.saved'),
       })
-      console.log('[InformationAllocation] Upload response:', uploadResponse)
-      console.log('[InformationAllocation] File uploaded successfully')
 
       const url = URL.createObjectURL(blob)
       const a = document.createElement('a')
@@ -334,17 +478,62 @@ const InformationAllocation = () => {
           time: new Date(),
           format: ext.toUpperCase(),
           blob,
+          downloaded: false,
+          templateName: file?.name || '',
         },
         ...prev,
       ])
       setShowSaveModal(false)
-      console.log('[InformationAllocation] Dispatching history-updated event')
+      addToast(t('informationAllocation.saveFileModal.saved'))
       window.dispatchEvent(new Event('history-updated'))
     } catch (err) {
       console.error('[InformationAllocation] Upload error:', err)
       setSaveError(err.message || 'Faylni arxivga saqlashda xatolik yuz berdi')
+      addToast(t('informationAllocation.saveFileModal.saveError'), 'error')
     } finally {
       setArchiveSaving(false)
+    }
+  }
+
+  // ===== Tarix amallari =====
+  const totalHistoryPages = Math.max(1, Math.ceil(history.length / historyPerPage))
+  const paginatedHistory = useMemo(() => {
+    const start = (historyPage - 1) * historyPerPage
+    return history.slice(start, start + historyPerPage)
+  }, [history, historyPage, historyPerPage])
+
+  useEffect(() => {
+    if (historyPage > totalHistoryPages) setHistoryPage(1)
+  }, [historyPage, totalHistoryPages])
+
+  async function handleDownloadHistory(item) {
+    try {
+      const blob = item.blob || (await downloadHistoryFile(item.id))
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = item.fileName
+      document.body.appendChild(a)
+      a.click()
+      a.remove()
+      URL.revokeObjectURL(url)
+      setHistory((prev) =>
+        prev.map((h) => (h.id === item.id ? { ...h, downloaded: true } : h)),
+      )
+    } catch (err) {
+      console.error('Yuklab olishda xatolik:', err)
+    }
+  }
+
+  async function handleDeleteHistory() {
+    const id = deletingHistoryItem.id
+    try {
+      await deleteHistoryItem(id)
+      setHistory((prev) => prev.filter((h) => h.id !== id))
+      setDeletingHistoryItem(null)
+      addToast(t('informationAllocation.historyBar.deleted', 'Yozuv o\'chirildi'))
+    } catch (err) {
+      console.error("O'chirishda xatolik:", err)
     }
   }
 
@@ -401,6 +590,15 @@ const InformationAllocation = () => {
             pendingSelectedText={pendingSelectedText}
             onAddSelectedText={handleAddSelectedText}
             onExtract={handleExtract}
+            tableIndex={tableIndex}
+            setTableIndex={setTableIndex}
+            headingLevel={headingLevel}
+            setHeadingLevel={setHeadingLevel}
+            selectedBookmark={selectedBookmark}
+            setSelectedBookmark={setSelectedBookmark}
+            bookmarks={bookmarks}
+            tablesCount={tablesCount}
+            headingsList={headingsList}
           />
         </div>
 
@@ -426,8 +624,13 @@ const InformationAllocation = () => {
       </div>
 
       <HistoryBar
-        history={history}
+        history={paginatedHistory}
         onSelect={(h) => setViewingHistoryItem(h)}
+        onDownload={handleDownloadHistory}
+        onDeleteRequest={(h) => setDeletingHistoryItem(h)}
+        currentPage={historyPage}
+        totalPages={totalHistoryPages}
+        onPageChange={setHistoryPage}
       />
 
       {showSaveModal && (
@@ -451,6 +654,33 @@ const InformationAllocation = () => {
           onClose={() => setViewingHistoryItem(null)}
         />
       )}
+
+      {deletingHistoryItem && (
+        <ConfirmModal
+          title={t('informationAllocation.historyBar.confirmDelete')}
+          message={
+            <Trans
+              i18nKey="informationAllocation.historyBar.confirmDeleteMessage"
+              values={{ fileName: deletingHistoryItem.fileName }}
+              components={{ b: <b /> }}
+            />
+          }
+          confirmLabel={t('history.table.delete')}
+          onCancel={() => setDeletingHistoryItem(null)}
+          onConfirm={handleDeleteHistory}
+        />
+      )}
+
+      <div className="toastContainer">
+        {toasts.map((toast) => (
+          <div key={toast.id} className={`toast ${toast.type}`}>
+            <span className="toastIcon">
+              {toast.type === 'success' ? <FaCheckCircle /> : <FaClock />}
+            </span>
+            <span>{toast.message}</span>
+          </div>
+        ))}
+      </div>
     </div>
   )
 }

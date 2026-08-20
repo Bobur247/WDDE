@@ -11,7 +11,7 @@ import {
   FaTimes,
 } from 'react-icons/fa'
 import mammoth from 'mammoth'
-import { Document, Packer, Paragraph, HeadingLevel, AlignmentType } from 'docx'
+import { generateDocument, downloadDocumentFile } from '../../../api/documents'
 
 const PAGE_SIZES = ['A4', 'A5', 'A3', 'Letter', 'Legal']
 const PAGE_NUM_POSITION_KEYS = [
@@ -57,6 +57,7 @@ const AdditionalSettingsPanel = ({
   const { t } = useTranslation()
   const [generating, setGenerating] = useState(false)
   const [logoPreviewUrl, setLogoPreviewUrl] = useState('')
+  const [generateError, setGenerateError] = useState('')
 
   const [viewingDoc, setViewingDoc] = useState(false)
   const [viewLoading, setViewLoading] = useState(false)
@@ -80,123 +81,108 @@ const AdditionalSettingsPanel = ({
     if (selected) setLogoFile(selected)
   }
 
-  // DOCX generatsiya — `docx` kutubxonasi bilan HAQIQIY .docx yaratadi.
-  // Diqqat: bu original shablon vizual formatini emas, oddiy struktura
-  // (sarlavha + paragraflar + header/footer)ni qayta quradi. Original
-  // shablon ko'rinishini aynan saqlash uchun productionda `docxtemplater`
-  // (+ pizzip) tavsiya etiladi.
   async function handleGenerate() {
     setGenerating(true)
     setViewHtml('')
+    setGenerateError('')
 
     try {
-      const bodyParagraphs = selectedTemplate.fields.map(
-        (field) =>
-          new Paragraph({
-            text: `${field.label}: ${fieldValues[field.key] || ''}`,
-          }),
-      )
+      const templateId =
+        selectedTemplate.id === 'blank' ? null : Number(selectedTemplate.id)
 
-      const children = [
-        new Paragraph({
-          text: documentName,
-          heading: HeadingLevel.HEADING_1,
-        }),
-      ]
-
-      if (headerOn && headerOrgName) {
-        children.push(
-          new Paragraph({
-            text: headerOrgName,
-            alignment: AlignmentType.CENTER,
-          }),
-        )
-      }
-      if (headerOn && headerPhone) {
-        children.push(
-          new Paragraph({
-            text: headerPhone,
-            alignment: AlignmentType.CENTER,
-          }),
-        )
+      const payload = {
+        template_id: templateId,
+        document_name:
+          documentName.trim() ||
+          t('createDocument.additionalSettings.fallbackFileName'),
+        field_values: fieldValues,
+        settings: {
+          header_enabled: headerOn,
+          org_name: headerOrgName,
+          phone: headerPhone,
+          footer_enabled: footerOn,
+          footer_text: footerText,
+          page_numbers_enabled: pageNumOn,
+          page_number_position: pageNumPosition,
+          page_size: pageSize,
+          orientation: orientation,
+        },
+        output_format: outputFormat === 'docx-pdf' ? 'docx' : outputFormat,
       }
 
-      children.push(...bodyParagraphs)
+      const response = await generateDocument(payload)
+      const data = response?.data || response
 
-      if (footerOn && footerText) {
-        children.push(
-          new Paragraph({ text: footerText, alignment: AlignmentType.CENTER }),
-        )
-      }
-      if (pageNumOn) {
-        children.push(
-          new Paragraph({ text: '— 1 —', alignment: AlignmentType.CENTER }),
-        )
-      }
-
-      const doc = new Document({
-        sections: [
-          {
-            properties: {
-              page: {
-                size: {
-                  orientation:
-                    orientation === 'landscape' ? 'landscape' : 'portrait',
-                },
-              },
-            },
-            children,
-          },
-        ],
-      })
-
-      const blob = await Packer.toBlob(doc)
-      const safeName =
-        documentName.trim().replace(/\s+/g, '_') ||
-        t('createDocument.additionalSettings.fallbackFileName')
+      const rawDate = data.created_at || new Date()
+      const date = new Date(rawDate)
+      const dd = String(date.getDate()).padStart(2, '0')
+      const mm = String(date.getMonth() + 1).padStart(2, '0')
+      const yyyy = date.getFullYear()
+      const hh = String(date.getHours()).padStart(2, '0')
+      const min = String(date.getMinutes()).padStart(2, '0')
 
       const entry = {
-        id: Date.now(),
-        name: `${safeName}.docx`,
+        id: data.id,
+        name: data.document_name || documentName,
         templateName: selectedTemplate.name,
-        date: new Date().toLocaleString('uz-UZ'),
-        format:
-          outputFormat === 'docx-pdf'
-            ? t('createDocument.additionalSettings.outputFormat.docxPdf')
-            : outputFormat.toUpperCase(),
-        blob,
+        date: `${dd}.${mm}.${yyyy} ${hh}:${min}`,
+        format: data.format || outputFormat.toUpperCase(),
+        blob: null,
       }
 
       onGenerated(entry)
     } catch (err) {
       console.error(err)
+      if (err.status === 422) {
+        setGenerateError(
+          t('createDocument.additionalSettings.generateError422') ||
+            'Noto\'g\'ri ma\'lumot yuborildi. Iltimos, maydonlarni tekshiring.',
+        )
+      } else if (err.status === 403) {
+        setGenerateError(
+          t('createDocument.additionalSettings.generateError403') ||
+            'Ruxsat yo\'q.',
+        )
+      } else if (err.status === 404) {
+        setGenerateError(
+          t('createDocument.additionalSettings.generateError404') ||
+            'Hujjat topilmadi.',
+        )
+      } else {
+        setGenerateError(
+          t('createDocument.additionalSettings.generateError') ||
+            'Hujjat yaratishda xatolik yuz berdi.',
+        )
+      }
     } finally {
       setGenerating(false)
     }
   }
 
-  function handleDownload(entry) {
-    if (!entry?.blob) return
-    const url = URL.createObjectURL(entry.blob)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = entry.name
-    document.body.appendChild(a)
-    a.click()
-    a.remove()
-    URL.revokeObjectURL(url)
+  async function handleDownload(entry) {
+    try {
+      const blob = await downloadDocumentFile(entry.id)
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = entry.name
+      document.body.appendChild(a)
+      a.click()
+      a.remove()
+      URL.revokeObjectURL(url)
+    } catch (err) {
+      console.error('Yuklab olishda xatolik:', err)
+    }
   }
 
-  // "Ko'rish" — DOCX blobni yangi tabda ochish o'rniga, mammoth bilan
-  // HTML'ga aylantirib, modalda ko'rsatamiz (docx faylni brauzer o'zi
-  // to'g'ridan-to'g'ri ochib bera olmaydi, faqat yuklab beradi)
   async function handleView() {
-    if (!generatedResult?.blob) return
+    if (!generatedResult?.id) return
     setViewingDoc(true)
     setViewLoading(true)
     setViewError('')
     try {
-      const arrayBuffer = await generatedResult.blob.arrayBuffer()
+      const blob = await downloadDocumentFile(generatedResult.id)
+      const arrayBuffer = await blob.arrayBuffer()
       const result = await mammoth.convertToHtml({ arrayBuffer })
       setViewHtml(result.value)
     } catch (err) {
@@ -450,6 +436,10 @@ const AdditionalSettingsPanel = ({
             </button>
           </div>
         </div>
+      )}
+
+      {generateError && (
+        <p className="generatedResultError">{generateError}</p>
       )}
 
       {(outputFormat === 'pdf' || outputFormat === 'docx-pdf') &&

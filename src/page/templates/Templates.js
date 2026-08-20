@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   FaFileAlt,
@@ -9,11 +9,6 @@ import {
   FaGavel,
   FaCog,
   FaEllipsisH,
-  FaUserCircle,
-  FaBalanceScale,
-  FaChartBar,
-  FaBook,
-  FaBuilding,
 } from 'react-icons/fa'
 import {
   TemplateFilters,
@@ -23,87 +18,34 @@ import {
   ViewTemplateModal,
   DeleteConfirmModal,
 } from '../../components/components'
+import {
+  createTemplate,
+  deleteTemplate,
+  getCategories,
+  getTemplates,
+} from '../../api/templates'
 import './Templates.css'
 
 // Kategoriya RO'YXATI (id + icon) — nomlar tarjima kaliti orqali
 // render vaqtida hisoblanadi, count esa pastda templates massividan
 // avtomatik hisoblanadi
-const CATEGORY_DEFS = [
-  { id: 'biznes', icon: FaBriefcase },
-  { id: 'talim', icon: FaGraduationCap },
-  { id: 'shaxsiy', icon: FaUser },
-  { id: 'huquqiy', icon: FaGavel },
-  { id: 'texnik', icon: FaCog },
-  { id: 'boshqalar', icon: FaEllipsisH },
-]
-
-// DEMO uchun shablonlar — haqiqiy loyihada backenddan keladi.
-// Matnli maydonlar (name/description/previewTitle) tarjima kaliti
-// orqali render vaqtida hisoblanadi (pastga qarang).
-const MOCK_TEMPLATES = [
-  {
-    id: 1,
-    key: 'template1',
-    categoryId: 'biznes',
-    badgeColor: 'blue',
-    language: "O'zbekcha",
-    previewIcon: FaFileAlt,
-    previewTheme: 'light',
-  },
-  {
-    id: 2,
-    key: 'template2',
-    categoryId: 'shaxsiy',
-    badgeColor: 'green',
-    language: "O'zbekcha",
-    previewIcon: FaUserCircle,
-    previewTheme: 'light',
-  },
-  {
-    id: 3,
-    key: 'template3',
-    categoryId: 'biznes',
-    badgeColor: 'blue',
-    language: "O'zbekcha",
-    previewIcon: FaBuilding,
-    previewTheme: 'gradient',
-  },
-  {
-    id: 4,
-    key: 'template4',
-    categoryId: 'talim',
-    badgeColor: 'purple',
-    language: "O'zbekcha",
-    previewIcon: FaBook,
-    previewTheme: 'light',
-  },
-  {
-    id: 5,
-    key: 'template5',
-    categoryId: 'huquqiy',
-    badgeColor: 'orange',
-    language: "O'zbekcha",
-    previewIcon: FaBalanceScale,
-    previewTheme: 'light',
-  },
-  {
-    id: 6,
-    key: 'template6',
-    categoryId: 'biznes',
-    badgeColor: 'blue',
-    language: "O'zbekcha",
-    previewIcon: FaChartBar,
-    previewTheme: 'light',
-  },
+const CATEGORY_ICONS = [
+  FaBriefcase,
+  FaGraduationCap,
+  FaUser,
+  FaGavel,
+  FaCog,
+  FaEllipsisH,
 ]
 
 const Templates = () => {
   const { t, i18n } = useTranslation()
 
-  // Foydalanuvchi qo'shgan shablonlar (haqiqiy matn bilan, tarjima talab qilmaydi)
-  const [customTemplates, setCustomTemplates] = useState([])
-  // O'chirilgan demo (mock) shablonlarning id'lari
-  const [deletedMockIds, setDeletedMockIds] = useState([])
+  const [templates, setTemplates] = useState([])
+  const [categoriesFromApi, setCategoriesFromApi] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
+  const [saving, setSaving] = useState(false)
 
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('all')
@@ -115,26 +57,39 @@ const Templates = () => {
   const [viewingTemplate, setViewingTemplate] = useState(null)
   const [deletingTemplate, setDeletingTemplate] = useState(null)
 
-  // Demo shablonlar tili UI tiliga qarab o'zgarganda ham qayta tarjima qilinadi
-  const translatedMockTemplates = useMemo(
-    () =>
-      MOCK_TEMPLATES.filter((item) => !deletedMockIds.includes(item.id)).map(
-        (item) => ({
-          ...item,
-          name: t(`templates.mock.${item.key}.name`),
-          categoryLabel: t(`templates.categories.${item.categoryId}`),
-          description: t(`templates.mock.${item.key}.description`),
-          previewTitle: t(`templates.mock.${item.key}.previewTitle`),
-        }),
-      ),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [t, i18n.language, deletedMockIds],
-  )
+  async function loadTemplates() {
+    setLoading(true)
+    setError('')
+    try {
+      const [templateResponse, categoryResponse] = await Promise.all([
+        getTemplates(),
+        getCategories(),
+      ])
+      setTemplates((templateResponse?.data || []).map(normalizeTemplate))
+      setCategoriesFromApi(categoryResponse?.data || [])
+    } catch (err) {
+      setError(err.message || "Shablonlarni yuklab bo'lmadi")
+    } finally {
+      setLoading(false)
+    }
+  }
 
-  const templates = useMemo(
-    () => [...customTemplates, ...translatedMockTemplates],
-    [customTemplates, translatedMockTemplates],
-  )
+  useEffect(() => {
+    loadTemplates()
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+  function normalizeTemplate(item) {
+    return {
+      ...item,
+      categoryId: item.category?.slug || item.category?.id,
+      categoryLabel: item.category?.name || '',
+      previewTitle: item.name,
+      previewIcon: FaFileAlt,
+      previewTheme: 'light',
+      badgeColor: 'blue',
+      fileName: `${item.name}.${item.file_format}`,
+    }
+  }
 
   // Kategoriya sonlari HAQIQIY templates massividan hisoblanadi —
   // qattiq yozilgan raqamlar emas
@@ -145,10 +100,12 @@ const Templates = () => {
       count: templates.length,
       icon: FaFileAlt,
     }
-    const rest = CATEGORY_DEFS.map((def) => ({
-      ...def,
-      name: t(`templates.categories.${def.id}`),
-      count: templates.filter((tpl) => tpl.categoryId === def.id).length,
+    const rest = categoriesFromApi.map((category, index) => ({
+      id: category.slug || category.id,
+      categoryId: category.id,
+      name: category.name,
+      count: category.count ?? 0,
+      icon: CATEGORY_ICONS[index % CATEGORY_ICONS.length],
     }))
     return [all, ...rest]
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -185,19 +142,37 @@ const Templates = () => {
     return result
   }, [templates, searchTerm, selectedCategory, selectedLanguage, sortOrder])
 
-  function handleAddTemplate(newTemplate) {
-    setCustomTemplates((prev) => [{ id: Date.now(), ...newTemplate }, ...prev])
-    setShowAddModal(false)
+  async function handleAddTemplate(newTemplate) {
+    const formData = new FormData()
+    formData.append('name', newTemplate.name)
+    formData.append('category_id', String(newTemplate.categoryId))
+    formData.append('language', newTemplate.language)
+    formData.append('description', newTemplate.description || '')
+    formData.append('file', newTemplate.docxFile)
+    if (newTemplate.imageFile) formData.append('image', newTemplate.imageFile)
+    setSaving(true)
+    try {
+      await createTemplate(formData)
+      setShowAddModal(false)
+      await loadTemplates()
+    } catch (err) {
+      throw err
+    } finally {
+      setSaving(false)
+    }
   }
 
-  function handleConfirmDelete() {
-    const id = deletingTemplate.id
-    if (customTemplates.some((tpl) => tpl.id === id)) {
-      setCustomTemplates((prev) => prev.filter((tpl) => tpl.id !== id))
-    } else {
-      setDeletedMockIds((prev) => [...prev, id])
+  async function handleConfirmDelete() {
+    try {
+      await deleteTemplate(deletingTemplate.id)
+      setTemplates((prev) =>
+        prev.filter((tpl) => tpl.id !== deletingTemplate.id),
+      )
+      setDeletingTemplate(null)
+      await loadTemplates()
+    } catch (err) {
+      setError(err.message || "Shablonni o'chirib bo'lmadi")
     }
-    setDeletingTemplate(null)
   }
 
   return (
@@ -236,26 +211,35 @@ const Templates = () => {
         setViewMode={setViewMode}
       />
 
-      <div className="templatesBody">
-        <TemplateCategories
-          categories={categories}
-          selectedCategory={selectedCategory}
-          setSelectedCategory={setSelectedCategory}
-        />
+      {loading && <p className="templateCardsEmpty">Yuklanmoqda...</p>}
+      {!loading && error && <p className="templateCardsEmpty">{error}</p>}
 
-        <TemplateCards
-          templates={filteredTemplates}
-          viewMode={viewMode}
-          onView={(tpl) => setViewingTemplate(tpl)}
-          onDeleteRequest={(tpl) => setDeletingTemplate(tpl)}
-        />
-      </div>
+      {!loading && !error && (
+        <div className="templatesBody">
+          <TemplateCategories
+            categories={categories}
+            selectedCategory={selectedCategory}
+            setSelectedCategory={setSelectedCategory}
+          />
+
+          <TemplateCards
+            templates={filteredTemplates}
+            viewMode={viewMode}
+            onView={(tpl) => setViewingTemplate(tpl)}
+            onDeleteRequest={(tpl) => setDeletingTemplate(tpl)}
+            onError={setError}
+          />
+        </div>
+      )}
 
       {showAddModal && (
         <AddTemplateModal
-          categories={categories.filter((c) => c.id !== 'all')}
+          categories={categories
+            .filter((c) => c.id !== 'all')
+            .map((c) => ({ ...c, id: c.categoryId || c.id }))}
           onClose={() => setShowAddModal(false)}
           onSave={handleAddTemplate}
+          saving={saving}
         />
       )}
 

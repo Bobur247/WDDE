@@ -1,49 +1,48 @@
 import { useEffect, useState } from 'react'
-import { FaTimes, FaDownload, FaFileAlt } from 'react-icons/fa'
+import { FaTimes, FaDownload } from 'react-icons/fa'
 import { useTranslation } from 'react-i18next'
 import mammoth from 'mammoth'
 import * as XLSX from 'xlsx'
+import { fetchTemplateFileBlob } from '../../../api/templates'
 
 // Fayl kengaytmasiga qarab qanday ko'rinishda ochilishini aniqlaydi
-function getFileKind(file) {
-  if (!file) return null
-  const name = file.name.toLowerCase()
-  if (name.endsWith('.pdf')) return 'pdf'
-  if (name.endsWith('.docx')) return 'docx'
-  if (name.endsWith('.xlsx') || name.endsWith('.xls')) return 'excel'
-  return 'other'
-}
-
 const ViewTemplateModal = ({ template, onClose }) => {
   const { t } = useTranslation()
   const PreviewIcon = template.previewIcon
-  const file = template.docxFile // AddTemplateModal'dan kelgan haqiqiy fayl (bo'lishi mumkin yoki yo'q)
-  const fileKind = getFileKind(file)
+  const fileKind =
+    template.file_format === 'xlsx' || template.file_format === 'xls'
+      ? 'excel'
+      : template.file_format === 'pdf'
+        ? 'pdf'
+        : 'docx'
+  const fileName =
+    template.fileName || `${template.name}.${template.file_format}`
 
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [docHtml, setDocHtml] = useState('')
   const [pdfUrl, setPdfUrl] = useState('')
   const [excelRows, setExcelRows] = useState(null)
+  const [fileBlob, setFileBlob] = useState(null)
 
   useEffect(() => {
-    if (!file) return // demo shablon - haqiqiy fayl yo'q
-
     let objectUrl = ''
 
     async function loadFile() {
       setLoading(true)
       setError('')
       try {
+        const blob = await fetchTemplateFileBlob(template.id)
+        setFileBlob(blob)
         if (fileKind === 'pdf') {
-          objectUrl = URL.createObjectURL(file)
+          objectUrl = URL.createObjectURL(blob)
           setPdfUrl(objectUrl)
         } else if (fileKind === 'docx') {
-          const arrayBuffer = await file.arrayBuffer()
+          const arrayBuffer = await blob.arrayBuffer()
           const result = await mammoth.convertToHtml({ arrayBuffer })
           setDocHtml(result.value)
         } else if (fileKind === 'excel') {
-          const arrayBuffer = await file.arrayBuffer()
+          const arrayBuffer = await blob.arrayBuffer()
           const workbook = XLSX.read(arrayBuffer, { type: 'array' })
           const firstSheetName = workbook.SheetNames[0]
           const sheet = workbook.Sheets[firstSheetName]
@@ -64,14 +63,14 @@ const ViewTemplateModal = ({ template, onClose }) => {
       if (objectUrl) URL.revokeObjectURL(objectUrl)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [file, fileKind])
+  }, [template.id, fileKind])
 
   function handleDownload() {
-    if (!file) return
-    const url = URL.createObjectURL(file)
+    if (!fileBlob) return
+    const url = URL.createObjectURL(fileBlob)
     const a = document.createElement('a')
     a.href = url
-    a.download = file.name
+    a.download = fileName
     document.body.appendChild(a)
     a.click()
     a.remove()
@@ -101,33 +100,15 @@ const ViewTemplateModal = ({ template, onClose }) => {
           </button>
         </div>
 
-        {/* Fayl mavjud bo'lmasa (demo shablon) — faqat namuna ko'rsatiladi */}
-        {!file && (
-          <>
-            <div className={`viewTemplatePreview ${template.previewTheme}`}>
-              <PreviewIcon className="viewTemplatePreviewIcon" />
-              <span className="viewTemplatePreviewTitle">
-                {template.previewTitle}
-              </span>
-            </div>
-            <p className="viewTemplateDemoNote">
-              <FaFileAlt /> {t('templates.viewModal.demoNote')}
-            </p>
-          </>
-        )}
-
-        {/* Haqiqiy fayl bo'lsa — ichini ochib beramiz */}
-        {file && loading && (
+        {loading && (
           <div className="fileViewerLoading">
             {t('templates.viewModal.loading')}
           </div>
         )}
 
-        {file && !loading && error && (
-          <div className="fileViewerError">{error}</div>
-        )}
+        {!loading && error && <div className="fileViewerError">{error}</div>}
 
-        {file && !loading && !error && fileKind === 'pdf' && pdfUrl && (
+        {!loading && !error && fileKind === 'pdf' && pdfUrl && (
           <iframe
             title={t('templates.viewModal.pdfPreviewTitle')}
             src={pdfUrl}
@@ -135,14 +116,14 @@ const ViewTemplateModal = ({ template, onClose }) => {
           />
         )}
 
-        {file && !loading && !error && fileKind === 'docx' && (
+        {!loading && !error && fileKind === 'docx' && (
           <div
             className="docxViewerContent"
             dangerouslySetInnerHTML={{ __html: docHtml }}
           />
         )}
 
-        {file && !loading && !error && fileKind === 'excel' && excelRows && (
+        {!loading && !error && fileKind === 'excel' && excelRows && (
           <div className="excelViewerWrapper">
             <table className="excelViewerTable">
               <tbody>
@@ -158,7 +139,7 @@ const ViewTemplateModal = ({ template, onClose }) => {
           </div>
         )}
 
-        {file && !loading && !error && fileKind === 'other' && (
+        {!loading && !error && fileKind === 'other' && (
           <p className="viewTemplateDemoNote">
             {t('templates.viewModal.unsupportedFile')}
           </p>
@@ -176,7 +157,7 @@ const ViewTemplateModal = ({ template, onClose }) => {
             type="button"
             className="modalSaveButton"
             onClick={handleDownload}
-            disabled={!file}
+            disabled={!fileBlob || loading}
           >
             <FaDownload />
             <span>{t('templates.viewModal.download')}</span>

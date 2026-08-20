@@ -257,7 +257,18 @@
       "title": "Bajarilgan amallar (History)",
       "empty": "Hali hech qanday fayl saqlanmagan",
       "blocksCount": "{{count}} ta block",
-      "detail": "Batafsil →"
+      "detail": "Batafsil →",
+      "download": "Yuklab olish",
+      "delete": "O'chirish",
+      "confirmDelete": "Yozuvni o'chirish",
+      "confirmDeleteMessage": "<b>{{fileName}}</b> tarixdan o'chirilsinmi? Bu amalni ortga qaytarib bo'lmaydi.",
+      "statusNotDownloaded": "Yuklab olinmagan",
+      "statusDownloaded": "Yuklab olingan",
+      "page": "Sahifa",
+      "prevPage": "Oldingi",
+      "nextPage": "Keyingi",
+      "templateName": "Manba shabloni",
+      "deleted": "Yozuv o'chirildi"
     },
     "extractionMethod": {
       "methods": {
@@ -280,7 +291,18 @@
       "addSelectedText": "+ Ajratishga qo'shish",
       "regexPatternLabel": "Regex ifoda:",
       "regexPatternPlaceholder": "Masalan: \\+998\\d{9}",
-      "comingSoon": "\"{{label}}\" usuli keyingi bosqichda qo'shiladi — bu docx faylning ichki strukturasini (jadval/sarlavha/bookmark) chuqurroq tahlil qilishni talab qiladi.",
+      "tableIndexLabel": "Jadval raqami:",
+      "tableIndexPlaceholder": "Masalan: 1",
+      "headingLevelLabel": "Sarlavha darajasi:",
+      "headingLevelPlaceholder": "H1, H2, H3",
+      "bookmarkLabel": "Bookmark:",
+      "bookmarkPlaceholder": "Bookmark tanlang",
+      "bookmarkSelectLabel": "Bookmarklar ro'yxati:",
+      "noBookmarksFound": "Hujjatda bookmark topilmadi",
+      "noTablesFound": "Hujjatda jadval topilmadi",
+      "noHeadingsFound": "Hujjatda sarlavha topilmadi",
+      "regexNoMatch": "Mos keluvchi natija topilmadi",
+      "regexInvalid": "Regex noto'g'ri kiritildi",
       "extract": "Ajratish"
     },
     "extractedData": {
@@ -335,10 +357,14 @@
       "newFile": "Yangi fayl yaratish",
       "appendFile": "Mavjud faylga qo'shish",
       "appendHint": "DOCX/PDF fayllarga qo'shish backend integratsiyasi bilan qo'shiladi — hozircha faqat TXT/CSV/JSON uchun ishlaydi.",
+      "appendNotSupportedDocxPdf": "DOCX/PDF formatlari uchun hozircha qo'shimcha yo'q — backend integratsiyasi kutilmoqda.",
       "appendToLabel": "Qaysi faylga qo'shilsin:",
       "selectFileOption": "Faylni tanlang",
       "cancel": "Bekor qilish",
-      "save": "Saqlash"
+      "save": "Saqlash",
+      "saving": "Saqlanmoqda...",
+      "saved": "Fayl muvaffaqiyatli saqlandi",
+      "saveError": "Saqlashda xatolik yuz berdi"
     },
     "historyDetailModal": {
       "close": "Yopish",
@@ -394,23 +420,31 @@
     },
     "defaultDocumentName": "Rahmat xati",
     "newDocumentName": "Yangi hujjat",
-    "settingsPanel": {
-      "title": "Hujjatni sozlash",
-      "tabs": {
-        "asosiy": "Asosiy",
-        "headerFooter": "Header/Footer",
-        "qoshimcha": "Qo'shimcha",
-        "uslub": "Uslub"
+      "settingsPanel": {
+        "title": "Hujjatni sozlash",
+        "tabs": {
+          "asosiy": "Asosiy",
+          "headerFooter": "Header/Footer",
+          "qoshimcha": "Qo'shimcha",
+          "uslub": "Uslub",
+          "yaratilganHujjatlar": "Yaratilgan hujjatlar"
+        },
+        "tabComingSoon": "\"{{tab}}\" bo'limi keyingi bosqichda qo'shiladi. Hozircha logo / header / footer sozlamalarini o'ng paneldan (\"Qo'shimcha sozlamalar\") boshqarishingiz mumkin.",
+        "documentInfo": "Hujjat ma'lumotlari",
+        "documentNameLabel": "Hujjat nomi:",
+        "templateLabel": "Shablon:",
+        "templateFieldsLabel": "Shablon maydonlari",
+        "richText": {
+          "placeholderWord": "matn"
+        },
+        "yaratilganHujjatlar": {
+          "title": "Yaratilgan hujjatlar",
+          "loading": "Hujjatlar yuklanmoqda...",
+          "error": "Yaratilgan hujjatlarni yuklashda xatolik yuz berdi.",
+          "empty": "Hali yaratilgan hujjatlar yo'q",
+          "emptySubtitle": "Hujjat yaratganingizdan so'ng ular shu yerda ko'rinadi."
+        }
       },
-      "tabComingSoon": "\"{{tab}}\" bo'limi keyingi bosqichda qo'shiladi. Hozircha logo / header / footer sozlamalarini o'ng paneldan (\"Qo'shimcha sozlamalar\") boshqarishingiz mumkin.",
-      "documentInfo": "Hujjat ma'lumotlari",
-      "documentNameLabel": "Hujjat nomi:",
-      "templateLabel": "Shablon:",
-      "templateFieldsLabel": "Shablon maydonlari",
-      "richText": {
-        "placeholderWord": "matn"
-      }
-    },
     "livePreview": {
       "label": "Live Preview",
       "desktopTitle": "Desktop ko'rinish",
@@ -480,10 +514,15 @@
         "error": "Hujjatni ko'rsatishda xatolik yuz berdi",
         "close": "Yopish",
         "download": "Yuklab olish"
-      }
+      },
+      "generateError": "Hujjat yaratishda xatolik yuz berdi.",
+      "generateError422": "Noto'g'ri ma'lumot yuborildi. Iltimos, maydonlarni tekshiring.",
+      "generateError403": "Ruxsat yo'q.",
+      "generateError404": "Hujjat topilmadi."
     },
     "history": {
       "title": "Yaratilgan hujjatlar tarixi",
+      "loadError": "Hujjatlarni yuklashda xatolik yuz berdi.",
       "empty": "Hali hech qanday hujjat yaratilmagan. Chapdan shablon tanlab, \"Hujjatni yaratish\" tugmasini bosing.",
       "columns": {
         "number": "№",

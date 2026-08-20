@@ -257,7 +257,18 @@
       "title": "Бажарилган амаллар (Тарих)",
       "empty": "Ҳали ҳеч қандай файл сақланмаган",
       "blocksCount": "{{count}} та блок",
-      "detail": "Батафсил →"
+      "detail": "Батафсил →",
+      "download": "Юклаб олиш",
+      "delete": "Ўчириш",
+      "confirmDelete": "Ёзувни ўчириш",
+      "confirmDeleteMessage": "<b>{{fileName}}</b> тарихдан ўчирилсинми? Бу амални ортга қайтариб бўлмайди.",
+      "statusNotDownloaded": "Юклаб олинмаган",
+      "statusDownloaded": "Юклаб олинган",
+      "page": "Саҳифа",
+      "prevPage": "Олдинги",
+      "nextPage": "Кейинги",
+      "templateName": "Манба шаблони",
+      "deleted": "Ёзув ўчирилди"
     },
     "extractionMethod": {
       "methods": {
@@ -280,7 +291,18 @@
       "addSelectedText": "+ Ажратишга қўшиш",
       "regexPatternLabel": "Regex ифода:",
       "regexPatternPlaceholder": "Масалан: \\+998\\d{9}",
-      "comingSoon": "\"{{label}}\" усули кейинги босқичда қўшилади — бу docx файлнинг ички структурасини (жадвал/сарлавҳа/букмарк) чуқурроқ таҳлил қилишни талаб қилади.",
+      "tableIndexLabel": "Жадвал рақами:",
+      "tableIndexPlaceholder": "Масалан: 1",
+      "headingLevelLabel": "Сарлавҳа даражаси:",
+      "headingLevelPlaceholder": "H1, H2, H3",
+      "bookmarkLabel": "Букмарк:",
+      "bookmarkPlaceholder": "Букмаркни танланг",
+      "bookmarkSelectLabel": "Букмарклар рўйхати:",
+      "noBookmarksFound": "Ҳужжатда букмарк топилмади",
+      "noTablesFound": "Ҳужжатда жадвал топилмади",
+      "noHeadingsFound": "Ҳужжатда сарлавҳа топилмади",
+      "regexNoMatch": "Мос келувчи натижа топилмади",
+      "regexInvalid": "Regex нотўғри киритилди",
       "extract": "Ажратиш"
     },
     "extractedData": {
@@ -335,10 +357,14 @@
       "newFile": "Янги файл яратиш",
       "appendFile": "Мавжуд файлга қўшиш",
       "appendHint": "DOCX/PDF файлларга қўшиш backend интеграцияси билан қўшилади — ҳозирча фақат TXT/CSV/JSON учун ишлайди.",
+      "appendNotSupportedDocxPdf": "DOCX/PDF форматлари учун ҳозирча қўшимча йўқ — backend интеграцияси кутилмоқда.",
       "appendToLabel": "Қайси файлга қўшилсин:",
       "selectFileOption": "Файлни танланг",
       "cancel": "Бекор қилиш",
-      "save": "Сақлаш"
+      "save": "Сақлаш",
+      "saving": "Сақланмоқда...",
+      "saved": "Файл муваффақиятли сақланди",
+      "saveError": "Сақлашда хатолик юз берди"
     },
     "historyDetailModal": {
       "close": "Ёпиш",
@@ -480,10 +506,15 @@
         "error": "Ҳужжатни кўрсатишда хатолик юз берди",
         "close": "Ёпиш",
         "download": "Юклаб олиш"
-      }
+      },
+      "generateError": "Ҳужжат яратишда хатолик юз берди.",
+      "generateError422": "Нотўғри маълумот юборилди. Илтимос, майдонларни текширинг.",
+      "generateError403": "Рухсат йўқ.",
+      "generateError404": "Ҳужжат топилмади."
     },
     "history": {
       "title": "Яратилган ҳужжатлар тарихи",
+      "loadError": "Ҳужжатларни юклашда хатолик юз берди.",
       "empty": "Ҳали ҳеч қандай ҳужжат яратилмаган. Чапдан шаблон танлаб, \"Ҳужжатни яратиш\" тугмасини босинг.",
       "columns": {
         "number": "№",

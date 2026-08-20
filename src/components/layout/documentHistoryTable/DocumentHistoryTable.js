@@ -1,19 +1,37 @@
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { FaClock, FaEye, FaDownload, FaTrash, FaFileWord } from 'react-icons/fa'
+import { FaClock, FaFileWord, FaEye, FaDownload, FaTrash } from 'react-icons/fa'
+import { ViewFileModal, DeleteRecordModal } from '../../components'
+import { downloadDocumentFile } from '../../../api/documents'
 
 const DocumentHistoryTable = ({ history, onDelete }) => {
   const { t } = useTranslation()
+  const [viewingDoc, setViewingDoc] = useState(null)
+  const [deletingDoc, setDeletingDoc] = useState(null)
 
-  function handleDownload(entry) {
-    if (!entry.blob) return
-    const url = URL.createObjectURL(entry.blob)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = entry.name
-    document.body.appendChild(a)
-    a.click()
-    a.remove()
-    URL.revokeObjectURL(url)
+  async function handleDownload(entry) {
+    try {
+      const blob = await downloadDocumentFile(entry.id)
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = entry.fileName || entry.name
+      document.body.appendChild(a)
+      a.click()
+      a.remove()
+      URL.revokeObjectURL(url)
+    } catch (err) {
+      console.error('Yuklab olishda xatolik:', err)
+    }
+  }
+
+  async function handleView(entry) {
+    try {
+      const blob = await downloadDocumentFile(entry.id)
+      setViewingDoc({ ...entry, blob })
+    } catch (err) {
+      console.error('Ko\'rishda xatolik:', err)
+    }
   }
 
   return (
@@ -57,10 +75,7 @@ const DocumentHistoryTable = ({ history, onDelete }) => {
                     <button
                       type="button"
                       className="historyActionButton"
-                      onClick={() =>
-                        entry.blob &&
-                        window.open(URL.createObjectURL(entry.blob))
-                      }
+                      onClick={() => handleView(entry)}
                     >
                       <FaEye />
                       <span>{t('createDocument.history.actions.view')}</span>
@@ -76,7 +91,7 @@ const DocumentHistoryTable = ({ history, onDelete }) => {
                     <button
                       type="button"
                       className="historyActionButton danger"
-                      onClick={() => onDelete(entry.id)}
+                      onClick={() => setDeletingDoc(entry)}
                     >
                       <FaTrash />
                     </button>
@@ -86,6 +101,25 @@ const DocumentHistoryTable = ({ history, onDelete }) => {
             ))}
           </tbody>
         </table>
+      )}
+
+      {viewingDoc && (
+        <ViewFileModal
+          record={viewingDoc}
+          onClose={() => setViewingDoc(null)}
+          fullScreen
+        />
+      )}
+
+      {deletingDoc && (
+        <DeleteRecordModal
+          record={deletingDoc}
+          onCancel={() => setDeletingDoc(null)}
+          onConfirm={() => {
+            onDelete(deletingDoc.id)
+            setDeletingDoc(null)
+          }}
+        />
       )}
     </div>
   )

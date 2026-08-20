@@ -7,6 +7,7 @@ import {
   DocumentHistoryTable,
   NewDocumentModal,
 } from '../../components/components'
+import { getDocuments, deleteDocument } from '../../api/documents'
 import './CreateDocument.css'
 
 
@@ -187,14 +188,70 @@ const CreateDocument = () => {
 
   const [history, setHistory] = useState([])
   const [generatedResult, setGeneratedResult] = useState(null)
+  const [documentsError, setDocumentsError] = useState('')
+
+  useEffect(() => {
+    let cancelled = false
+
+    async function loadDocuments() {
+      try {
+        const data = await getDocuments()
+        const items = Array.isArray(data) ? data : data?.data || []
+        const docs = items.map((item) => {
+          const rawDate = item.created_at || item.date
+          const date = rawDate ? new Date(rawDate) : new Date()
+          const dd = String(date.getDate()).padStart(2, '0')
+          const mm = String(date.getMonth() + 1).padStart(2, '0')
+          const yyyy = date.getFullYear()
+          const hh = String(date.getHours()).padStart(2, '0')
+          const min = String(date.getMinutes()).padStart(2, '0')
+          const fileName =
+            item.document_name || item.fileName || item.file_name || item.name
+          return {
+            id: item.id,
+            name: fileName,
+            fileName: fileName,
+            templateName: item.template_name || '',
+            date: `${dd}.${mm}.${yyyy} ${hh}:${min}`,
+            format: item.format || 'DOCX',
+            blob: null,
+          }
+        })
+        if (!cancelled) {
+          setHistory(docs)
+          setDocumentsError('')
+        }
+      } catch (err) {
+        if (!cancelled) {
+          setDocumentsError(err.message || t('createDocument.history.loadError'))
+        }
+      }
+    }
+
+    loadDocuments()
+
+    return () => {
+      cancelled = true
+    }
+  }, [])
 
   function handleGenerated(entry) {
-    setHistory((prev) => [entry, ...prev])
-    setGeneratedResult(entry)
+    const normalized = { ...entry, fileName: entry.name }
+    setHistory((prev) => [normalized, ...prev])
+    setGeneratedResult(normalized)
   }
 
-  function handleDeleteHistory(id) {
-    setHistory((prev) => prev.filter((h) => h.id !== id))
+  async function handleDeleteHistory(id) {
+    try {
+      await deleteDocument(id)
+      setHistory((prev) => prev.filter((h) => h.id !== id))
+    } catch (err) {
+      if (err.status === 404) {
+        setHistory((prev) => prev.filter((h) => h.id !== id))
+      } else {
+        console.error("O'chirishda xatolik:", err)
+      }
+    }
   }
 
   return (
@@ -228,6 +285,8 @@ const CreateDocument = () => {
           setDocumentName={setDocumentName}
           fieldValues={fieldValues}
           setFieldValues={setFieldValues}
+          history={history}
+          onDelete={handleDeleteHistory}
         />
 
         <AdditionalSettingsPanel
@@ -266,6 +325,10 @@ const CreateDocument = () => {
           history={history}
           onDelete={handleDeleteHistory}
         />
+
+        {documentsError && (
+          <p className="historyError">{documentsError}</p>
+        )}
       </div>
 
       {showNewDocModal && (

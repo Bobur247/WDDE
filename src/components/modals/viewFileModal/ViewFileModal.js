@@ -13,7 +13,14 @@ function getFileKind(fileName) {
   return 'other'
 }
 
-const ViewFileModal = ({ record, onClose }) => {
+function formatDateValue(raw) {
+  if (!raw) return ''
+  const date = raw instanceof Date ? raw : new Date(raw)
+  if (Number.isNaN(date.getTime())) return String(raw)
+  return date.toLocaleString('uz-UZ')
+}
+
+const ViewFileModal = ({ record, onClose, fullScreen }) => {
   const { t } = useTranslation()
   const fileKind = getFileKind(record.fileName)
 
@@ -76,14 +83,14 @@ const ViewFileModal = ({ record, onClose }) => {
   return (
     <div className="modalOverlay" onClick={onClose}>
       <div
-        className="modalBox viewFileModal"
+        className={`modalBox viewFileModal${fullScreen ? ' fullScreen' : ''}`}
         onClick={(e) => e.stopPropagation()}
       >
         <div className="modalTopHeader">
           <div>
             <h3>{record.fileName}</h3>
             <p className="viewFileModalSubtitle">
-              {record.typeLabel} · {record.date.toLocaleString('uz-UZ')}
+              {record.typeLabel} · {formatDateValue(record.date)}
             </p>
           </div>
           <button type="button" className="modalCloseIcon" onClick={onClose}>
